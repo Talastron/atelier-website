@@ -44,29 +44,29 @@ const FEATURES = [
 
 export function Features() {
   return (
+    // Same width treatment as Hero: max-width on the section, page-padding
+    // inside, margin auto to center. Keeps cards visually aligned with the
+    // rest of the page rhythm.
     <section
       id="features"
       style={{
         paddingBlock: 'var(--atelier-section-padding-y)',
         paddingInline: 'var(--atelier-page-padding)',
+        maxWidth: 'var(--atelier-container-max)',
+        margin: '0 auto',
       }}
     >
-      <div
-        className="mx-auto"
-        style={{ maxWidth: 'var(--atelier-container-max)' }}
-      >
-        <EditorialHeader
-          eyebrow="The Toolkit"
-          title="Master your aesthetic."
-          subtitle="Built for professionals who treat their wardrobe as an investment portfolio."
-          align="center"
-          className="mb-16"
-        />
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {FEATURES.map((f) => (
-            <FeatureCard key={f.title} icon={f.icon} title={f.title} description={f.description} />
-          ))}
-        </div>
+      <EditorialHeader
+        eyebrow="The Toolkit"
+        title="Master your aesthetic."
+        subtitle="Built for professionals who treat their wardrobe as an investment portfolio."
+        align="center"
+        className="mb-16"
+      />
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {FEATURES.map((f) => (
+          <FeatureCard key={f.title} icon={f.icon} title={f.title} description={f.description} />
+        ))}
       </div>
     </section>
   );
