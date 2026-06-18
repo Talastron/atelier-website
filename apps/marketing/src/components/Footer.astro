@@ -6,23 +6,34 @@ import { EDIT_URL, SITE } from '../config.ts';
 const year = new Date().getFullYear();
 ---
 
-<footer class="bg-cream border-t border-stone-200/60 py-12">
+<footer class="bg-cream border-t border-stone-200/60 py-16">
   <div
-    class="mx-auto flex flex-col md:flex-row items-center justify-between gap-6"
+    class="mx-auto"
     style="max-width: var(--atelier-container-max); padding-inline: var(--atelier-page-padding);"
   >
-    <a href="/" class="flex items-center gap-3">
-      <AtelierMark size={28} client:load />
-      <span class="font-display text-xl text-stone-900 tracking-tight">Atelier.</span>
-    </a>
-    <div class="flex gap-6 text-sm text-stone-500 font-medium">
-      <a href={EDIT_URL} class="hover:text-stone-900 transition-colors">Sign In</a>
-      <a href={`mailto:${SITE.supportEmail}`} class="hover:text-stone-900 transition-colors">Support</a>
-      <a href="/legal/privacy" class="hover:text-stone-900 transition-colors">Privacy</a>
-      <a href="/legal/terms" class="hover:text-stone-900 transition-colors">Terms</a>
+    <!-- Top row: logo + comprehensive link list -->
+    <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-8 mb-8">
+      <a href="/" class="flex items-center gap-3">
+        <AtelierMark size={28} client:load />
+        <span class="font-display text-xl text-stone-900 tracking-tight">Atelier.</span>
+      </a>
+
+      <nav class="flex flex-wrap gap-x-6 gap-y-3 text-sm text-stone-500 font-medium">
+        <a href="/about" class="hover:text-stone-900 transition-colors">About</a>
+        <a href="/journal" class="hover:text-stone-900 transition-colors">Journal</a>
+        <a href="/pricing" class="hover:text-stone-900 transition-colors">Pricing</a>
+        <a href={EDIT_URL} class="hover:text-stone-900 transition-colors">Sign In</a>
+        <a href={`mailto:${SITE.supportEmail}`} class="hover:text-stone-900 transition-colors">Support</a>
+        <a href="/legal/privacy" class="hover:text-stone-900 transition-colors">Privacy</a>
+        <a href="/legal/terms" class="hover:text-stone-900 transition-colors">Terms</a>
+      </nav>
     </div>
-    <p class="text-xs text-stone-400 tracking-wider uppercase">
-      &copy; {year} Atelier. All rights reserved.
-    </p>
+
+    <!-- Bottom row: copyright (separated by subtle rule) -->
+    <div class="border-t border-stone-200/60 pt-6">
+      <p class="text-xs text-stone-400 tracking-wider uppercase">
+        &copy; {year} Atelier. All rights reserved.
+      </p>
+    </div>
   </div>
 </footer>

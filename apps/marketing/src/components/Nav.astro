@@ -6,14 +6,24 @@ import { EDIT_URL } from '../config.ts';
 
 <nav class="fixed top-0 left-0 right-0 z-50 bg-cream/90 backdrop-blur-md border-b border-stone-200/60">
   <div
-    class="mx-auto h-20 flex items-center justify-between"
+    class="mx-auto h-20 flex items-center justify-between gap-6"
     style="max-width: var(--atelier-container-max); padding-inline: var(--atelier-page-padding);"
   >
-    <a href="/" class="flex items-center gap-3">
+    <!-- Left: logo -->
+    <a href="/" class="flex items-center gap-3 shrink-0">
       <AtelierMark size={32} client:load />
       <span class="font-display text-2xl tracking-tight">Atelier.</span>
     </a>
-    <div class="flex items-center gap-6">
+
+    <!-- Center: primary nav links (desktop only) -->
+    <div class="hidden md:flex items-center gap-8 text-sm font-medium text-stone-600">
+      <a href="/about" class="hover:text-stone-900 transition-colors">About</a>
+      <a href="/journal" class="hover:text-stone-900 transition-colors">Journal</a>
+      <a href="/pricing" class="hover:text-stone-900 transition-colors">Pricing</a>
+    </div>
+
+    <!-- Right: account actions -->
+    <div class="flex items-center gap-6 shrink-0">
       <a href={EDIT_URL} class="hidden md:block text-sm font-medium text-stone-500 hover:text-stone-900 transition-colors">
         Sign In
       </a>
