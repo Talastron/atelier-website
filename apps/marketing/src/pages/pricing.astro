@@ -4,10 +4,13 @@ import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
 import { BrassRule } from '@atelier/ui';
 
-// PLACEHOLDER — replaced in Phase 1C after Lemon Squeezy product is created.
-// Format: https://<your-store>.lemonsqueezy.com/checkout/buy/<variant-id>
-const LS_CHECKOUT_URL_MONTHLY = 'https://myatelier.lemonsqueezy.com/checkout/buy/PLACEHOLDER_MONTHLY_VARIANT_ID';
-const LS_CHECKOUT_URL_ANNUAL = 'https://myatelier.lemonsqueezy.com/checkout/buy/PLACEHOLDER_ANNUAL_VARIANT_ID';
+// Lemon Squeezy product URL (Atelier Membership — covers both Monthly & Annual variants).
+// The customer picks Monthly vs Annual on the LS-hosted checkout page.
+// Annual is set as the "favourite" / highlighted default in the LS dashboard.
+const LS_CHECKOUT_URL = 'https://myatelier.lemonsqueezy.com/checkout/buy/a9d33c73-c40d-41b7-bb39-6aef6b39b525';
+
+// Variant IDs — appear in webhook payloads; reference only, not used in URLs.
+// 1809234 = Monthly, 1809222 = Annual
 ---
 
 <Base title="Pricing — Atelier">
@@ -40,10 +43,10 @@ const LS_CHECKOUT_URL_ANNUAL = 'https://myatelier.lemonsqueezy.com/checkout/buy/
         <h2 class="text-2xl mb-2" style="font-family: var(--atelier-font-display);">Monthly</h2>
         <p class="text-stone-500 text-sm mb-8">Flexible, no commitment.</p>
         <p class="text-4xl mb-8" style="font-family: var(--atelier-font-display);">
-          $— <span class="text-base text-stone-500">/ month</span>
+          £9.99 <span class="text-base text-stone-500">/ month</span>
         </p>
         <a
-          href={LS_CHECKOUT_URL_MONTHLY}
+          href={LS_CHECKOUT_URL}
           class="block text-center bg-stone-900 text-white px-8 py-4 rounded-full text-base font-medium hover:bg-stone-700 transition-all shadow-lg active:scale-95"
         >
           Start 14-day trial
@@ -59,10 +62,10 @@ const LS_CHECKOUT_URL_ANNUAL = 'https://myatelier.lemonsqueezy.com/checkout/buy/
         </div>
         <p class="text-stone-400 text-sm mb-8">Save ~20% over monthly.</p>
         <p class="text-4xl mb-8" style="font-family: var(--atelier-font-display);">
-          $— <span class="text-base text-stone-400">/ year</span>
+          £95 <span class="text-base text-stone-400">/ year</span>
         </p>
         <a
-          href={LS_CHECKOUT_URL_ANNUAL}
+          href={LS_CHECKOUT_URL}
           class="block text-center bg-brass-300 text-stone-900 px-8 py-4 rounded-full text-base font-medium hover:bg-brass-200 transition-all shadow-lg active:scale-95"
         >
           Start 14-day trial
