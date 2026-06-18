@@ -18,6 +18,7 @@
     "@atelier/ui": "workspace:*",
     "@tailwindcss/vite": "^4.0.0",
     "astro": "^5.0.0",
+    "jose": "^6.2.3",
     "lucide-react": "^0.460.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
