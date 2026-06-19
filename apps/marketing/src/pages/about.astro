@@ -180,6 +180,47 @@ import { ChevronRight } from 'lucide-react';
       </div>
     </section>
 
+    {/* ── 3.5 For Whom — audience qualifier ──────────────────────────
+        Three "For the…" lines that qualify the reader in or out
+        clearly. Closing distinction (not for those who want more,
+        for those who want less used better) gives the section its
+        edge. Sits between The Practice (what we do) and the Manifesto
+        sample (proof of it) — logical flow: what → who → example. */}
+    <section
+      class="mx-auto"
+      style="max-width: 760px; padding-inline: var(--atelier-page-padding); padding-bottom: clamp(4rem, 7vw, 6rem);"
+    >
+      <div class="flex items-center gap-3 mb-6">
+        <BrassRule client:load />
+        <p
+          class="text-[10px] uppercase font-semibold"
+          style="letter-spacing: 0.28em; color: var(--atelier-stone-500);"
+        >
+          For Whom
+        </p>
+      </div>
+      <h2
+        class="mb-8"
+        style="font-family: var(--atelier-font-display); font-size: clamp(1.75rem, 3vw, 2.5rem); line-height: 1.15; letter-spacing: -0.01em; color: var(--atelier-stone-900); max-width: 24ch;"
+      >
+        For the considered closet.
+      </h2>
+      <div
+        class="space-y-6"
+        style="font-size: 1.0625rem; line-height: 1.75; color: var(--atelier-stone-700);"
+      >
+        <p>
+          For the reader who asks <em>how many times will I wear this</em> before
+          the price. For the owner of forty pieces, not four hundred. For the
+          dresser who reaches for what they own first.
+        </p>
+        <p>
+          Atelier is not for the person who wants more clothes.
+          <em>It is for the person who wants less, used better.</em>
+        </p>
+      </div>
+    </section>
+
     {/* ── 4. A Style Manifesto — embedded sample ─────────────────────
         The centrepiece. Framed as a vellum certificate so it reads as
         an artefact rather than another page section. Sample is for a
@@ -404,6 +445,72 @@ import { ChevronRight } from 'lucide-react';
           </p>
         </li>
       </ul>
+    </section>
+
+    {/* ── 5.5 The Maker — founder presence ──────────────────────────
+        Small section putting a name (and eventually a portrait) to
+        Atelier. Closes the trust gap that every premium brand closes
+        by attaching a human — Aesop has Paphitis, Loewe has Anderson,
+        Atelier has Sibylle.
+        Portrait slot left empty for now; can be filled with an
+        ink-line illustration or a small black-and-white photograph
+        when ready. */}
+    <section
+      class="mx-auto"
+      style="max-width: 760px; padding-inline: var(--atelier-page-padding); padding-bottom: clamp(4rem, 7vw, 6rem);"
+    >
+      <div class="flex items-center gap-3 mb-6">
+        <BrassRule client:load />
+        <p
+          class="text-[10px] uppercase font-semibold"
+          style="letter-spacing: 0.28em; color: var(--atelier-stone-500);"
+        >
+          The Maker
+        </p>
+      </div>
+      <h2
+        class="mb-8"
+        style="font-family: var(--atelier-font-display); font-size: clamp(1.75rem, 3vw, 2.5rem); line-height: 1.15; letter-spacing: -0.01em; color: var(--atelier-stone-900); max-width: 24ch;"
+      >
+        Atelier is composed by <em style="font-weight: 400;">Sibylle Sherwood</em>.
+      </h2>
+      <div
+        class="space-y-6 mb-8"
+        style="font-size: 1.0625rem; line-height: 1.75; color: var(--atelier-stone-700);"
+      >
+        <p>
+          Working from a converted barn in Cobham, Surrey, with the help of a
+          small team and a great deal of cashmere. The studio is built piece by
+          piece, in the same spirit Atelier asks of its members — slowly,
+          considered, with attention paid to what already exists.
+        </p>
+        <p>
+          Atelier is privately held and self-funded. There is no investor in
+          the closet. The product is the business.
+        </p>
+      </div>
+
+      {/* Hand-signed name as a flourish — typeset in italic display
+          serif rather than a real signature for now. */}
+      <div class="flex items-center gap-4">
+        <span
+          aria-hidden="true"
+          style="display: inline-block; width: 32px; height: 1.5px; background: var(--atelier-brass-300);"
+        />
+        <p
+          class="italic"
+          style="font-family: var(--atelier-font-display); font-size: 1.25rem; color: var(--atelier-stone-700); letter-spacing: -0.005em;"
+        >
+          — Sibylle
+        </p>
+        <a
+          href="mailto:contact@myatelier.style"
+          class="text-[11px] uppercase ml-auto transition-colors hover:text-stone-900"
+          style="letter-spacing: 0.28em; color: var(--atelier-stone-500); font-weight: 500;"
+        >
+          Letters →
+        </a>
+      </div>
     </section>
 
     {/* ── 6. Closing — invitation to the studio ────────────────────── */}
