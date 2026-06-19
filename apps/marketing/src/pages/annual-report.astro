@@ -1,0 +1,263 @@
+---
+// apps/marketing/src/pages/annual-report.astro
+//
+// Standalone page for the Annual Report sample artefact. Sister page
+// to /manifesto. Same purpose: gives the sample its own URL for SEO
+// and sharing, and lets the artefact stand alone.
+//
+// Page structure:
+//   1. Hero — eyebrow + headline naming the artefact
+//   2. What it is — editorial paragraphs explaining the practice of
+//      writing your wardrobe down once a year and reading it back
+//   3. The artefact — the existing InvestmentLens vellum report
+//   4. What it covers — three short sections on the kinds of figures
+//   5. When you receive it — annual on your studio anniversary
+//   6. Closing CTA to /pricing
+import Base from '../layouts/Base.astro';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+import { InvestmentLens } from '../components/landing/InvestmentLens.jsx';
+import { BrassRule } from '@atelier/ui';
+import { ChevronRight } from 'lucide-react';
+---
+
+<Base title="The Annual Report — Atelier" description="A private year-end reading of your wardrobe — the figures, the patterns, the pieces that earned their keep. Composed once a year by the Atelier studio.">
+  <Nav />
+  <main>
+    {/* ── 1. Hero ───────────────────────────────────────────────────── */}
+    <section
+      class="relative text-center"
+      style="padding-top: clamp(7rem, 12vw, 9rem); padding-bottom: clamp(2rem, 4vw, 3rem); padding-inline: var(--atelier-page-padding);"
+    >
+      <div
+        aria-hidden="true"
+        class="absolute pointer-events-none"
+        style="top: 8%; left: 50%; transform: translateX(-50%); width: 60%; height: 50%; background: radial-gradient(ellipse at center, rgba(212, 179, 120, 0.07) 0%, transparent 65%);"
+      />
+
+      <div class="relative mx-auto" style="max-width: var(--atelier-container-max);">
+        <div class="flex items-center justify-center gap-4 mb-6">
+          <BrassRule client:load />
+          <p
+            class="text-[10px] uppercase font-medium"
+            style="letter-spacing: 0.32em; color: var(--atelier-brass-600);"
+          >
+            The Annual Report · MMXXVI
+          </p>
+          <BrassRule client:load />
+        </div>
+
+        <p
+          class="mx-auto italic mb-3"
+          style="font-family: var(--atelier-font-display); font-size: clamp(0.9375rem, 1.1vw, 1.0625rem); color: var(--atelier-stone-500);"
+        >
+          A private year-end reading of your closet.
+        </p>
+
+        <h1
+          class="mx-auto"
+          style="font-family: var(--atelier-font-display); font-size: clamp(2.5rem, 6vw, 5rem); line-height: 1.02; letter-spacing: -0.015em; color: var(--atelier-stone-900); max-width: 18ch; margin-bottom: clamp(1.5rem, 2.5vw, 2rem);"
+        >
+          A year in your closet, <em style="font-weight: 400;">in figures</em>.
+        </h1>
+
+        <p
+          class="mx-auto"
+          style="color: var(--atelier-stone-500); font-size: clamp(1.0625rem, 1.4vw, 1.1875rem); line-height: 1.6; max-width: 56ch;"
+        >
+          Once a year, on your studio anniversary, Atelier composes a private
+          report of what the figures say. What earned its keep. What did not.
+          What the year unlocked.
+        </p>
+      </div>
+    </section>
+
+    {/* ── 2. What it is ────────────────────────────────────────────── */}
+    <section
+      class="mx-auto"
+      style="max-width: 720px; padding-inline: var(--atelier-page-padding); padding-block: clamp(3rem, 6vw, 5rem);"
+    >
+      <div
+        class="space-y-6"
+        style="font-size: 1.0625rem; line-height: 1.75; color: var(--atelier-stone-700);"
+      >
+        <p>
+          Most wardrobes have no record. Pieces enter, get worn, get
+          forgotten, get given away — and the story of <em>why</em> we own
+          them goes with them. Atelier keeps the record. The Annual Report
+          is what we send back.
+        </p>
+        <p>
+          It is not a dashboard. The figures are there, but they sit inside
+          a piece of writing — about which garment carried the year, which
+          breaks of habit cost you, which corner of the closet earned its
+          shelf and which did not. A small annual <em>reckoning</em>, kept
+          quietly, designed to be read once.
+        </p>
+        <p>
+          The aim is not optimisation. The aim is <em>attention paid</em>.
+          The pieces that paid you back, the ones that asked too much, the
+          colour break you should let go. Read it once, then forget it
+          until next year.
+        </p>
+      </div>
+    </section>
+
+    {/* ── 3. The artefact (existing InvestmentLens section) ─────────── */}
+    <InvestmentLens client:visible />
+
+    {/* ── 4. What it covers ───────────────────────────────────────── */}
+    <section
+      class="mx-auto"
+      style="max-width: var(--atelier-container-max); padding-inline: var(--atelier-page-padding); padding-block: clamp(4rem, 7vw, 6rem);"
+    >
+      <div class="text-center mb-12">
+        <div class="flex items-center justify-center gap-3 mb-4">
+          <BrassRule client:load />
+          <p
+            class="text-[10px] uppercase font-semibold"
+            style="letter-spacing: 0.28em; color: var(--atelier-stone-500);"
+          >
+            What it covers
+          </p>
+          <BrassRule client:load />
+        </div>
+        <h2
+          class="mx-auto"
+          style="font-family: var(--atelier-font-display); font-size: clamp(1.75rem, 3vw, 2.5rem); line-height: 1.1; letter-spacing: -0.01em; color: var(--atelier-stone-900); max-width: 24ch;"
+        >
+          The figures, and the writing around them.
+        </h2>
+      </div>
+
+      <ul
+        class="mx-auto grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-12"
+        style="max-width: 1000px;"
+      >
+        <li class="text-center md:text-left">
+          <p
+            class="text-[10px] uppercase mb-3"
+            style="letter-spacing: 0.32em; color: var(--atelier-brass-600); font-weight: 600;"
+          >
+            N°. I
+          </p>
+          <h3
+            class="mb-3"
+            style="font-family: var(--atelier-font-display); font-size: 1.25rem; line-height: 1.2; color: var(--atelier-stone-900);"
+          >
+            What earned its keep.
+          </h3>
+          <p style="font-size: 0.9375rem; line-height: 1.65; color: var(--atelier-stone-600);">
+            The pieces with the lowest cost-per-wear. Your year's
+            highest-returning garments, written up by name, with
+            the count.
+          </p>
+        </li>
+
+        <li class="text-center md:text-left">
+          <p
+            class="text-[10px] uppercase mb-3"
+            style="letter-spacing: 0.32em; color: var(--atelier-brass-600); font-weight: 600;"
+          >
+            N°. II
+          </p>
+          <h3
+            class="mb-3"
+            style="font-family: var(--atelier-font-display); font-size: 1.25rem; line-height: 1.2; color: var(--atelier-stone-900);"
+          >
+            What sat unworn.
+          </h3>
+          <p style="font-size: 0.9375rem; line-height: 1.65; color: var(--atelier-stone-600);">
+            The pieces the studio flagged and the ones you chose to keep
+            anyway, with the reasons noted. The quiet half of the closet,
+            reckoned with.
+          </p>
+        </li>
+
+        <li class="text-center md:text-left">
+          <p
+            class="text-[10px] uppercase mb-3"
+            style="letter-spacing: 0.32em; color: var(--atelier-brass-600); font-weight: 600;"
+          >
+            N°. III
+          </p>
+          <h3
+            class="mb-3"
+            style="font-family: var(--atelier-font-display); font-size: 1.25rem; line-height: 1.2; color: var(--atelier-stone-900);"
+          >
+            What the year unlocked.
+          </h3>
+          <p style="font-size: 0.9375rem; line-height: 1.65; color: var(--atelier-stone-600);">
+            Outfits composed, looks saved, wears unlocked per piece. The
+            compounding return of attention paid, expressed as a number
+            you can carry forward.
+          </p>
+        </li>
+      </ul>
+    </section>
+
+    {/* ── 5. When you receive it ──────────────────────────────────── */}
+    <section
+      class="mx-auto text-center"
+      style="max-width: 640px; padding-inline: var(--atelier-page-padding); padding-bottom: clamp(4rem, 7vw, 6rem);"
+    >
+      <div class="flex items-center justify-center gap-3 mb-5">
+        <BrassRule client:load />
+        <p
+          class="text-[10px] uppercase font-medium"
+          style="letter-spacing: 0.32em; color: var(--atelier-brass-600);"
+        >
+          Cadence
+        </p>
+        <BrassRule client:load />
+      </div>
+      <p
+        class="italic mx-auto"
+        style="font-family: var(--atelier-font-display); font-size: clamp(1.125rem, 1.6vw, 1.375rem); line-height: 1.6; color: var(--atelier-stone-700); max-width: 44ch;"
+      >
+        Once a year, on the anniversary of the day you joined the studio.
+        Always unannounced. Read it once, kept privately, returned to
+        whenever you wish.
+      </p>
+    </section>
+
+    {/* ── 6. Closing CTA ──────────────────────────────────────────── */}
+    <section
+      class="mx-auto text-center"
+      style="max-width: 720px; padding-inline: var(--atelier-page-padding); padding-bottom: clamp(5rem, 8vw, 7rem);"
+    >
+      <div class="flex items-center justify-center gap-3 mb-6">
+        <BrassRule client:load />
+        <p
+          class="text-[10px] uppercase font-medium"
+          style="letter-spacing: 0.32em; color: var(--atelier-brass-600);"
+        >
+          Begin a record of your own
+        </p>
+        <BrassRule client:load />
+      </div>
+      <h2
+        class="mx-auto mb-6"
+        style="font-family: var(--atelier-font-display); font-size: clamp(1.875rem, 3.5vw, 2.75rem); line-height: 1.1; letter-spacing: -0.01em; color: var(--atelier-stone-900); max-width: 24ch;"
+      >
+        The first year is the longest read.
+      </h2>
+      <p
+        class="mx-auto mb-8"
+        style="font-size: 1rem; line-height: 1.65; color: var(--atelier-stone-500); max-width: 50ch;"
+      >
+        Join now, log a year of wears, receive your first report on
+        the anniversary.
+      </p>
+      <a
+        href="/pricing"
+        class="inline-flex items-center gap-2 px-8 py-4 rounded-full text-base font-semibold transition-all hover:opacity-90 active:scale-[0.98]"
+        style="background: var(--atelier-stone-900); color: #ffffff; letter-spacing: 0.04em; box-shadow: 0 12px 32px -10px rgba(28, 25, 23, 0.3);"
+      >
+        Find the keys
+        <ChevronRight size={16} strokeWidth={1.75} client:load />
+      </a>
+    </section>
+  </main>
+  <Footer />
+</Base>

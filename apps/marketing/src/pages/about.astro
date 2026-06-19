@@ -20,6 +20,7 @@
 import Base from '../layouts/Base.astro';
 import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
+import ManifestoArtefact from '../components/ManifestoArtefact.astro';
 import { BrassRule } from '@atelier/ui';
 import { ChevronRight } from 'lucide-react';
 ---
@@ -257,89 +258,9 @@ import { ChevronRight } from 'lucide-react';
         </p>
       </div>
 
-      {/* The vellum certificate — cream-on-cream card with brass border and
-          corner ornaments. Italic display serif throughout for the manuscript
-          quality. */}
-      <article
-        class="relative mx-auto"
-        style="max-width: 720px; background: #ffffff; border: 1px solid var(--atelier-stone-200); border-radius: 4px; padding: clamp(2.5rem, 5vw, 4rem) clamp(2rem, 4vw, 3.5rem); box-shadow: 0 50px 120px -30px rgba(28, 25, 23, 0.12), 0 18px 40px -16px rgba(28, 25, 23, 0.08);"
-      >
-        {/* Brass border-rule frame inside the card */}
-        <div
-          aria-hidden="true"
-          style="position: absolute; inset: 18px; border: 1px solid rgba(212, 179, 120, 0.35); pointer-events: none; border-radius: 2px;"
-        />
-
-        {/* Corner ornaments — small brass squares at the four inner corners */}
-        <span aria-hidden="true" class="manifesto-corner" style="top: 14px; left: 14px;" />
-        <span aria-hidden="true" class="manifesto-corner" style="top: 14px; right: 14px;" />
-        <span aria-hidden="true" class="manifesto-corner" style="bottom: 14px; left: 14px;" />
-        <span aria-hidden="true" class="manifesto-corner" style="bottom: 14px; right: 14px;" />
-
-        <div class="relative">
-          {/* Eyebrow header */}
-          <div class="text-center mb-8">
-            <p
-              class="text-[10px] uppercase mb-2"
-              style="letter-spacing: 0.4em; color: var(--atelier-brass-600); font-weight: 600;"
-            >
-              Style Manifesto
-            </p>
-            <p
-              style="font-family: var(--atelier-font-display); font-style: italic; font-size: 0.875rem; color: var(--atelier-stone-500);"
-            >
-              composed for L — , Volume I, MMXXVI
-            </p>
-          </div>
-
-          {/* The three movements */}
-          <div
-            class="space-y-7"
-            style="font-family: var(--atelier-font-display); font-style: italic; font-size: clamp(1rem, 1.3vw, 1.125rem); line-height: 1.75; color: var(--atelier-stone-800);"
-          >
-            <p>
-              <span
-                style="font-family: var(--atelier-font-display); font-style: normal; font-weight: 600; font-size: 1.4em; line-height: 0.85; float: left; margin-right: 0.18em; margin-top: 0.05em; color: var(--atelier-brass-600);"
-              >Y</span>ou
-              dress in the language of <em style="font-weight: 500; color: var(--atelier-stone-900);">weight</em>. The pieces you reach for most often share
-              a quiet density — wool that holds its shape, silk that drapes with
-              consequence, cotton with a hand thick enough to fold and remember
-              the fold. Twelve of your last twenty wears were single-fabric
-              statements; you mistrust pieces that announce themselves.
-            </p>
-            <p>
-              The palette is a closed circuit. You move between
-              <em style="font-weight: 500; color: var(--atelier-stone-900);">charcoal, camel, oat,</em> and
-              <em style="font-weight: 500; color: var(--atelier-stone-900);">ink</em>, with three deliberate breaks — a champagne silk, an
-              ivory tweed, the silk twill scarf you've worn nine times this
-              year. Black appears rarely and always alone. The pieces that have
-              gone unworn — eight of them — are the ones that broke this
-              circuit on impulse.
-            </p>
-            <p>
-              What you are styling toward is
-              <em style="font-weight: 500; color: var(--atelier-stone-900);">unmistakable but unhurried.</em> You favour an outfit that
-              resolves in two glances rather than one: a coat that proves its
-              tailoring on the third inspection, a hem that costs nothing for
-              the eye to find. The Concierge will continue to suggest
-              accordingly.
-            </p>
-          </div>
-
-          {/* Sign-off — three centred brass dots */}
-          <div class="flex items-center justify-center gap-2 mt-10" aria-hidden="true">
-            <span style="display: inline-block; width: 3px; height: 3px; border-radius: 50%; background: var(--atelier-brass-300);" />
-            <span style="display: inline-block; width: 3px; height: 3px; border-radius: 50%; background: var(--atelier-brass-600);" />
-            <span style="display: inline-block; width: 3px; height: 3px; border-radius: 50%; background: var(--atelier-brass-300);" />
-          </div>
-          <p
-            class="text-center mt-4 text-[10px] uppercase"
-            style="letter-spacing: 0.32em; color: var(--atelier-stone-400); font-weight: 500;"
-          >
-            Atelier — The Long Barn, Surrey
-          </p>
-        </div>
-      </article>
+      {/* The vellum certificate — extracted into ManifestoArtefact.astro
+          so /about and /manifesto share one source. */}
+      <ManifestoArtefact />
 
       <p
         class="text-center mt-8"
@@ -553,15 +474,3 @@ import { ChevronRight } from 'lucide-react';
   <Footer />
 </Base>
 
-<style>
-  /* Brass corner ornaments on the manifesto certificate. Small filled
-     squares set just inside each corner of the brass border-rule — the
-     same flourish used on 18th-century engraved certificates. */
-  .manifesto-corner {
-    position: absolute;
-    width: 6px;
-    height: 6px;
-    background: var(--atelier-brass-600);
-    border-radius: 1px;
-  }
-</style>

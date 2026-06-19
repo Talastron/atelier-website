@@ -1,0 +1,315 @@
+---
+// apps/marketing/src/pages/manifesto.astro
+//
+// Standalone page for the Style Manifesto sample artefact. Gives the
+// piece its own URL — useful for SEO ("what is a style manifesto"),
+// for sharing (one direct link rather than scrolling to a section
+// on /about), and for letting the artefact stand alone as the moment
+// of brand voice it deserves to be.
+//
+// Page structure:
+//   1. Hero — eyebrow + headline naming the artefact
+//   2. What it is — three editorial paragraphs explaining what a
+//      Style Manifesto is, why Atelier composes one, and what makes
+//      it different from a personality test or a style quiz
+//   3. The artefact — the vellum certificate, taking centre stage
+//   4. How it's composed — brief explanation of what the studio
+//      reads (wears, palette, fabric weight, saved looks)
+//   5. When you receive it — cadence (each season)
+//   6. Closing CTA to /pricing
+import Base from '../layouts/Base.astro';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+import ManifestoArtefact from '../components/ManifestoArtefact.astro';
+import { BrassRule } from '@atelier/ui';
+import { ChevronRight } from 'lucide-react';
+---
+
+<Base title="The Style Manifesto — Atelier" description="A private three-paragraph reading of your aesthetic, composed by Atelier from your wardrobe data. Editorial criticism of your own closet, written for you alone.">
+  <Nav />
+  <main>
+    {/* ── 1. Hero ───────────────────────────────────────────────────── */}
+    <section
+      class="relative text-center"
+      style="padding-top: clamp(7rem, 12vw, 9rem); padding-bottom: clamp(2rem, 4vw, 3rem); padding-inline: var(--atelier-page-padding);"
+    >
+      <div
+        aria-hidden="true"
+        class="absolute pointer-events-none"
+        style="top: 8%; left: 50%; transform: translateX(-50%); width: 60%; height: 50%; background: radial-gradient(ellipse at center, rgba(212, 179, 120, 0.07) 0%, transparent 65%);"
+      />
+
+      <div class="relative mx-auto" style="max-width: var(--atelier-container-max);">
+        <div class="flex items-center justify-center gap-4 mb-6">
+          <BrassRule client:load />
+          <p
+            class="text-[10px] uppercase font-medium"
+            style="letter-spacing: 0.32em; color: var(--atelier-brass-600);"
+          >
+            The Style Manifesto · MMXXVI
+          </p>
+          <BrassRule client:load />
+        </div>
+
+        <p
+          class="mx-auto italic mb-3"
+          style="font-family: var(--atelier-font-display); font-size: clamp(0.9375rem, 1.1vw, 1.0625rem); color: var(--atelier-stone-500);"
+        >
+          A private brief, composed each season.
+        </p>
+
+        <h1
+          class="mx-auto"
+          style="font-family: var(--atelier-font-display); font-size: clamp(2.5rem, 6vw, 5rem); line-height: 1.02; letter-spacing: -0.015em; color: var(--atelier-stone-900); max-width: 18ch; margin-bottom: clamp(1.5rem, 2.5vw, 2rem);"
+        >
+          Editorial <em style="font-weight: 400;">criticism</em> of your own closet.
+        </h1>
+
+        <p
+          class="mx-auto"
+          style="color: var(--atelier-stone-500); font-size: clamp(1.0625rem, 1.4vw, 1.1875rem); line-height: 1.6; max-width: 56ch;"
+        >
+          A three-paragraph reading of your aesthetic, written by Atelier
+          from the wardrobe you've built. Not a personality test. Not a
+          style quiz. A piece of writing about you, for you alone.
+        </p>
+      </div>
+    </section>
+
+    {/* ── 2. What it is ────────────────────────────────────────────── */}
+    <section
+      class="mx-auto"
+      style="max-width: 720px; padding-inline: var(--atelier-page-padding); padding-block: clamp(3rem, 6vw, 5rem);"
+    >
+      <div
+        class="space-y-6"
+        style="font-size: 1.0625rem; line-height: 1.75; color: var(--atelier-stone-700);"
+      >
+        <p>
+          A Style Manifesto is the studio's reading of you, written as
+          editorial. The Concierge knows every garment you own, every wear
+          you've logged, every look you've saved and discarded. From that,
+          it composes three short paragraphs — one on the language of your
+          choices, one on the palette you actually live in, one on what
+          you are styling toward.
+        </p>
+        <p>
+          It is the opposite of a personality test. There are no archetypes,
+          no boxes, no <em>"you're a 60% Classic, 40% Romantic"</em>. The
+          Manifesto names what is true of <em>your</em> closet — the wool
+          coat you reach for twice a week, the silk dress you have not worn
+          since June, the colour break that did not work — and reads them
+          back to you as a small piece of literary criticism.
+        </p>
+        <p>
+          The point is not flattery. The point is <em>noticing</em>. A good
+          Manifesto tells you something about yourself you already knew but
+          had never put into words.
+        </p>
+      </div>
+    </section>
+
+    {/* ── 3. The artefact ──────────────────────────────────────────── */}
+    <section
+      class="mx-auto"
+      style="max-width: var(--atelier-container-max); padding-inline: var(--atelier-page-padding); padding-bottom: clamp(4rem, 7vw, 6rem);"
+    >
+      <div class="text-center mb-12">
+        <div class="flex items-center justify-center gap-3 mb-4">
+          <BrassRule client:load />
+          <p
+            class="text-[10px] uppercase font-medium"
+            style="letter-spacing: 0.32em; color: var(--atelier-brass-600);"
+          >
+            By way of example
+          </p>
+          <BrassRule client:load />
+        </div>
+        <h2
+          class="mx-auto"
+          style="font-family: var(--atelier-font-display); font-size: clamp(1.75rem, 3vw, 2.5rem); line-height: 1.1; letter-spacing: -0.01em; color: var(--atelier-stone-900); max-width: 28ch;"
+        >
+          One we composed for a fictional member.
+        </h2>
+        <p
+          class="mx-auto mt-5"
+          style="font-size: 0.9375rem; color: var(--atelier-stone-500); max-width: 52ch; line-height: 1.65;"
+        >
+          The sample below was composed for a fictional member, Lena, who
+          reads colour as architecture. Yours would be different.
+        </p>
+      </div>
+
+      <ManifestoArtefact />
+    </section>
+
+    {/* ── 4. How it's composed ────────────────────────────────────── */}
+    <section
+      class="mx-auto"
+      style="max-width: var(--atelier-container-max); padding-inline: var(--atelier-page-padding); padding-bottom: clamp(4rem, 7vw, 6rem);"
+    >
+      <div class="text-center mb-12">
+        <div class="flex items-center justify-center gap-3 mb-4">
+          <BrassRule client:load />
+          <p
+            class="text-[10px] uppercase font-semibold"
+            style="letter-spacing: 0.28em; color: var(--atelier-stone-500);"
+          >
+            How it is composed
+          </p>
+          <BrassRule client:load />
+        </div>
+        <h2
+          class="mx-auto"
+          style="font-family: var(--atelier-font-display); font-size: clamp(1.75rem, 3vw, 2.5rem); line-height: 1.1; letter-spacing: -0.01em; color: var(--atelier-stone-900); max-width: 24ch;"
+        >
+          What the studio reads.
+        </h2>
+      </div>
+
+      <ul
+        class="mx-auto grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-12"
+        style="max-width: 880px;"
+      >
+        <li>
+          <p
+            class="text-[10px] uppercase mb-3"
+            style="letter-spacing: 0.32em; color: var(--atelier-brass-600); font-weight: 600;"
+          >
+            N°. I
+          </p>
+          <h3
+            class="mb-3"
+            style="font-family: var(--atelier-font-display); font-size: 1.25rem; line-height: 1.2; color: var(--atelier-stone-900);"
+          >
+            Your wears, your reaches.
+          </h3>
+          <p style="font-size: 0.9375rem; line-height: 1.65; color: var(--atelier-stone-600);">
+            Which pieces you log most, which sit unworn, which you reach for
+            on which kinds of day. The frequency map of your closet.
+          </p>
+        </li>
+
+        <li>
+          <p
+            class="text-[10px] uppercase mb-3"
+            style="letter-spacing: 0.32em; color: var(--atelier-brass-600); font-weight: 600;"
+          >
+            N°. II
+          </p>
+          <h3
+            class="mb-3"
+            style="font-family: var(--atelier-font-display); font-size: 1.25rem; line-height: 1.2; color: var(--atelier-stone-900);"
+          >
+            Palette and material.
+          </h3>
+          <p style="font-size: 0.9375rem; line-height: 1.65; color: var(--atelier-stone-600);">
+            The colours you live in, the fabrics you favour, the textures
+            that recur. Where the patterns are; where the breaks are.
+          </p>
+        </li>
+
+        <li>
+          <p
+            class="text-[10px] uppercase mb-3"
+            style="letter-spacing: 0.32em; color: var(--atelier-brass-600); font-weight: 600;"
+          >
+            N°. III
+          </p>
+          <h3
+            class="mb-3"
+            style="font-family: var(--atelier-font-display); font-size: 1.25rem; line-height: 1.2; color: var(--atelier-stone-900);"
+          >
+            Composed outfits and saved looks.
+          </h3>
+          <p style="font-size: 0.9375rem; line-height: 1.65; color: var(--atelier-stone-600);">
+            What you've put together. What you've kept. What you've changed
+            your mind about. The shape of your taste in motion.
+          </p>
+        </li>
+
+        <li>
+          <p
+            class="text-[10px] uppercase mb-3"
+            style="letter-spacing: 0.32em; color: var(--atelier-brass-600); font-weight: 600;"
+          >
+            N°. IV
+          </p>
+          <h3
+            class="mb-3"
+            style="font-family: var(--atelier-font-display); font-size: 1.25rem; line-height: 1.2; color: var(--atelier-stone-900);"
+          >
+            Your own notes.
+          </h3>
+          <p style="font-size: 0.9375rem; line-height: 1.65; color: var(--atelier-stone-600);">
+            Annotations you've left on pieces, reasons you've kept the
+            ones you don't wear. The studio reads what you have told it.
+          </p>
+        </li>
+      </ul>
+    </section>
+
+    {/* ── 5. When you receive it ──────────────────────────────────── */}
+    <section
+      class="mx-auto text-center"
+      style="max-width: 640px; padding-inline: var(--atelier-page-padding); padding-bottom: clamp(4rem, 7vw, 6rem);"
+    >
+      <div class="flex items-center justify-center gap-3 mb-5">
+        <BrassRule client:load />
+        <p
+          class="text-[10px] uppercase font-medium"
+          style="letter-spacing: 0.32em; color: var(--atelier-brass-600);"
+        >
+          Cadence
+        </p>
+        <BrassRule client:load />
+      </div>
+      <p
+        class="italic mx-auto"
+        style="font-family: var(--atelier-font-display); font-size: clamp(1.125rem, 1.6vw, 1.375rem); line-height: 1.6; color: var(--atelier-stone-700); max-width: 44ch;"
+      >
+        A first reading is composed when you have logged thirty wears.
+        A refreshed brief arrives each season after that — quarterly,
+        unannounced, kept privately.
+      </p>
+    </section>
+
+    {/* ── 6. Closing CTA ──────────────────────────────────────────── */}
+    <section
+      class="mx-auto text-center"
+      style="max-width: 720px; padding-inline: var(--atelier-page-padding); padding-bottom: clamp(5rem, 8vw, 7rem);"
+    >
+      <div class="flex items-center justify-center gap-3 mb-6">
+        <BrassRule client:load />
+        <p
+          class="text-[10px] uppercase font-medium"
+          style="letter-spacing: 0.32em; color: var(--atelier-brass-600);"
+        >
+          Compose your own
+        </p>
+        <BrassRule client:load />
+      </div>
+      <h2
+        class="mx-auto mb-6"
+        style="font-family: var(--atelier-font-display); font-size: clamp(1.875rem, 3.5vw, 2.75rem); line-height: 1.1; letter-spacing: -0.01em; color: var(--atelier-stone-900); max-width: 24ch;"
+      >
+        Read your own closet, back to yourself.
+      </h2>
+      <p
+        class="mx-auto mb-8"
+        style="font-size: 1rem; line-height: 1.65; color: var(--atelier-stone-500); max-width: 50ch;"
+      >
+        Begin with a fourteen-day trial. Log thirty wears, receive your first brief.
+      </p>
+      <a
+        href="/pricing"
+        class="inline-flex items-center gap-2 px-8 py-4 rounded-full text-base font-semibold transition-all hover:opacity-90 active:scale-[0.98]"
+        style="background: var(--atelier-stone-900); color: #ffffff; letter-spacing: 0.04em; box-shadow: 0 12px 32px -10px rgba(28, 25, 23, 0.3);"
+      >
+        Find the keys
+        <ChevronRight size={16} strokeWidth={1.75} client:load />
+      </a>
+    </section>
+  </main>
+  <Footer />
+</Base>
