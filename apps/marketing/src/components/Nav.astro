@@ -1,7 +1,28 @@
 ---
 // apps/marketing/src/components/Nav.astro
+//
+// Site navigation, two states:
+//   - Desktop (md+): horizontal bar with logo + 3 nav links + sign in + brass CTA
+//   - Mobile (<md): logo + brass CTA + hamburger trigger. Tapping the trigger
+//                   opens a full-screen overlay menu with editorial typography.
+//
+// The mobile overlay is a fixed-position panel that fades in over the page.
+// Contents are stacked vertically with generous rhythm — large display-serif
+// nav links, an Open Studio CTA at the bottom, and a quiet colophon line.
+// Closes via the X button, ESC key, or the secondary "Close" link. Body
+// scroll is locked while the menu is open so the page doesn't drift behind it.
+//
+// All interactivity is vanilla JS in the <script> tag at the bottom — no
+// React hydration needed for a simple open/close toggle.
 import { AtelierMark } from '@atelier/ui';
-import { EDIT_URL } from '../config.ts';
+import { EDIT_URL, SITE } from '../config.ts';
+import { Menu, X } from 'lucide-react';
+
+const NAV_LINKS = [
+  { label: 'About', href: '/about' },
+  { label: 'Journal', href: '/journal' },
+  { label: 'Pricing', href: '/pricing' },
+];
 ---
 
 <nav class="fixed top-0 left-0 right-0 z-50 bg-cream/90 backdrop-blur-md border-b border-stone-200/60">
@@ -9,27 +30,249 @@ import { EDIT_URL } from '../config.ts';
     class="mx-auto h-20 flex items-center justify-between gap-6"
     style="max-width: var(--atelier-container-max); padding-inline: var(--atelier-page-padding);"
   >
-    <!-- Left: logo -->
+    {/* Logo */}
     <a href="/" class="flex items-center gap-3 shrink-0">
       <AtelierMark size={32} client:load />
       <span class="font-display text-2xl tracking-tight">Atelier.</span>
     </a>
 
-    <!-- Center: primary nav links (desktop only) -->
+    {/* Desktop nav links (md+) */}
     <div class="hidden md:flex items-center gap-8 text-sm font-medium text-stone-600">
-      <a href="/about" class="hover:text-stone-900 transition-colors">About</a>
-      <a href="/journal" class="hover:text-stone-900 transition-colors">Journal</a>
-      <a href="/pricing" class="hover:text-stone-900 transition-colors">Pricing</a>
+      {NAV_LINKS.map((link) => (
+        <a href={link.href} class="hover:text-stone-900 transition-colors">{link.label}</a>
+      ))}
     </div>
 
-    <!-- Right: account actions -->
-    <div class="flex items-center gap-6 shrink-0">
-      <a href={EDIT_URL} class="hidden md:block text-sm font-medium text-stone-500 hover:text-stone-900 transition-colors">
+    {/* Right cluster */}
+    <div class="flex items-center gap-4 shrink-0">
+      {/* Sign In (desktop only) */}
+      <a
+        href={EDIT_URL}
+        class="hidden md:block text-sm font-medium text-stone-500 hover:text-stone-900 transition-colors"
+      >
         Sign In
       </a>
-      <a href={EDIT_URL} class="bg-stone-900 text-white px-6 py-2.5 rounded-full text-sm font-medium hover:bg-stone-700 transition-all shadow-lg active:scale-95">
+
+      {/* Open Studio CTA (desktop only — hidden on mobile to give the hamburger
+          full prominence and keep the bar uncluttered) */}
+      <a
+        href={EDIT_URL}
+        class="hidden md:inline-flex bg-stone-900 text-white px-6 py-2.5 rounded-full text-sm font-medium hover:bg-stone-700 transition-all shadow-lg active:scale-95"
+      >
         Open Studio
       </a>
+
+      {/* Mobile menu trigger (<md only) */}
+      <button
+        id="mobile-menu-trigger"
+        type="button"
+        class="md:hidden flex items-center gap-2 px-3 py-2 -mr-2"
+        aria-label="Open menu"
+        aria-controls="mobile-menu"
+        aria-expanded="false"
+      >
+        <span
+          class="text-[10px] uppercase font-medium text-stone-700"
+          style="letter-spacing: 0.28em;"
+        >
+          Menu
+        </span>
+        <Menu size={18} strokeWidth={1.5} client:load />
+      </button>
     </div>
   </div>
 </nav>
+
+{/* ──────────────────────────────────────────────────────────────────────
+    MOBILE MENU OVERLAY
+    Full-screen, cream background, editorial typography. Visible only on
+    mobile (md:hidden). Fades in via [data-open="true"] attribute set by
+    the script below.
+    ────────────────────────────────────────────────────────────────── */}
+<div
+  id="mobile-menu"
+  class="md:hidden fixed inset-0 z-[60] flex flex-col"
+  style="background: var(--atelier-cream);"
+  data-open="false"
+  aria-hidden="true"
+>
+  {/* Header — logo + close button, mirroring the main nav bar so the
+      transition is visually continuous */}
+  <header
+    class="flex items-center justify-between h-20 border-b border-stone-200/60"
+    style="padding-inline: var(--atelier-page-padding);"
+  >
+    <a href="/" class="flex items-center gap-3 shrink-0" data-mobile-link>
+      <AtelierMark size={32} client:load />
+      <span class="font-display text-2xl tracking-tight">Atelier.</span>
+    </a>
+    <button
+      id="mobile-menu-close"
+      type="button"
+      class="flex items-center gap-2 px-3 py-2 -mr-2"
+      aria-label="Close menu"
+    >
+      <span
+        class="text-[10px] uppercase font-medium text-stone-700"
+        style="letter-spacing: 0.28em;"
+      >
+        Close
+      </span>
+      <X size={18} strokeWidth={1.5} client:load />
+    </button>
+  </header>
+
+  {/* Main nav links — large, display serif, vertically centered */}
+  <div
+    class="flex-1 flex flex-col justify-center"
+    style="padding-inline: var(--atelier-page-padding); padding-block: 2rem;"
+  >
+    <ul class="flex flex-col gap-7">
+      {NAV_LINKS.map((link, i) => (
+        <li>
+          <a
+            href={link.href}
+            data-mobile-link
+            class="mobile-nav-link inline-flex items-center gap-4 group"
+            style={`animation-delay: ${100 + i * 70}ms;`}
+          >
+            <span
+              aria-hidden="true"
+              class="brass-dot"
+              style="display: inline-block; width: 5px; height: 5px; border-radius: 50%; background: var(--atelier-brass-600); transition: transform 250ms ease;"
+            />
+            <span
+              class="tracking-tight"
+              style="font-family: var(--atelier-font-display); font-size: clamp(2.25rem, 9vw, 3rem); line-height: 1; color: var(--atelier-stone-900); letter-spacing: -0.01em;"
+            >
+              {link.label}
+            </span>
+          </a>
+        </li>
+      ))}
+    </ul>
+  </div>
+
+  {/* Footer — account actions + colophon. Sits at the bottom as a quiet
+      closing chord rather than a separate region */}
+  <footer
+    class="border-t border-stone-200/60"
+    style="padding-inline: var(--atelier-page-padding); padding-block: 1.75rem; display: flex; flex-direction: column; gap: 1.5rem;"
+  >
+    {/* Sign In + Open Studio — secondary then primary */}
+    <div class="flex flex-col gap-3">
+      <a
+        href={EDIT_URL}
+        data-mobile-link
+        class="text-center text-sm font-medium text-stone-600 py-3"
+      >
+        Sign in to your studio
+      </a>
+      <a
+        href={EDIT_URL}
+        data-mobile-link
+        class="inline-flex items-center justify-center gap-2 bg-stone-900 text-white px-8 py-4 rounded-full text-sm font-semibold transition-all hover:opacity-90 active:scale-[0.98]"
+        style="letter-spacing: 0.04em; box-shadow: 0 12px 32px -10px rgba(28, 25, 23, 0.3);"
+      >
+        Open Studio
+      </a>
+    </div>
+
+    {/* Closing colophon — brass dots + address. Same vocabulary as
+        the footer signature so the menu feels of-a-piece with the page */}
+    <div class="flex flex-col items-center gap-2.5 pt-2">
+      <div class="flex items-center gap-2" aria-hidden="true">
+        <span style="display: inline-block; width: 3px; height: 3px; border-radius: 50%; background: var(--atelier-brass-300);" />
+        <span style="display: inline-block; width: 3px; height: 3px; border-radius: 50%; background: var(--atelier-brass-600);" />
+        <span style="display: inline-block; width: 3px; height: 3px; border-radius: 50%; background: var(--atelier-brass-300);" />
+      </div>
+      <p
+        class="text-center text-[10px] uppercase font-medium"
+        style="letter-spacing: 0.32em; color: var(--atelier-stone-500);"
+      >
+        The Long Barn &middot; Cobham &middot; Surrey
+      </p>
+    </div>
+  </footer>
+</div>
+
+<style>
+  /* Mobile menu overlay — fades in/out, locked invisible until [data-open=true] */
+  #mobile-menu {
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 300ms ease, visibility 0s 300ms;
+  }
+  #mobile-menu[data-open="true"] {
+    visibility: visible;
+    opacity: 1;
+    transition: opacity 300ms ease;
+  }
+
+  /* Nav links inside the overlay — each one tweens in from the right
+     with a cascading delay (set inline per-link via animation-delay) */
+  .mobile-nav-link {
+    opacity: 0;
+    transform: translateX(0.75rem);
+  }
+  #mobile-menu[data-open="true"] .mobile-nav-link {
+    animation: mobile-nav-link-in 450ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  }
+
+  /* Brass dot grows slightly on hover/focus — micro flourish */
+  .mobile-nav-link:hover .brass-dot,
+  .mobile-nav-link:focus-visible .brass-dot {
+    transform: scale(1.6);
+  }
+
+  @keyframes mobile-nav-link-in {
+    from { opacity: 0; transform: translateX(0.75rem); }
+    to   { opacity: 1; transform: translateX(0); }
+  }
+</style>
+
+<script>
+  /* Mobile menu open/close. Vanilla JS — no React needed for a toggle.
+     Handles: trigger click, close button click, ESC key, body scroll lock,
+     aria-expanded attr, and auto-close on link click (so navigating away
+     doesn't leave a stale overlay state if the browser caches the page). */
+  const menu = document.getElementById('mobile-menu');
+  const trigger = document.getElementById('mobile-menu-trigger');
+  const closeBtn = document.getElementById('mobile-menu-close');
+
+  function openMenu() {
+    if (!menu || !trigger) return;
+    menu.dataset.open = 'true';
+    menu.setAttribute('aria-hidden', 'false');
+    trigger.setAttribute('aria-expanded', 'true');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeMenu() {
+    if (!menu || !trigger) return;
+    menu.dataset.open = 'false';
+    menu.setAttribute('aria-hidden', 'true');
+    trigger.setAttribute('aria-expanded', 'false');
+    document.body.style.overflow = '';
+  }
+
+  trigger?.addEventListener('click', openMenu);
+  closeBtn?.addEventListener('click', closeMenu);
+
+  /* ESC closes the menu when open */
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && menu?.dataset.open === 'true') closeMenu();
+  });
+
+  /* Any link tap inside the menu closes it. Navigation usually unmounts the
+     page anyway, but if the destination is cached (bfcache) the overlay
+     would otherwise come back open on Back. */
+  document.querySelectorAll('[data-mobile-link]').forEach((el) => {
+    el.addEventListener('click', closeMenu);
+  });
+
+  /* Restore body scroll if the page is restored from bfcache mid-open */
+  window.addEventListener('pageshow', () => {
+    if (menu?.dataset.open !== 'true') document.body.style.overflow = '';
+  });
+</script>
