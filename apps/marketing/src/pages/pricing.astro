@@ -24,8 +24,14 @@ import { ChevronRight } from 'lucide-react';
 // Annual is set as the "favourite" / highlighted default in the LS dashboard.
 const LS_CHECKOUT_URL = 'https://myatelier.lemonsqueezy.com/checkout/buy/a9d33c73-c40d-41b7-bb39-6aef6b39b525';
 
+// Founding Member URL — separate Lemon Squeezy variant for the £79/year
+// launch tier capped at 500 members. Replace with actual variant URL once
+// created in the LS dashboard. The webhook will track active founding
+// subscriptions and lock the variant when the cap is reached.
+const LS_FOUNDING_URL = 'https://myatelier.lemonsqueezy.com/checkout/buy/FOUNDING_VARIANT_ID';
+
 // Variant IDs — appear in webhook payloads; reference only, not used in URLs.
-// 1809234 = Monthly, 1809222 = Annual
+// 1809234 = Monthly, 1809222 = Annual, Founding = TBC
 ---
 
 <Base title="The Keys to Atelier — Membership">
@@ -94,6 +100,124 @@ const LS_CHECKOUT_URL = 'https://myatelier.lemonsqueezy.com/checkout/buy/a9d33c7
       </div>
     </section>
 
+    {/* ── Founding Members — the launch tier ───────────────────────────
+        Limited to the first 500 members. £79/year, locked at that price
+        for life. Set as a vellum-card flourish so it reads as a printed
+        invitation rather than a discount banner — same vocabulary as
+        the Manifesto and Annual Report artefacts.
+
+        When the cap closes, this section can be hidden via a single
+        conditional or replaced with a quiet "Founding Members closed —
+        join us at the public price below" line. The webhook will track
+        subscriptions and surface a remaining count later. */}
+    <section
+      class="mx-auto"
+      style="max-width: 720px; padding-inline: var(--atelier-page-padding); padding-bottom: clamp(3rem, 5vw, 4rem);"
+    >
+      <article
+        class="relative"
+        style="background: #ffffff; border: 1px solid var(--atelier-stone-200); border-radius: 4px; padding: clamp(2rem, 4vw, 3rem) clamp(1.75rem, 3.5vw, 2.75rem); box-shadow: 0 50px 120px -30px rgba(28, 25, 23, 0.12), 0 18px 40px -16px rgba(28, 25, 23, 0.08);"
+      >
+        {/* Brass border-rule frame inside the card */}
+        <div
+          aria-hidden="true"
+          style="position: absolute; inset: 14px; border: 1px solid rgba(212, 179, 120, 0.35); pointer-events: none; border-radius: 2px;"
+        />
+
+        {/* Corner ornaments — same flourish as Manifesto + Annual Report */}
+        <span aria-hidden="true" class="founding-corner" style="top: 10px; left: 10px;" />
+        <span aria-hidden="true" class="founding-corner" style="top: 10px; right: 10px;" />
+        <span aria-hidden="true" class="founding-corner" style="bottom: 10px; left: 10px;" />
+        <span aria-hidden="true" class="founding-corner" style="bottom: 10px; right: 10px;" />
+
+        <div class="relative text-center">
+          {/* Eyebrow */}
+          <div class="flex items-center justify-center gap-3 mb-5">
+            <span
+              aria-hidden="true"
+              style="display: inline-block; width: 24px; height: 1.5px; background: var(--atelier-brass-300);"
+            />
+            <p
+              class="text-[10px] uppercase font-semibold"
+              style="letter-spacing: 0.4em; color: var(--atelier-brass-600);"
+            >
+              Founding Members
+            </p>
+            <span
+              aria-hidden="true"
+              style="display: inline-block; width: 24px; height: 1.5px; background: var(--atelier-brass-300);"
+            />
+          </div>
+
+          {/* Headline */}
+          <h2
+            class="mx-auto mb-4"
+            style="font-family: var(--atelier-font-display); font-size: clamp(1.625rem, 2.75vw, 2.25rem); line-height: 1.1; letter-spacing: -0.01em; color: var(--atelier-stone-900); max-width: 22ch;"
+          >
+            For the <em style="font-weight: 400;">first five hundred</em>.
+          </h2>
+
+          {/* Considered subhead */}
+          <p
+            class="mx-auto mb-7"
+            style="font-style: italic; font-family: var(--atelier-font-display); font-size: clamp(0.9375rem, 1.2vw, 1.0625rem); line-height: 1.65; color: var(--atelier-stone-600); max-width: 48ch;"
+          >
+            The studio opens with a one-time invitation. The first five hundred
+            members take the keys at a founding price, kept locked at that
+            price for as long as they remain.
+          </p>
+
+          {/* Price moment */}
+          <div class="flex flex-col items-center mb-7">
+            <div class="flex items-baseline gap-2.5 mb-2">
+              <span
+                style="font-family: var(--atelier-font-display); font-size: clamp(2.75rem, 5vw, 3.75rem); line-height: 1; color: var(--atelier-stone-900); letter-spacing: -0.015em;"
+              >
+                £79
+              </span>
+              <span style="font-size: 0.9375rem; color: var(--atelier-stone-500);">/ year, locked for life</span>
+            </div>
+            <p
+              class="text-[10px] uppercase"
+              style="letter-spacing: 0.32em; color: var(--atelier-stone-400); font-weight: 500;"
+            >
+              vs £108 public price · save £29 every year
+            </p>
+          </div>
+
+          {/* CTA */}
+          <a
+            href={LS_FOUNDING_URL}
+            class="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-full text-base font-semibold transition-all hover:opacity-90 active:scale-[0.98]"
+            style="background: var(--atelier-brass-300); color: var(--atelier-stone-900); letter-spacing: 0.04em; box-shadow: 0 12px 32px -10px rgba(212, 179, 120, 0.4);"
+          >
+            Claim a founding key
+            <ChevronRight size={16} strokeWidth={1.75} client:load />
+          </a>
+
+          {/* Scarcity note — manual today, dynamic once webhook reports
+              the live remaining count */}
+          <p
+            class="mt-6 text-[10px] uppercase"
+            style="letter-spacing: 0.32em; color: var(--atelier-brass-600); font-weight: 600;"
+          >
+            Limited to the first 500 · then withdrawn
+          </p>
+        </div>
+      </article>
+    </section>
+
+    {/* Quiet section divider so the Public pricing reads as the secondary
+        offering, not competing with the Founding card above */}
+    <div class="text-center mb-10">
+      <p
+        class="text-[10px] uppercase"
+        style="letter-spacing: 0.32em; color: var(--atelier-stone-400); font-weight: 500;"
+      >
+        Or join at the public price
+      </p>
+    </div>
+
     {/* ── Pricing cards ─────────────────────────────────────────────── */}
     <section
       class="mx-auto"
@@ -127,7 +251,7 @@ const LS_CHECKOUT_URL = 'https://myatelier.lemonsqueezy.com/checkout/buy/a9d33c7
             <span
               style="font-family: var(--atelier-font-display); font-size: 3rem; line-height: 1; color: var(--atelier-stone-900);"
             >
-              £9.99
+              £12
             </span>
             <span class="text-sm" style="color: var(--atelier-stone-500);">/ month</span>
           </div>
@@ -178,7 +302,7 @@ const LS_CHECKOUT_URL = 'https://myatelier.lemonsqueezy.com/checkout/buy/a9d33c7
             <span
               style="font-family: var(--atelier-font-display); font-size: 3rem; line-height: 1; color: #ffffff;"
             >
-              £95
+              £108
             </span>
             <span class="text-sm" style="color: rgba(255,255,255,0.55);">/ year</span>
           </div>
@@ -186,7 +310,7 @@ const LS_CHECKOUT_URL = 'https://myatelier.lemonsqueezy.com/checkout/buy/a9d33c7
             class="text-[11px] mb-8"
             style="color: var(--atelier-brass-300); letter-spacing: 0.06em;"
           >
-            That's £7.92/month — save ~20%.
+            That's £9/month — save 25%.
           </p>
 
           <a
@@ -234,7 +358,7 @@ const LS_CHECKOUT_URL = 'https://myatelier.lemonsqueezy.com/checkout/buy/a9d33c7
     </section>
 
     {/* ── By Comparison — comparative anchor ─────────────────────────
-        Quietly reframes £95/year against what comparable services
+        Quietly reframes £108/year against what comparable services
         cost. Premium products must justify their price, not just
         state it — Atelier is the cheapest considered-styling option
         on the page and visitors should know it. Set as an editorial
@@ -328,7 +452,7 @@ const LS_CHECKOUT_URL = 'https://myatelier.lemonsqueezy.com/checkout/buy/a9d33c7
               class="shrink-0 text-[11px] uppercase font-semibold"
               style="letter-spacing: 0.22em; color: var(--atelier-brass-600); font-variant-numeric: tabular-nums;"
             >
-              £95
+              £108
             </span>
           </li>
         </ul>
@@ -359,3 +483,15 @@ const LS_CHECKOUT_URL = 'https://myatelier.lemonsqueezy.com/checkout/buy/a9d33c7
   </main>
   <Footer />
 </Base>
+
+<style>
+  /* Brass corner ornaments on the Founding Member card — same vocabulary
+     as the Manifesto certificate on /about and /manifesto. */
+  .founding-corner {
+    position: absolute;
+    width: 5px;
+    height: 5px;
+    background: var(--atelier-brass-600);
+    border-radius: 1px;
+  }
+</style>
