@@ -221,7 +221,7 @@ function StudioFrame() {
   return (
     <div
       ref={containerRef}
-      className="mx-auto"
+      className="mx-auto grid grid-cols-1 lg:grid-cols-[minmax(0,188px)_1fr]"
       style={{
         marginTop: 'clamp(2.5rem, 4vw, 4rem)',
         width: 'min(100%, 980px)',
@@ -231,18 +231,51 @@ function StudioFrame() {
         overflow: 'hidden',
         boxShadow:
           '0 60px 140px -30px rgba(40, 28, 12, 0.22), 0 22px 60px -20px rgba(28, 25, 23, 0.14)',
-        display: 'grid',
-        gridTemplateColumns: 'minmax(0, 188px) 1fr',
         textAlign: 'left',
       }}
     >
-      {/* ── Sidebar — matches the actual studio shell ─────────────────── */}
+      {/* ── Mobile top bar (hidden on lg+) — matches App.jsx mobile header */}
+      <div
+        className="lg:hidden flex items-center justify-between"
+        style={{
+          padding: '0.875rem 1rem',
+          borderBottom: '1px solid var(--atelier-stone-200)',
+          background: 'var(--atelier-cream)',
+        }}
+      >
+        <div className="flex items-center gap-2">
+          <AtelierMark size={22} />
+          <span
+            style={{
+              fontFamily: 'var(--atelier-font-display)',
+              fontSize: 15,
+              color: 'var(--atelier-stone-900)',
+              letterSpacing: '-0.005em',
+            }}
+          >
+            Atelier.
+          </span>
+        </div>
+        <p
+          style={{
+            fontSize: 9,
+            letterSpacing: '0.28em',
+            color: 'var(--atelier-stone-500)',
+            textTransform: 'uppercase',
+            fontWeight: 600,
+          }}
+        >
+          Wardrobe
+        </p>
+      </div>
+
+      {/* ── Desktop sidebar — hidden on mobile ────────────────────────── */}
       <aside
+        className="hidden lg:flex"
         style={{
           background: 'var(--atelier-cream)',
           borderRight: '1px solid var(--atelier-stone-200)',
           padding: '1.25rem 0.875rem 1rem',
-          display: 'flex',
           flexDirection: 'column',
           gap: '0.125rem',
         }}
@@ -567,6 +600,93 @@ function StudioFrame() {
             {confidence}% confidence
           </p>
         </div>
+      </div>
+
+      {/* ── Mobile bottom nav (hidden on lg+) — matches App.jsx:3360 ───── */}
+      <div
+        className="lg:hidden grid grid-cols-5 items-center"
+        style={{
+          padding: '0.5rem 0.5rem 0.625rem',
+          borderTop: '1px solid var(--atelier-stone-200)',
+          background: 'rgba(247, 245, 242, 0.92)',
+          backdropFilter: 'blur(8px)',
+        }}
+      >
+        {[
+          { icon: LayoutGrid, label: 'Wardrobe', active: true },
+          { icon: Camera,     label: 'Studio' },
+          { icon: Sparkles,   label: '',        fab: true },
+          { icon: BookOpen,   label: 'Lookbook' },
+          { icon: Bookmark,   label: 'Inspire' },
+        ].map(({ icon: Icon, label, active, fab }, i) => {
+          if (fab) {
+            return (
+              <div key={i} className="flex justify-center">
+                <div
+                  style={{
+                    width: 46,
+                    height: 46,
+                    borderRadius: '50%',
+                    background: 'linear-gradient(135deg, var(--atelier-brass-300), var(--atelier-brass-600))',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    boxShadow: '0 6px 16px -4px rgba(168, 136, 76, 0.45), 0 2px 4px rgba(28, 25, 23, 0.08)',
+                    transform: 'translateY(-6px)',
+                  }}
+                >
+                  <Icon
+                    size={20}
+                    strokeWidth={1.5}
+                    style={{ color: 'var(--atelier-stone-900)' }}
+                  />
+                </div>
+              </div>
+            );
+          }
+          return (
+            <div
+              key={i}
+              className="flex flex-col items-center gap-1 relative"
+              style={{ padding: '0.25rem' }}
+            >
+              <Icon
+                size={18}
+                strokeWidth={active ? 2 : 1.5}
+                style={{
+                  color: active ? 'var(--atelier-stone-900)' : 'var(--atelier-stone-400)',
+                  transform: active ? 'scale(1.06)' : 'scale(1)',
+                  transition: 'all 200ms',
+                }}
+              />
+              <span
+                style={{
+                  fontSize: 9,
+                  letterSpacing: '0.04em',
+                  color: active ? 'var(--atelier-stone-900)' : 'var(--atelier-stone-400)',
+                  fontWeight: active ? 500 : 400,
+                }}
+              >
+                {label}
+              </span>
+              {active && (
+                <span
+                  aria-hidden="true"
+                  style={{
+                    position: 'absolute',
+                    bottom: -2,
+                    left: '50%',
+                    transform: 'translateX(-50%)',
+                    width: 3,
+                    height: 3,
+                    borderRadius: '50%',
+                    background: 'var(--atelier-stone-900)',
+                  }}
+                />
+              )}
+            </div>
+          );
+        })}
       </div>
 
       <style>{`

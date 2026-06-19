@@ -197,7 +197,7 @@ export function ConciergeDemo() {
   return (
     <div
       ref={containerRef}
-      className="relative mx-auto"
+      className="concierge-demo-panel relative mx-auto"
       style={{
         width: 'min(100%, 600px)',
         height: '560px',
@@ -213,6 +213,7 @@ export function ConciergeDemo() {
     >
       {/* Header */}
       <header
+        className="concierge-demo-header"
         style={{
           padding: '1.5rem 1.5rem 1.25rem',
           borderBottom: '1px solid rgba(168, 162, 158, 0.18)',
@@ -230,7 +231,7 @@ export function ConciergeDemo() {
               </span>
             </div>
             <h3
-              className="text-2xl"
+              className="concierge-demo-title text-2xl"
               style={{
                 fontFamily: 'var(--atelier-font-display)',
                 color: 'var(--atelier-stone-900)',
@@ -543,6 +544,15 @@ export function ConciergeDemo() {
         @keyframes dot-bounce {
           0%, 60%, 100% { transform: translateY(0); opacity: 0.4; }
           30% { transform: translateY(-3px); opacity: 1; }
+        }
+        /* Mobile breakpoint — tighter header, smaller title */
+        @media (max-width: 640px) {
+          .concierge-demo-header {
+            padding: 1rem 1.125rem 0.875rem !important;
+          }
+          .concierge-demo-title {
+            font-size: 1.25rem !important;
+          }
         }
       `}</style>
     </div>

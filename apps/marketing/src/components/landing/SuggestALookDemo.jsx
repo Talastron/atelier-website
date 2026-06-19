@@ -178,9 +178,12 @@ export function SuggestALookDemo() {
         border: '1px solid var(--atelier-stone-200)',
       }}
     >
-      {/* Background — the wardrobe screen behind the modal */}
+      {/* Background — the wardrobe screen behind the modal.
+          Desktop: 3-column shell (sidebar + content + Today rail).
+          Mobile: collapses to a simplified phone-style view with the
+          Today card centered, content grid hidden. */}
       <div
-        className="absolute inset-0 grid"
+        className="absolute inset-0 hidden md:grid"
         style={{
           gridTemplateColumns: '180px 1fr 240px',
           gap: '1rem',
@@ -280,6 +283,119 @@ export function SuggestALookDemo() {
               Suggest a look
             </button>
           </div>
+        </div>
+      </div>
+
+      {/* Mobile-only background — simplified phone-style view with the
+          Today card front-and-centre. The faux sidebar and content grid
+          collapse away because there's no room for them on small screens. */}
+      <div
+        className="absolute inset-0 md:hidden flex flex-col"
+        style={{
+          padding: '1rem',
+          opacity: modalVisible || modalClosing ? 0.4 : 1,
+          filter: modalVisible || modalClosing ? 'blur(2px)' : 'none',
+          transition: 'opacity 400ms ease, filter 400ms ease',
+        }}
+      >
+        {/* Mobile top bar — Atelier mark + section label */}
+        <div
+          className="flex items-center justify-between mb-3"
+          style={{ paddingBottom: '0.625rem', borderBottom: '1px solid var(--atelier-stone-200)' }}
+        >
+          <div className="flex items-center gap-2">
+            <div
+              style={{
+                width: 18,
+                height: 18,
+                borderRadius: 4,
+                background: 'var(--atelier-ink)',
+              }}
+            />
+            <span
+              style={{
+                fontFamily: 'var(--atelier-font-display)',
+                fontSize: 13,
+                color: 'var(--atelier-stone-900)',
+              }}
+            >
+              Atelier.
+            </span>
+          </div>
+          <p
+            style={{
+              fontSize: 8.5,
+              letterSpacing: '0.28em',
+              textTransform: 'uppercase',
+              color: 'var(--atelier-stone-500)',
+              fontWeight: 600,
+            }}
+          >
+            Wardrobe
+          </p>
+        </div>
+
+        {/* Mobile Today card — the action surface */}
+        <div
+          className="rounded-2xl relative overflow-hidden mb-3"
+          style={{
+            background: 'linear-gradient(135deg, var(--atelier-ink) 0%, #292524 100%)',
+            color: '#ffffff',
+            padding: '0.875rem 1rem',
+          }}
+        >
+          <p
+            className="text-[9px] uppercase font-bold mb-0.5"
+            style={{ letterSpacing: '0.24em', color: 'var(--atelier-stone-400)' }}
+          >
+            Today
+          </p>
+          <p
+            className="text-sm mb-2"
+            style={{ fontFamily: 'var(--atelier-font-display)', lineHeight: 1.3 }}
+          >
+            15–27°C · Partly cloudy
+          </p>
+          <button
+            type="button"
+            tabIndex={-1}
+            aria-hidden="true"
+            className="w-full text-[10px] uppercase px-3 py-2 rounded-full flex items-center justify-center gap-2 font-medium"
+            style={{
+              background: 'var(--atelier-brass-300)',
+              color: 'var(--atelier-stone-900)',
+              letterSpacing: '0.18em',
+              boxShadow: buttonGlowing
+                ? '0 0 0 4px rgba(212, 179, 120, 0.4), 0 0 24px rgba(212, 179, 120, 0.5)'
+                : 'none',
+              transform: buttonGlowing ? 'scale(1.03)' : 'scale(1)',
+              transition: 'all 400ms ease',
+            }}
+          >
+            <Wand2 size={11} strokeWidth={1.5} />
+            Suggest a look
+          </button>
+        </div>
+
+        {/* Mobile item glimpse — a faint 2-row strip below to hint at the wardrobe */}
+        <div
+          className="grid grid-cols-3 gap-2"
+          style={{ flexShrink: 0 }}
+        >
+          {FAUX_WARDROBE.slice(0, 3).map((src, i) => (
+            <img
+              key={i}
+              src={src}
+              alt=""
+              loading="lazy"
+              className="rounded-md"
+              style={{
+                aspectRatio: '3/4',
+                objectFit: 'cover',
+                width: '100%',
+              }}
+            />
+          ))}
         </div>
       </div>
 
