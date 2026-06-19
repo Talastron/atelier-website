@@ -11,6 +11,7 @@ import Philosophy from '../components/Philosophy.astro';
 import { Hero } from '../components/landing/Hero.jsx';
 import { ConciergeDemo } from '../components/landing/ConciergeDemo.jsx';
 import { SuggestALookDemo } from '../components/landing/SuggestALookDemo.jsx';
+import { InvestmentLens } from '../components/landing/InvestmentLens.jsx';
 import { Features } from '../components/Features.jsx';
 import { BrassRule } from '@atelier/ui';
 ---
@@ -120,6 +121,9 @@ import { BrassRule } from '@atelier/ui';
         <SuggestALookDemo client:visible />
       </div>
     </section>
+
+    {/* ── Section 4: The Investment Lens — stats spread ─────────────── */}
+    <InvestmentLens client:visible />
 
     {/* ── Existing Features + Philosophy preserved ──────────────────── */}
     <Features client:visible />
