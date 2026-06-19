@@ -8,6 +8,7 @@ const journal = defineCollection({
     date: z.coerce.date(),
     description: z.string(),
     kicker: z.string().optional(),
+    kind: z.enum(['note', 'essay']).default('note'),
     draft: z.boolean().default(false),
   }),
 });

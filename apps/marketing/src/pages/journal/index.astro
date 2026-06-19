@@ -9,7 +9,20 @@ const all = (await getCollection('journal', ({ data }) => !data.draft)).sort(
   (a, b) => b.data.date.getTime() - a.data.date.getTime()
 );
 
-const [hero, ...rest] = all;
+// Hero: the most recent essay (if any), otherwise the most recent post.
+// Editorial convention — the cover features the lead essay, not the foreword.
+const heroIdx = all.findIndex((p) => p.data.kind === 'essay');
+const hero = heroIdx >= 0 ? all[heroIdx] : all[0];
+const rest = all.filter((_, i) => i !== (heroIdx >= 0 ? heroIdx : 0));
+
+// Pre-compute per-kind numbering (oldest first within each kind),
+// so the contents can show "ESSAY N°.II" and "NOTE N°.V" without recounting at render.
+const essaysOldestFirst = [...all].filter((p) => p.data.kind === 'essay').reverse();
+const notesOldestFirst = [...all].filter((p) => p.data.kind !== 'essay').reverse();
+function kindNumber(post: typeof all[number]): number {
+  const seq = post.data.kind === 'essay' ? essaysOldestFirst : notesOldestFirst;
+  return seq.findIndex((p) => p.slug === post.slug) + 1;
+}
 
 function fmtLongDate(d: Date) {
   return d.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
@@ -19,14 +32,14 @@ function fmtShortDate(d: Date) {
 }
 ---
 
-<Base title="The Journal — Atelier" description="Notes on style, stewardship, and the considered wardrobe.">
+<Base title="The Journal — Atelier" description="Essays and notes on style, stewardship, and the considered wardrobe.">
   <Nav />
   <main>
 
     {/* ── Masthead ─────────────────────────────────────────────────────────── */}
     <section
       class="text-center"
-      style="padding-top: 9rem; padding-bottom: 3.5rem; padding-inline: var(--atelier-page-padding);"
+      style="padding-top: 9rem; padding-bottom: 4rem; padding-inline: var(--atelier-page-padding);"
     >
       <p
         class="text-[11px] mb-5"
@@ -46,20 +59,20 @@ function fmtShortDate(d: Date) {
       </div>
       <h1
         class="mt-6 text-5xl md:text-7xl mx-auto"
-        style="font-family: var(--atelier-font-display); line-height: var(--atelier-leading-display); color: var(--atelier-stone-900); max-width: 18ch;"
+        style="font-family: var(--atelier-font-display); line-height: var(--atelier-leading-display); color: var(--atelier-stone-900); max-width: 20ch;"
       >
-        <em style="font-weight: 400;">Notes</em> on the considered wardrobe.
+        <em style="font-weight: 400;">Essays</em> &amp; Notes <span style="display: inline-block;">on the considered wardrobe.</span>
       </h1>
     </section>
 
-    {/* ── Hero entry — the most recent piece, given its own room ──────────── */}
+    {/* ── Hero entry — the lead essay (or most recent piece) ───────────────── */}
     <section
       class="mx-auto"
-      style="max-width: var(--atelier-container-max); padding-inline: var(--atelier-page-padding); margin-bottom: 8rem;"
+      style="max-width: var(--atelier-container-max); padding-inline: var(--atelier-page-padding); margin-bottom: 12rem;"
     >
       <a href={`/journal/${hero.slug}`} class="block group">
         <div
-          class="grid md:grid-cols-12 gap-8 md:gap-12 items-start py-14 md:py-16"
+          class="grid md:grid-cols-12 gap-8 md:gap-14 items-start py-16 md:py-20"
           style="border-top: 1px solid var(--atelier-stone-200); border-bottom: 1px solid var(--atelier-stone-200);"
         >
           {/* Left meta column */}
@@ -68,7 +81,7 @@ function fmtShortDate(d: Date) {
               class="text-[10px]"
               style="letter-spacing: var(--atelier-tracking-eyebrow); color: var(--atelier-brass-600); font-weight: 500;"
             >
-              {hero.data.kicker ?? 'THE LATEST'}
+              {hero.data.kind === 'essay' ? 'THE LEAD ESSAY' : 'THE LATEST'}
             </p>
             <p
               class="figures-oldstyle"
@@ -76,6 +89,14 @@ function fmtShortDate(d: Date) {
             >
               {fmtLongDate(hero.data.date)}
             </p>
+            {hero.data.kicker && (
+              <p
+                class="mt-4 text-[10px]"
+                style="letter-spacing: var(--atelier-tracking-eyebrow); color: var(--atelier-stone-500); font-weight: 500;"
+              >
+                {hero.data.kicker}
+              </p>
+            )}
             <span style="display: inline-block; width: var(--atelier-brass-rule-width); height: var(--atelier-brass-rule-height); background: var(--atelier-brass-300); margin-top: 0.5rem;"></span>
           </div>
 
@@ -89,15 +110,15 @@ function fmtShortDate(d: Date) {
             </h2>
             <p
               class="text-lg md:text-xl"
-              style="color: var(--atelier-stone-600); line-height: var(--atelier-leading-snug); max-width: 50ch;"
+              style="color: var(--atelier-stone-600); line-height: var(--atelier-leading-snug); max-width: 52ch;"
             >
               {hero.data.description}
             </p>
             <span
-              class="inline-flex items-center gap-2 mt-10 text-xs"
+              class="inline-flex items-center gap-2 mt-12 text-xs"
               style="letter-spacing: var(--atelier-tracking-eyebrow); color: var(--atelier-stone-700); font-weight: 500;"
             >
-              READ THE ESSAY
+              {hero.data.kind === 'essay' ? 'READ THE ESSAY' : 'READ THE NOTE'}
               <span
                 class="transition-transform group-hover:translate-x-1"
                 style="color: var(--atelier-brass-600); display: inline-block;"
@@ -111,9 +132,9 @@ function fmtShortDate(d: Date) {
     {/* ── Table of Contents ───────────────────────────────────────────────── */}
     <section
       class="mx-auto"
-      style="max-width: var(--atelier-container-max); padding-inline: var(--atelier-page-padding); padding-bottom: 7rem;"
+      style="max-width: var(--atelier-container-max); padding-inline: var(--atelier-page-padding); padding-bottom: 10rem;"
     >
-      <div class="flex items-center justify-center gap-4 mb-20">
+      <div class="flex items-center justify-center gap-4 mb-24">
         <BrassRule client:load />
         <p
           class="text-[11px]"
@@ -125,54 +146,113 @@ function fmtShortDate(d: Date) {
       </div>
 
       <ol
-        class="grid md:grid-cols-2 gap-x-16 lg:gap-x-24 gap-y-20"
-        style="max-width: 1100px; margin: 0 auto; list-style: none; padding: 0;"
+        class="grid md:grid-cols-2 gap-x-24 lg:gap-x-32 gap-y-32"
+        style="max-width: 1120px; margin: 0 auto; list-style: none; padding: 0;"
       >
-        {rest.map((post, i) => {
-          // Number essays oldest-first, so the chronologically first essay is N°.I.
-          const total = rest.length;
-          const essayNumber = total - i;
-          // Even-indexed (i=0,2,4) align flush left; odd-indexed (1,3,5) drop down
-          // and align flush right — asymmetric chess-board rhythm.
-          const isOffset = i % 2 === 1;
-          return (
-            <li class={isOffset ? 'md:mt-16' : ''}>
-              <a href={`/journal/${post.slug}`} class="block group">
-                <div class="flex items-baseline gap-4 mb-5">
-                  <RomanNumeral n={essayNumber} client:load className="text-2xl md:text-3xl" />
-                  <span
-                    class="flex-1"
-                    style="height: 1px; background: var(--atelier-stone-300); transform: translateY(-0.35rem);"
-                  ></span>
-                  <span
-                    class="text-xs figures-oldstyle"
-                    style="font-family: var(--atelier-font-display); font-style: italic; color: var(--atelier-stone-500);"
+        {(() => {
+          // Track the running index of "note-style" cards (col-span-1) so the
+          // chess-board drape only applies to notes — essays break the rhythm
+          // and reset the counter.
+          let noteVisualIdx = 0;
+          return rest.map((post) => {
+            const isEssay = post.data.kind === 'essay';
+            const n = kindNumber(post);
+            if (isEssay) {
+              noteVisualIdx = 0; // reset drape after a full-row break
+              return (
+                <li class="md:col-span-2">
+                  <a href={`/journal/${post.slug}`} class="block group">
+                    <div class="flex items-baseline gap-5 mb-7">
+                      <p
+                        class="text-[11px]"
+                        style="letter-spacing: var(--atelier-tracking-eyebrow); color: var(--atelier-brass-600); font-weight: 500;"
+                      >
+                        ESSAY N°
+                      </p>
+                      <RomanNumeral n={n} client:load className="text-3xl md:text-4xl" />
+                      <span
+                        class="flex-1"
+                        style="height: 1px; background: var(--atelier-brass-300); transform: translateY(-0.4rem);"
+                      ></span>
+                      <span
+                        class="text-sm figures-oldstyle"
+                        style="font-family: var(--atelier-font-display); font-style: italic; color: var(--atelier-stone-500);"
+                      >
+                        {fmtShortDate(post.data.date)}
+                      </span>
+                    </div>
+                    {post.data.kicker && (
+                      <p
+                        class="text-[10px] mb-4"
+                        style="letter-spacing: var(--atelier-tracking-eyebrow); color: var(--atelier-stone-500); font-weight: 500;"
+                      >
+                        {post.data.kicker}
+                      </p>
+                    )}
+                    <h3
+                      class="text-3xl md:text-5xl tracking-tight mb-6 transition-colors group-hover:text-stone-600"
+                      style="font-family: var(--atelier-font-display); line-height: var(--atelier-leading-display); color: var(--atelier-stone-900); max-width: 22ch;"
+                    >
+                      {post.data.title}
+                    </h3>
+                    <p
+                      class="text-base md:text-lg"
+                      style="color: var(--atelier-stone-500); line-height: var(--atelier-leading-snug); max-width: 60ch;"
+                    >
+                      {post.data.description}
+                    </p>
+                  </a>
+                </li>
+              );
+            }
+            // Note card — half-width, asymmetric drape
+            const isOffset = noteVisualIdx % 2 === 1;
+            noteVisualIdx += 1;
+            return (
+              <li class={isOffset ? 'md:mt-28' : ''}>
+                <a href={`/journal/${post.slug}`} class="block group">
+                  <div class="flex items-baseline gap-4 mb-5">
+                    <p
+                      class="text-[10px]"
+                      style="letter-spacing: var(--atelier-tracking-eyebrow); color: var(--atelier-stone-500); font-weight: 500;"
+                    >
+                      NOTE N°
+                    </p>
+                    <RomanNumeral n={n} client:load className="text-2xl md:text-3xl" />
+                    <span
+                      class="flex-1"
+                      style="height: 1px; background: var(--atelier-stone-300); transform: translateY(-0.35rem);"
+                    ></span>
+                    <span
+                      class="text-xs figures-oldstyle"
+                      style="font-family: var(--atelier-font-display); font-style: italic; color: var(--atelier-stone-500);"
+                    >
+                      {fmtShortDate(post.data.date)}
+                    </span>
+                  </div>
+                  <p
+                    class="text-[10px] mb-3"
+                    style="letter-spacing: var(--atelier-tracking-eyebrow); color: var(--atelier-brass-600); font-weight: 500; min-height: 1em;"
                   >
-                    {fmtShortDate(post.data.date)}
-                  </span>
-                </div>
-                <p
-                  class="text-[10px] mb-3"
-                  style="letter-spacing: var(--atelier-tracking-eyebrow); color: var(--atelier-brass-600); font-weight: 500; min-height: 1em;"
-                >
-                  {post.data.kicker ?? ' '}
-                </p>
-                <h3
-                  class="text-2xl md:text-3xl tracking-tight mb-4 transition-colors group-hover:text-stone-600"
-                  style="font-family: var(--atelier-font-display); line-height: var(--atelier-leading-tight); color: var(--atelier-stone-900);"
-                >
-                  {post.data.title}
-                </h3>
-                <p
-                  class="text-base"
-                  style="color: var(--atelier-stone-500); line-height: var(--atelier-leading-snug); max-width: 42ch;"
-                >
-                  {post.data.description}
-                </p>
-              </a>
-            </li>
-          );
-        })}
+                    {post.data.kicker ?? ' '}
+                  </p>
+                  <h3
+                    class="text-2xl md:text-3xl tracking-tight mb-4 transition-colors group-hover:text-stone-600"
+                    style="font-family: var(--atelier-font-display); line-height: var(--atelier-leading-tight); color: var(--atelier-stone-900);"
+                  >
+                    {post.data.title}
+                  </h3>
+                  <p
+                    class="text-base"
+                    style="color: var(--atelier-stone-500); line-height: var(--atelier-leading-snug); max-width: 42ch;"
+                  >
+                    {post.data.description}
+                  </p>
+                </a>
+              </li>
+            );
+          });
+        })()}
       </ol>
     </section>
 

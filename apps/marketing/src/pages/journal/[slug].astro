@@ -9,28 +9,37 @@ export async function getStaticPaths() {
   const all = (await getCollection('journal', ({ data }) => !data.draft)).sort(
     (a, b) => b.data.date.getTime() - a.data.date.getTime()
   );
-  return all.map((post, idx) => ({
-    params: { slug: post.slug },
-    props: {
-      post,
-      // In date-desc order: newer = idx-1, older = idx+1.
-      // For reading flow we call the older one "previous" and the newer one "next".
-      newer: idx > 0 ? all[idx - 1] : null,
-      older: idx < all.length - 1 ? all[idx + 1] : null,
-      // Essay number is oldest-first, so essay N°.01 is the oldest piece.
-      essayNumber: all.length - idx,
-    },
-  }));
+
+  // Per-kind sequences, oldest first — so the inaugural piece in each kind is N°.I.
+  const essaysOld = [...all].filter((p) => p.data.kind === 'essay').reverse();
+  const notesOld = [...all].filter((p) => p.data.kind !== 'essay').reverse();
+
+  return all.map((post, idx) => {
+    const seq = post.data.kind === 'essay' ? essaysOld : notesOld;
+    const kindNumber = seq.findIndex((p) => p.slug === post.slug) + 1;
+    return {
+      params: { slug: post.slug },
+      props: {
+        post,
+        // In date-desc order: newer = idx-1, older = idx+1.
+        // For reading flow we call the older one "previous" and the newer one "next".
+        newer: idx > 0 ? all[idx - 1] : null,
+        older: idx < all.length - 1 ? all[idx + 1] : null,
+        kindNumber,
+      },
+    };
+  });
 }
 
-const { post, newer, older, essayNumber } = Astro.props;
+const { post, newer, older, kindNumber } = Astro.props;
 const { Content } = await post.render();
 
 function fmtLongDate(d: Date) {
   return d.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
 }
 
-const essayLabel = `THE JOURNAL · VOL I · ESSAY N°${String(essayNumber).padStart(2, '0')}`;
+const kindLabel = post.data.kind === 'essay' ? 'ESSAY' : 'NOTE';
+const mastheadLabel = `THE JOURNAL · VOL I · ${kindLabel} N°${String(kindNumber).padStart(2, '0')}`;
 ---
 
 <Base title={`${post.data.title} — The Journal — Atelier`} description={post.data.description}>
@@ -44,7 +53,7 @@ const essayLabel = `THE JOURNAL · VOL I · ESSAY N°${String(essayNumber).padSt
         class="text-[10px] figures-oldstyle"
         style="letter-spacing: var(--atelier-tracking-eyebrow); color: var(--atelier-brass-600); font-weight: 500;"
       >
-        {essayLabel}
+        {mastheadLabel}
       </p>
       <BrassRule client:load />
     </div>
@@ -102,7 +111,7 @@ const essayLabel = `THE JOURNAL · VOL I · ESSAY N°${String(essayNumber).padSt
               class="text-[10px] mb-3"
               style="letter-spacing: var(--atelier-tracking-eyebrow); color: var(--atelier-stone-500); font-weight: 500;"
             >
-              <span style="color: var(--atelier-brass-600);">←</span> PREVIOUS ESSAY
+              <span style="color: var(--atelier-brass-600);">←</span> PREVIOUS {older.data.kind === 'essay' ? 'ESSAY' : 'NOTE'}
             </p>
             <p
               class="text-xl md:text-2xl tracking-tight transition-colors group-hover:text-stone-600"
@@ -120,7 +129,7 @@ const essayLabel = `THE JOURNAL · VOL I · ESSAY N°${String(essayNumber).padSt
               class="text-[10px] mb-3"
               style="letter-spacing: var(--atelier-tracking-eyebrow); color: var(--atelier-stone-500); font-weight: 500;"
             >
-              NEXT ESSAY <span style="color: var(--atelier-brass-600);">→</span>
+              NEXT {newer.data.kind === 'essay' ? 'ESSAY' : 'NOTE'} <span style="color: var(--atelier-brass-600);">→</span>
             </p>
             <p
               class="text-xl md:text-2xl tracking-tight transition-colors group-hover:text-stone-600"
