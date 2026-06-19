@@ -229,8 +229,10 @@ function StudioFrame() {
         border: '1px solid var(--atelier-stone-200)',
         borderRadius: 20,
         overflow: 'hidden',
+        // Quiet luxury shadow — paper-like depth, not a SaaS hover-cast.
+        // 12px spread, 8% opacity; the brand reads as Loro Piana not Linear.
         boxShadow:
-          '0 60px 140px -30px rgba(40, 28, 12, 0.22), 0 22px 60px -20px rgba(28, 25, 23, 0.14)',
+          '0 12px 36px -10px rgba(28, 25, 23, 0.10), 0 2px 4px rgba(28, 25, 23, 0.04)',
         textAlign: 'left',
       }}
     >
@@ -351,7 +353,7 @@ function StudioFrame() {
               padding: '0.875rem 1rem',
               position: 'relative',
               overflow: 'hidden',
-              boxShadow: '0 10px 30px -10px rgba(28, 25, 23, 0.18)',
+              boxShadow: '0 4px 12px -3px rgba(28, 25, 23, 0.08)',
             }}
           >
             {/* Sparkles decoration top-right */}
@@ -421,18 +423,19 @@ function StudioFrame() {
             </button>
           </div>
 
-          {/* Outfit reveal card — appears when composing/revealing/complete */}
-          {(showingOutfit || composing) && (
-            <div
-              style={{
-                background: '#ffffff',
-                border: '1px solid var(--atelier-stone-200)',
-                borderRadius: 16,
-                padding: '0.875rem',
-                opacity: fading ? 0 : 1,
-                transition: 'opacity 500ms ease',
-              }}
-            >
+          {/* Outfit reveal card — ALWAYS rendered (placeholders when idle)
+              so the mobile hero doesn't jump in height. Content swaps based
+              on stage; container stays the same shape from frame one. */}
+          <div
+            style={{
+              background: '#ffffff',
+              border: '1px solid var(--atelier-stone-200)',
+              borderRadius: 16,
+              padding: '0.875rem',
+              opacity: fading ? 0 : 1,
+              transition: 'opacity 500ms ease',
+            }}
+          >
               <div className="flex items-center gap-2 mb-2.5">
                 <span
                   aria-hidden="true"
@@ -578,7 +581,6 @@ function StudioFrame() {
                 </p>
               </div>
             </div>
-          )}
         </div>
       </div>
 

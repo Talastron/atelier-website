@@ -203,7 +203,7 @@ export function ConciergeDemo() {
         height: '560px',
         background: 'var(--atelier-cream)',
         boxShadow:
-          '0 60px 140px -30px rgba(40, 28, 12, 0.22), 0 22px 60px -20px rgba(28, 25, 23, 0.14)',
+          '0 12px 36px -10px rgba(28, 25, 23, 0.10), 0 2px 4px rgba(28, 25, 23, 0.04)',
         borderRadius: '20px',
         overflow: 'hidden',
         display: 'flex',

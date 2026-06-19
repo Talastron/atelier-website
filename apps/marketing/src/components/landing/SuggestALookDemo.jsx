@@ -172,7 +172,7 @@ export function SuggestALookDemo() {
         height: '560px',
         background: 'var(--atelier-cream)',
         boxShadow:
-          '0 60px 140px -30px rgba(40, 28, 12, 0.22), 0 22px 60px -20px rgba(28, 25, 23, 0.14)',
+          '0 12px 36px -10px rgba(28, 25, 23, 0.10), 0 2px 4px rgba(28, 25, 23, 0.04)',
         borderRadius: '20px',
         overflow: 'hidden',
         border: '1px solid var(--atelier-stone-200)',
@@ -518,7 +518,7 @@ export function SuggestALookDemo() {
             width: 'min(94%, 680px)',
             background: 'linear-gradient(135deg, var(--atelier-ink) 0%, #292524 100%)',
             color: '#ffffff',
-            boxShadow: '0 30px 80px -10px rgba(0,0,0,0.5)',
+            boxShadow: '0 16px 40px -8px rgba(0, 0, 0, 0.32)',
             animation: modalClosing
               ? 'modal-slide-out 400ms ease forwards'
               : 'modal-slide-in 450ms cubic-bezier(0.22, 1, 0.36, 1) forwards',
