@@ -127,26 +127,16 @@ const NAV_LINKS = [
     class="flex-1 flex flex-col justify-center"
     style="padding-inline: var(--atelier-page-padding); padding-block: 2rem;"
   >
-    <ul class="flex flex-col gap-7">
+    <ul class="flex flex-col items-center gap-7">
       {NAV_LINKS.map((link, i) => (
         <li>
           <a
             href={link.href}
             data-mobile-link
-            class="mobile-nav-link inline-flex items-center gap-4 group"
-            style={`animation-delay: ${100 + i * 70}ms;`}
+            class="mobile-nav-link tracking-tight"
+            style={`animation-delay: ${100 + i * 70}ms; font-family: var(--atelier-font-display); font-size: clamp(2.25rem, 9vw, 3rem); line-height: 1; color: var(--atelier-stone-900); letter-spacing: -0.01em;`}
           >
-            <span
-              aria-hidden="true"
-              class="brass-dot"
-              style="display: inline-block; width: 5px; height: 5px; border-radius: 50%; background: var(--atelier-brass-600); transition: transform 250ms ease;"
-            />
-            <span
-              class="tracking-tight"
-              style="font-family: var(--atelier-font-display); font-size: clamp(2.25rem, 9vw, 3rem); line-height: 1; color: var(--atelier-stone-900); letter-spacing: -0.01em;"
-            >
-              {link.label}
-            </span>
+            {link.label}
           </a>
         </li>
       ))}
@@ -209,20 +199,36 @@ const NAV_LINKS = [
     transition: opacity 300ms ease;
   }
 
-  /* Nav links inside the overlay — each one tweens in from the right
-     with a cascading delay (set inline per-link via animation-delay) */
+  /* Nav links inside the overlay — clean display-serif text, no bullet
+     ornament. A brass hairline draws beneath each link on hover, from
+     centre outward (same micro-interaction as the Return-to-top link
+     in the footer — keeps the site's hover vocabulary consistent).
+     Links tween in from the right with cascading delays (set per-link
+     inline via animation-delay). */
   .mobile-nav-link {
+    position: relative;
+    display: inline-block;
+    padding-bottom: 0.4rem;
     opacity: 0;
     transform: translateX(0.75rem);
   }
   #mobile-menu[data-open="true"] .mobile-nav-link {
     animation: mobile-nav-link-in 450ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
   }
-
-  /* Brass dot grows slightly on hover/focus — micro flourish */
-  .mobile-nav-link:hover .brass-dot,
-  .mobile-nav-link:focus-visible .brass-dot {
-    transform: scale(1.6);
+  .mobile-nav-link::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    transform: translateX(-50%);
+    width: 0;
+    height: 1.5px;
+    background: var(--atelier-brass-600);
+    transition: width 320ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .mobile-nav-link:hover::after,
+  .mobile-nav-link:focus-visible::after {
+    width: 80%;
   }
 
   @keyframes mobile-nav-link-in {

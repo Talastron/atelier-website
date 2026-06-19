@@ -235,24 +235,12 @@ export function TravelCapsuleDemo() {
                 minHeight: 360,
               }}
             >
-              <div className="flex items-center gap-2.5 mb-5">
-                <span
-                  aria-hidden="true"
-                  style={{
-                    display: 'inline-block',
-                    width: 4,
-                    height: 4,
-                    borderRadius: '50%',
-                    background: 'var(--atelier-brass-600)',
-                  }}
-                />
-                <p
-                  className="text-[10px] uppercase font-semibold"
-                  style={{ letterSpacing: '0.28em', color: 'var(--atelier-stone-500)' }}
-                >
-                  Your trip
-                </p>
-              </div>
+              <p
+                className="text-[10px] uppercase font-semibold mb-5"
+                style={{ letterSpacing: '0.28em', color: 'var(--atelier-stone-500)' }}
+              >
+                Your trip
+              </p>
 
               {/* Big destination name — display serif, italic moment on city */}
               <h3
@@ -358,24 +346,12 @@ export function TravelCapsuleDemo() {
                 background: '#ffffff',
               }}
             >
-              <div className="flex items-center gap-2.5 mb-5">
-                <span
-                  aria-hidden="true"
-                  style={{
-                    display: 'inline-block',
-                    width: 4,
-                    height: 4,
-                    borderRadius: '50%',
-                    background: 'var(--atelier-brass-600)',
-                  }}
-                />
-                <p
-                  className="text-[10px] uppercase font-semibold"
-                  style={{ letterSpacing: '0.28em', color: 'var(--atelier-stone-500)' }}
-                >
-                  The capsule
-                </p>
-              </div>
+              <p
+                className="text-[10px] uppercase font-semibold mb-5"
+                style={{ letterSpacing: '0.28em', color: 'var(--atelier-stone-500)' }}
+              >
+                The capsule
+              </p>
 
               {/* 3x3 grid of items. Each item fades in with a cascading
                   delay during the 'in' phase so the capsule feels composed
