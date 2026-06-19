@@ -28,97 +28,47 @@ import { ChevronRight } from 'lucide-react';
     class="relative overflow-hidden rounded-[3rem]"
     style={`background: linear-gradient(160deg, var(--atelier-ink) 0%, #292524 100%); color: #ffffff; padding-block: clamp(4rem, 7vw, 6rem); padding-inline: clamp(2rem, 5vw, 4rem); box-shadow: 0 60px 140px -40px rgba(28, 25, 23, 0.45);`}
   >
-    {/* Decorative skeleton key — hand-drawn SVG that matches the footer
-        armoire's line-illustration vocabulary: variable stroke weights,
-        brass-coloured centre accent, antique two-tier bit. Anchored to
-        bottom-right at low opacity so it reinforces the "Keys to Atelier"
-        motif without competing with copy. */}
+    {/* Decorative AtelierMark hanger — the brand's actual mark, at low
+        opacity in the bottom-right. Just the wire-hanger silhouette and
+        brass charm, no dark square background, so it floats on the
+        gradient rather than blocking it. Visual rhyme with the nav logo,
+        the footer brand block, and the sidebar in the studio. */}
     <div
       aria-hidden="true"
       class="absolute pointer-events-none"
-      style="right: -2rem; bottom: -3rem; opacity: 0.08; transform: rotate(-18deg);"
+      style="right: -1.5rem; bottom: -2rem; opacity: 0.12; transform: rotate(-14deg);"
     >
       <svg
-        width="360"
-        height="360"
-        viewBox="0 0 280 280"
+        width="320"
+        height="320"
+        viewBox="0 0 256 256"
         xmlns="http://www.w3.org/2000/svg"
         aria-hidden="true"
       >
-        {/* Bow — outer ornate ring */}
-        <circle
-          cx="140"
-          cy="82"
-          r="46"
-          fill="none"
-          stroke="#ffffff"
-          stroke-width="1.6"
-        />
-        {/* Bow — inner detail circle */}
-        <circle
-          cx="140"
-          cy="82"
-          r="31"
-          fill="none"
-          stroke="#ffffff"
-          stroke-width="0.9"
-        />
-        {/* Quatrefoil petals around the bow — north, east, south, west */}
+        {/* Hanger silhouette — the same path as AtelierMark but stroked
+            in white so it reads on the dark gradient instead of black on cream. */}
         <g
           fill="none"
           stroke="#ffffff"
-          stroke-width="0.9"
+          stroke-width="7"
           stroke-linecap="round"
-        >
-          <path d="M 140 36 C 130 50, 130 62, 140 68 C 150 62, 150 50, 140 36 Z" />
-          <path d="M 186 82 C 172 72, 160 72, 154 82 C 160 92, 172 92, 186 82 Z" />
-          <path d="M 140 128 C 130 114, 130 102, 140 96 C 150 102, 150 114, 140 128 Z" />
-          <path d="M 94 82 C 108 72, 120 72, 126 82 C 120 92, 108 92, 94 82 Z" />
-        </g>
-        {/* Brass centre — the "keyhole" indicator, same brass tone as the
-            armoire's keyhole accents in the footer */}
-        <circle cx="140" cy="82" r="5.5" fill="#D4B378" />
-        <circle cx="140" cy="82" r="2" fill="#1c1917" />
-
-        {/* Shaft connecting bow to bit */}
-        <line
-          x1="140"
-          y1="128"
-          x2="140"
-          y2="230"
-          stroke="#ffffff"
-          stroke-width="1.6"
-          stroke-linecap="round"
-        />
-        {/* Decorative double-band on the shaft (the antique "collar") */}
-        <line
-          x1="126"
-          y1="162"
-          x2="154"
-          y2="162"
-          stroke="#ffffff"
-          stroke-width="0.9"
-          stroke-linecap="round"
-        />
-        <line
-          x1="126"
-          y1="168"
-          x2="154"
-          y2="168"
-          stroke="#ffffff"
-          stroke-width="0.9"
-          stroke-linecap="round"
-        />
-
-        {/* Bit — vintage two-tier ward pattern (the teeth at the end) */}
-        <path
-          d="M 140 198 L 168 198 L 168 210 L 152 210 L 152 222 L 172 222 L 172 232 L 140 232"
-          fill="none"
-          stroke="#ffffff"
-          stroke-width="1.6"
           stroke-linejoin="round"
+        >
+          <path d="M 160 60 Q 160 44 144 44 Q 128 44 128 58 L 128 110" />
+          <path d="M 128 110 L 62 184 L 194 184 Z" />
+        </g>
+        {/* Brass charm thread + bead — same as the footer/nav/sidebar mark */}
+        <line
+          x1="128"
+          y1="184"
+          x2="128"
+          y2="206"
+          stroke="#D4B378"
+          stroke-width="1.5"
           stroke-linecap="round"
+          opacity="0.8"
         />
+        <circle cx="128" cy="212" r="5" fill="#D4B378" />
       </svg>
     </div>
 
@@ -161,8 +111,9 @@ import { ChevronRight } from 'lucide-react';
         The small luxuries that turn a wardrobe into a practice.
       </p>
 
-      {/* Trial line — pill format, brass on dark, sits between the subhead
-          and the CTAs as a third-line trust signal. */}
+      {/* Trial line — pill format, brass on dark. Truncated to just
+          '14-day trial' since Lemon Squeezy collects card details at
+          checkout, so claiming 'no card required' would be dishonest. */}
       <p
         class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full mb-10"
         style="background: rgba(212, 179, 120, 0.12); border: 1px solid rgba(212, 179, 120, 0.25); color: var(--atelier-brass-300); font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; font-weight: 600;"
@@ -171,7 +122,7 @@ import { ChevronRight } from 'lucide-react';
           aria-hidden="true"
           style="width: 5px; height: 5px; border-radius: 50%; background: var(--atelier-brass-300);"
         />
-        14-day trial · no card required
+        14-day trial
       </p>
 
       {/* Two CTAs — primary brass to /pricing (where the Keys live),
