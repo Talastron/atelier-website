@@ -1090,6 +1090,26 @@ export function Hero() {
           />
         </div>
 
+        {/* Kicker — small italic line above the headline that disambiguates
+            the product category immediately. Without it, first-time visitors
+            spend 2-3 seconds parsing "AI stylist / wardrobe" and could
+            mistake Atelier for a clothing brand or a styling service. The
+            kicker tells them "this is software" before they read anything
+            else. Set in stone-500 italic display serif so it reads as
+            editorial subtitle rather than utility caption. */}
+        <p
+          className="mx-auto italic"
+          style={{
+            fontFamily: 'var(--atelier-font-display)',
+            fontSize: 'clamp(0.9375rem, 1.1vw, 1.0625rem)',
+            color: 'var(--atelier-stone-500)',
+            marginBottom: 'clamp(1rem, 1.5vw, 1.25rem)',
+            letterSpacing: '0.005em',
+          }}
+        >
+          A digital studio for your wardrobe.
+        </p>
+
         {/* Headline */}
         <h1
           className="mx-auto"
