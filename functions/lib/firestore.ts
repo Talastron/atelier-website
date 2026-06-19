@@ -45,6 +45,49 @@ export async function upsertSubscription(
   if (!resp.ok) throw new Error(`upsertSubscription failed: ${resp.status} ${await resp.text()}`);
 }
 
+/**
+ * Write/update the lookup-index doc at /subscriberAccess/{uid}.
+ *
+ * Firestore Security Rules cannot query collections — they can only do direct
+ * doc lookups by ID. The canonical /subscriptions/{lsSubId} doc is keyed by
+ * Lemon Squeezy subscription ID, which the rules can't look up from the
+ * signed-in user's uid alone. This denormalized index, keyed by Firebase uid,
+ * lets rules check subscription status in one direct `get()` call.
+ *
+ * Always written alongside upsertSubscription() — never as a substitute.
+ */
+export async function upsertSubscriberAccess(
+  accessToken: string,
+  projectId: string,
+  sub: SubscriptionRecord
+): Promise<void> {
+  const docPath = `projects/${projectId}/databases/(default)/documents/subscriberAccess/${sub.userId}`;
+  const updateMask = [
+    'subscriptionId', 'email', 'status',
+    'currentPeriodEnd', 'cancelledAt', 'updatedAt',
+  ];
+
+  const fields: Record<string, unknown> = {
+    subscriptionId: { stringValue: sub.subscriptionId },
+    email: { stringValue: sub.email },
+    status: { stringValue: sub.status },
+    currentPeriodEnd: { timestampValue: sub.currentPeriodEnd },
+    updatedAt: { timestampValue: new Date().toISOString() },
+  };
+  if (sub.cancelledAt) fields.cancelledAt = { timestampValue: sub.cancelledAt };
+
+  const url = `${FIRESTORE_BASE}/${docPath}?${
+    updateMask.map((f) => `updateMask.fieldPaths=${f}`).join('&')
+  }`;
+
+  const resp = await fetch(url, {
+    method: 'PATCH',
+    headers: { Authorization: `Bearer ${accessToken}`, 'Content-Type': 'application/json' },
+    body: JSON.stringify({ fields }),
+  });
+  if (!resp.ok) throw new Error(`upsertSubscriberAccess failed: ${resp.status} ${await resp.text()}`);
+}
+
 export async function isEventProcessed(
   accessToken: string,
   projectId: string,

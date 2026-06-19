@@ -1,7 +1,7 @@
 import { verifyLemonSqueezySignature } from '../lib/hmac.ts';
 import { getGoogleAccessToken, parseServiceAccount } from '../lib/google-auth.ts';
 import { findOrCreateUserByEmail, sendSignInLink } from '../lib/firebase-identity-toolkit.ts';
-import { upsertSubscription, isEventProcessed, markEventProcessed, type SubscriptionRecord } from '../lib/firestore.ts';
+import { upsertSubscription, upsertSubscriberAccess, isEventProcessed, markEventProcessed, type SubscriptionRecord } from '../lib/firestore.ts';
 
 interface Env {
   LEMONSQUEEZY_WEBHOOK_SECRET: string;
@@ -91,6 +91,7 @@ export async function onRequestPost(context: PagesContext): Promise<Response> {
       const user = await findOrCreateUserByEmail(token, env.FIREBASE_PROJECT_ID, email);
       subscriptionRecord.userId = user.uid;
       await upsertSubscription(token, env.FIREBASE_PROJECT_ID, subscriptionRecord);
+      await upsertSubscriberAccess(token, env.FIREBASE_PROJECT_ID, subscriptionRecord);
       await sendSignInLink(token, env.FIREBASE_PROJECT_ID, email, `${env.EDIT_URL}/auth`);
       break;
     }
@@ -100,6 +101,7 @@ export async function onRequestPost(context: PagesContext): Promise<Response> {
       const user = await findOrCreateUserByEmail(token, env.FIREBASE_PROJECT_ID, email);
       subscriptionRecord.userId = user.uid;
       await upsertSubscription(token, env.FIREBASE_PROJECT_ID, subscriptionRecord);
+      await upsertSubscriberAccess(token, env.FIREBASE_PROJECT_ID, subscriptionRecord);
       break;
     }
     case 'subscription_cancelled': {
@@ -108,6 +110,7 @@ export async function onRequestPost(context: PagesContext): Promise<Response> {
       subscriptionRecord.status = 'cancelled';
       subscriptionRecord.cancelledAt = new Date().toISOString();
       await upsertSubscription(token, env.FIREBASE_PROJECT_ID, subscriptionRecord);
+      await upsertSubscriberAccess(token, env.FIREBASE_PROJECT_ID, subscriptionRecord);
       break;
     }
     case 'subscription_expired':
@@ -116,6 +119,7 @@ export async function onRequestPost(context: PagesContext): Promise<Response> {
       subscriptionRecord.userId = user.uid;
       subscriptionRecord.status = eventName === 'subscription_expired' ? 'expired' : 'past_due';
       await upsertSubscription(token, env.FIREBASE_PROJECT_ID, subscriptionRecord);
+      await upsertSubscriberAccess(token, env.FIREBASE_PROJECT_ID, subscriptionRecord);
       break;
     }
     default:
