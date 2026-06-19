@@ -83,8 +83,8 @@ const sections = [
         Mobile: stacked vertical, centered. Desktop: 12-col grid.
         ────────────────────────────────────────────────────────────── */}
     <div
-      class="flex flex-col items-center text-center lg:grid lg:grid-cols-12 lg:items-start lg:text-left lg:gap-x-12"
-      style="padding-top: clamp(4.5rem, 8vw, 6.5rem); padding-bottom: clamp(3rem, 5vw, 4rem); gap: clamp(3.5rem, 6vw, 5rem);"
+      class="flex flex-col items-center text-center gap-y-14 md:gap-y-16 lg:grid lg:grid-cols-12 lg:items-start lg:text-left lg:gap-y-0 lg:gap-x-12"
+      style="padding-top: clamp(4.5rem, 8vw, 6.5rem); padding-bottom: clamp(3rem, 5vw, 4rem);"
     >
       {/* ── Brand mast (mobile: vertical centered · desktop: left col) ── */}
       <div class="lg:col-span-3 flex flex-col items-center lg:items-start" style="max-width: 32ch;">
@@ -96,10 +96,19 @@ const sections = [
           class="flex flex-col items-center lg:flex-row lg:items-center gap-3 group"
           aria-label="Atelier — return home"
         >
-          <AtelierMark size={56} client:load />
+          {/* Two AtelierMark instances — one mobile (64px, large
+              centerpiece mast), one desktop (44px, sidebar scale). The
+              AtelierMark component renders width/height from its size
+              prop, so this is cheaper than CSS-resizing the SVG. */}
+          <div class="lg:hidden">
+            <AtelierMark size={64} client:load />
+          </div>
+          <div class="hidden lg:block">
+            <AtelierMark size={44} client:load />
+          </div>
           <span
-            class="tracking-tight transition-colors group-hover:text-stone-700"
-            style="font-family: var(--atelier-font-display); color: var(--atelier-stone-900); font-size: clamp(1.875rem, 5vw, 1.875rem); letter-spacing: -0.005em; line-height: 1;"
+            class="tracking-tight transition-colors group-hover:text-stone-700 text-[2.25rem] lg:text-[1.625rem]"
+            style="font-family: var(--atelier-font-display); color: var(--atelier-stone-900); letter-spacing: -0.005em; line-height: 1;"
           >
             Atelier.
           </span>
@@ -145,9 +154,13 @@ const sections = [
         {sections.map((section) => (
           <div class="flex flex-col items-center md:items-start">
             <h3
-              class="mb-5 text-[10px] uppercase font-semibold"
+              class="mb-5 flex items-center gap-2.5 text-[10px] uppercase font-semibold"
               style="letter-spacing: 0.28em; color: var(--atelier-stone-900);"
             >
+              <span
+                aria-hidden="true"
+                style="display: inline-block; width: 4px; height: 4px; border-radius: 50%; background: var(--atelier-brass-600);"
+              />
               {section.eyebrow}
             </h3>
             <ul class="flex flex-col gap-1">
@@ -323,12 +336,33 @@ const sections = [
     </div>
 
     {/* ──────────────────────────────────────────────────────────────────
-        Return to the top — the graceful exit.
+        Closing flourish — literary endline, then graceful exit.
+        Three centered brass dots act as a typographic transition mark
+        (the way fine printing uses an asterism ⁂ to separate sections),
+        then a one-line italic colophon — the equivalent of "Composed in
+        Garamond" at the back of a book, but earned for Atelier — and
+        finally the Return-to-top link as the polite way out.
         ────────────────────────────────────────────────────────────── */}
     <div
-      class="flex justify-center"
-      style="padding-bottom: clamp(2.5rem, 5vw, 3rem);"
+      class="flex flex-col items-center"
+      style="padding-top: 2rem; padding-bottom: clamp(2.5rem, 5vw, 3rem); gap: 1.5rem;"
     >
+      {/* Three brass dots — the asterism */}
+      <div class="flex items-center gap-2" aria-hidden="true">
+        <span style="display: inline-block; width: 3px; height: 3px; border-radius: 50%; background: var(--atelier-brass-300);" />
+        <span style="display: inline-block; width: 3px; height: 3px; border-radius: 50%; background: var(--atelier-brass-600);" />
+        <span style="display: inline-block; width: 3px; height: 3px; border-radius: 50%; background: var(--atelier-brass-300);" />
+      </div>
+
+      {/* Literary closing line — italic display serif */}
+      <p
+        class="text-center italic"
+        style="font-family: var(--atelier-font-display); color: var(--atelier-stone-500); font-size: 13px; line-height: 1.6; max-width: 42ch;"
+      >
+        Composed in Surrey, for considered closets everywhere.
+      </p>
+
+      {/* Return to the top — brass underline draws on hover */}
       <a
         href="#top"
         class="footer-return inline-flex items-center gap-2 text-[10px] uppercase font-medium"
@@ -353,26 +387,44 @@ const sections = [
     color: var(--atelier-stone-900);
   }
 
-  /* Return-to-top link */
+  /* Return-to-top link — brass underline draws on hover, from the
+     centre outward. Subtle but tells the visitor someone designed it.
+     The underline sits just below the text, brass-600, 1px high. */
   .footer-return {
-    transition: color 200ms ease;
+    position: relative;
+    transition: color 250ms ease;
+  }
+  .footer-return::after {
+    content: '';
+    position: absolute;
+    bottom: 0.45rem;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 1px;
+    background: var(--atelier-brass-600);
+    transition: width 300ms cubic-bezier(0.22, 1, 0.36, 1);
   }
   .footer-return:hover,
   .footer-return:focus-visible {
-    color: var(--atelier-stone-700);
+    color: var(--atelier-stone-900);
+  }
+  .footer-return:hover::after,
+  .footer-return:focus-visible::after {
+    width: calc(100% - 2rem);
   }
 
-  /* Armoire SVG — responsive size. Larger on mobile where it has the
-     full canvas to itself; smaller on desktop where it sits in a 3-col
-     sidebar alongside the brand and nav. */
+  /* Armoire SVG — responsive width via clamp(); height auto from
+     viewBox aspect ratio. On mobile, scales between 160px (iPhone SE
+     comfort) and 184px (large phones / small tablets) by viewport
+     proportion. Desktop overrides to 148px in the sidebar position. */
   .footer-armoire {
-    width: 184px;
-    height: 322px;
+    width: clamp(160px, 46vw, 184px);
+    height: auto;
   }
   @media (min-width: 1024px) {
     .footer-armoire {
       width: 148px;
-      height: 260px;
     }
   }
 </style>
