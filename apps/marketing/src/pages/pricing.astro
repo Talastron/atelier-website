@@ -233,6 +233,117 @@ const LS_CHECKOUT_URL = 'https://myatelier.lemonsqueezy.com/checkout/buy/a9d33c7
 
     </section>
 
+    {/* ── By Comparison — comparative anchor ─────────────────────────
+        Quietly reframes £95/year against what comparable services
+        cost. Premium products must justify their price, not just
+        state it — Atelier is the cheapest considered-styling option
+        on the page and visitors should know it. Set as an editorial
+        aside rather than a comparison table; magazine-style ledger
+        rather than a SaaS feature matrix. */}
+    <section
+      class="mx-auto"
+      style="max-width: 720px; padding-inline: var(--atelier-page-padding); padding-bottom: clamp(4rem, 7vw, 6rem);"
+    >
+      <div class="text-center mb-10">
+        <div class="flex items-center justify-center gap-3 mb-4">
+          <BrassRule client:load />
+          <p
+            class="text-[10px] uppercase font-medium"
+            style="letter-spacing: 0.32em; color: var(--atelier-brass-600);"
+          >
+            By comparison
+          </p>
+          <BrassRule client:load />
+        </div>
+        <h2
+          class="mx-auto"
+          style="font-family: var(--atelier-font-display); font-size: clamp(1.625rem, 2.5vw, 2rem); line-height: 1.15; letter-spacing: -0.005em; color: var(--atelier-stone-900); max-width: 22ch;"
+        >
+          What considered styling costs elsewhere.
+        </h2>
+      </div>
+
+      {/* Comparison ledger — three rows, each with the alternative on
+          the left and its price on the right. Hairlines between.
+          Closes with an italic Atelier line beneath in brass. */}
+      <div
+        class="mx-auto"
+        style="max-width: 560px;"
+      >
+        <ul
+          class="flex flex-col"
+          style="border-top: 1px solid var(--atelier-stone-200);"
+        >
+          <li
+            class="flex items-baseline justify-between gap-6 py-4"
+            style="border-bottom: 1px solid var(--atelier-stone-200);"
+          >
+            <span style="font-family: var(--atelier-font-display); font-size: 1rem; color: var(--atelier-stone-700);">
+              A single personal styling appointment
+            </span>
+            <span
+              class="shrink-0 text-[11px] uppercase font-semibold"
+              style="letter-spacing: 0.22em; color: var(--atelier-stone-500); font-variant-numeric: tabular-nums;"
+            >
+              £200 and up
+            </span>
+          </li>
+          <li
+            class="flex items-baseline justify-between gap-6 py-4"
+            style="border-bottom: 1px solid var(--atelier-stone-200);"
+          >
+            <span style="font-family: var(--atelier-font-display); font-size: 1rem; color: var(--atelier-stone-700);">
+              Net&#8209;a&#8209;Porter EIP styling concierge
+            </span>
+            <span
+              class="shrink-0 text-[11px] uppercase font-semibold"
+              style="letter-spacing: 0.22em; color: var(--atelier-stone-500); font-variant-numeric: tabular-nums;"
+            >
+              By invitation
+            </span>
+          </li>
+          <li
+            class="flex items-baseline justify-between gap-6 py-4"
+            style="border-bottom: 1px solid var(--atelier-stone-200);"
+          >
+            <span style="font-family: var(--atelier-font-display); font-size: 1rem; color: var(--atelier-stone-700);">
+              A capsule wardrobe consultation
+            </span>
+            <span
+              class="shrink-0 text-[11px] uppercase font-semibold"
+              style="letter-spacing: 0.22em; color: var(--atelier-stone-500); font-variant-numeric: tabular-nums;"
+            >
+              £350 — £800
+            </span>
+          </li>
+          {/* Atelier row — set differently so it lands as the answer */}
+          <li
+            class="flex items-baseline justify-between gap-6 py-5"
+            style="border-bottom: 1px solid var(--atelier-stone-200); background: rgba(212, 179, 120, 0.06);"
+          >
+            <span style="font-family: var(--atelier-font-display); font-size: 1rem; color: var(--atelier-stone-900); font-weight: 500;">
+              <em style="font-weight: 400;">Atelier</em>, a year inside the studio
+            </span>
+            <span
+              class="shrink-0 text-[11px] uppercase font-semibold"
+              style="letter-spacing: 0.22em; color: var(--atelier-brass-600); font-variant-numeric: tabular-nums;"
+            >
+              £95
+            </span>
+          </li>
+        </ul>
+
+        {/* Italic closing line — repositions the number */}
+        <p
+          class="text-center mt-6 italic"
+          style="font-family: var(--atelier-font-display); font-size: 0.9375rem; color: var(--atelier-stone-500); line-height: 1.6; max-width: 46ch; margin-inline: auto;"
+        >
+          Less than half of one stylist visit — for a stylist who never closes,
+          composed from the wardrobe you already own.
+        </p>
+      </div>
+    </section>
+
     {/* ── Trust line — quiet, factual, at the base ─────────────────── */}
     <div
       class="mx-auto text-center"
