@@ -286,116 +286,214 @@ export function SuggestALookDemo() {
         </div>
       </div>
 
-      {/* Mobile-only background — simplified phone-style view with the
-          Today card front-and-centre. The faux sidebar and content grid
-          collapse away because there's no room for them on small screens. */}
+      {/* Mobile-only background — faithful replica of the actual mobile
+          Wardrobe view from App.jsx: top bar + greeting + Your Collection
+          + TodayTile (dark gradient) + filter chips + item grid. The modal
+          opens on top with backdrop blur. */}
       <div
         className="absolute inset-0 md:hidden flex flex-col"
         style={{
-          padding: '1rem',
           opacity: modalVisible || modalClosing ? 0.4 : 1,
           filter: modalVisible || modalClosing ? 'blur(2px)' : 'none',
           transition: 'opacity 400ms ease, filter 400ms ease',
         }}
       >
-        {/* Mobile top bar — Atelier mark + section label */}
+        {/* Mobile top bar — Atelier mark + brass profile circle */}
         <div
-          className="flex items-center justify-between mb-3"
-          style={{ paddingBottom: '0.625rem', borderBottom: '1px solid var(--atelier-stone-200)' }}
+          className="flex items-center justify-between"
+          style={{
+            padding: '0.75rem 1rem',
+            borderBottom: '1px solid var(--atelier-stone-200)',
+            background: 'var(--atelier-cream)',
+          }}
         >
           <div className="flex items-center gap-2">
             <div
               style={{
-                width: 18,
-                height: 18,
-                borderRadius: 4,
+                width: 20,
+                height: 20,
+                borderRadius: 5,
                 background: 'var(--atelier-ink)',
               }}
             />
             <span
               style={{
                 fontFamily: 'var(--atelier-font-display)',
-                fontSize: 13,
+                fontSize: 14,
                 color: 'var(--atelier-stone-900)',
               }}
             >
               Atelier.
             </span>
           </div>
-          <p
+          <div
             style={{
-              fontSize: 8.5,
-              letterSpacing: '0.28em',
-              textTransform: 'uppercase',
-              color: 'var(--atelier-stone-500)',
+              width: 22,
+              height: 22,
+              borderRadius: '50%',
+              background: 'linear-gradient(135deg, var(--atelier-brass-300), var(--atelier-brass-600))',
+              color: 'var(--atelier-stone-900)',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              fontFamily: 'var(--atelier-font-display)',
+              fontSize: 10,
               fontWeight: 600,
             }}
           >
-            Wardrobe
-          </p>
+            S
+          </div>
         </div>
 
-        {/* Mobile Today card — the action surface */}
-        <div
-          className="rounded-2xl relative overflow-hidden mb-3"
-          style={{
-            background: 'linear-gradient(135deg, var(--atelier-ink) 0%, #292524 100%)',
-            color: '#ffffff',
-            padding: '0.875rem 1rem',
-          }}
-        >
-          <p
-            className="text-[9px] uppercase font-bold mb-0.5"
-            style={{ letterSpacing: '0.24em', color: 'var(--atelier-stone-400)' }}
-          >
-            Today
-          </p>
-          <p
-            className="text-sm mb-2"
-            style={{ fontFamily: 'var(--atelier-font-display)', lineHeight: 1.3 }}
-          >
-            15–27°C · Partly cloudy
-          </p>
-          <button
-            type="button"
-            tabIndex={-1}
-            aria-hidden="true"
-            className="w-full text-[10px] uppercase px-3 py-2 rounded-full flex items-center justify-center gap-2 font-medium"
+        {/* Main content — greeting + title + TodayTile + chips + items */}
+        <div style={{ padding: '0.875rem 0.875rem 0', display: 'flex', flexDirection: 'column', gap: '0.625rem', flex: 1 }}>
+          {/* Greeting eyebrow */}
+          <div className="flex items-center gap-2">
+            <span
+              aria-hidden="true"
+              style={{ display: 'inline-block', width: 14, height: 1.5, background: 'var(--atelier-brass-300)' }}
+            />
+            <p
+              style={{
+                fontSize: 8,
+                letterSpacing: '0.28em',
+                textTransform: 'uppercase',
+                color: 'var(--atelier-stone-500)',
+                fontWeight: 600,
+              }}
+            >
+              Good morning
+            </p>
+          </div>
+
+          {/* Your Collection title (compact) */}
+          <div>
+            <h2
+              style={{
+                fontFamily: 'var(--atelier-font-display)',
+                fontSize: '1.25rem',
+                lineHeight: 1.05,
+                color: 'var(--atelier-stone-900)',
+                letterSpacing: '-0.005em',
+                marginBottom: 2,
+              }}
+            >
+              Your Collection
+            </h2>
+            <p
+              style={{
+                fontSize: 8,
+                letterSpacing: '0.18em',
+                textTransform: 'uppercase',
+                color: 'var(--atelier-stone-500)',
+                fontWeight: 600,
+              }}
+            >
+              6 Pieces Curated
+            </p>
+          </div>
+
+          {/* TodayTile — dark gradient action card */}
+          <div
             style={{
-              background: 'var(--atelier-brass-300)',
-              color: 'var(--atelier-stone-900)',
-              letterSpacing: '0.18em',
-              boxShadow: buttonGlowing
-                ? '0 0 0 4px rgba(212, 179, 120, 0.4), 0 0 24px rgba(212, 179, 120, 0.5)'
-                : 'none',
-              transform: buttonGlowing ? 'scale(1.03)' : 'scale(1)',
-              transition: 'all 400ms ease',
+              background: 'linear-gradient(135deg, var(--atelier-stone-900) 0%, var(--atelier-stone-800) 100%)',
+              color: '#ffffff',
+              borderRadius: 14,
+              padding: '0.75rem 0.875rem',
+              position: 'relative',
+              overflow: 'hidden',
             }}
           >
-            <Wand2 size={11} strokeWidth={1.5} />
-            Suggest a look
-          </button>
-        </div>
-
-        {/* Mobile item glimpse — a faint 2-row strip below to hint at the wardrobe */}
-        <div
-          className="grid grid-cols-3 gap-2"
-          style={{ flexShrink: 0 }}
-        >
-          {FAUX_WARDROBE.slice(0, 3).map((src, i) => (
-            <img
-              key={i}
-              src={src}
-              alt=""
-              loading="lazy"
-              className="rounded-md"
+            <div
+              aria-hidden="true"
+              className="absolute pointer-events-none"
+              style={{ right: -16, top: -16, opacity: 0.06, transform: 'rotate(12deg)' }}
+            >
+              <Sparkles size={100} strokeWidth={0.8} />
+            </div>
+            <p style={{ fontSize: 8, letterSpacing: '0.24em', textTransform: 'uppercase', color: 'var(--atelier-stone-400)', fontWeight: 700, marginBottom: 1 }}>
+              Today
+            </p>
+            <p style={{ fontFamily: 'var(--atelier-font-display)', fontSize: 12.5, lineHeight: 1.3, marginBottom: 8 }}>
+              15–27°C · Partly cloudy
+            </p>
+            <button
+              type="button"
+              tabIndex={-1}
+              aria-hidden="true"
               style={{
-                aspectRatio: '3/4',
-                objectFit: 'cover',
                 width: '100%',
+                background: 'var(--atelier-brass-300)',
+                color: 'var(--atelier-stone-900)',
+                fontSize: 9.5,
+                fontWeight: 600,
+                letterSpacing: '0.16em',
+                textTransform: 'uppercase',
+                padding: '0.5rem 0.75rem',
+                borderRadius: 999,
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: 5,
+                boxShadow: buttonGlowing
+                  ? '0 0 0 4px rgba(212, 179, 120, 0.4), 0 0 22px rgba(212, 179, 120, 0.5)'
+                  : 'none',
+                transform: buttonGlowing ? 'scale(1.02)' : 'scale(1)',
+                transition: 'all 350ms ease',
               }}
-            />
-          ))}
+            >
+              <Wand2 size={10} strokeWidth={1.5} />
+              Suggest a look
+            </button>
+          </div>
+
+          {/* Filter chips — horizontal scrollable strip */}
+          <div className="flex gap-1.5 overflow-hidden" style={{ marginInline: '-0.25rem' }}>
+            {[
+              { label: 'All', active: true },
+              { label: 'Tops' },
+              { label: 'Bottoms' },
+              { label: 'Dresses' },
+              { label: 'Outerwear' },
+            ].map((c, i) => (
+              <button
+                key={i}
+                type="button"
+                tabIndex={-1}
+                aria-hidden="true"
+                style={{
+                  padding: '0.25rem 0.625rem',
+                  borderRadius: 999,
+                  fontSize: 9,
+                  fontWeight: 500,
+                  background: c.active ? 'var(--atelier-ink)' : '#ffffff',
+                  color: c.active ? '#ffffff' : 'var(--atelier-stone-700)',
+                  border: `1px solid ${c.active ? 'var(--atelier-ink)' : 'var(--atelier-stone-200)'}`,
+                  flexShrink: 0,
+                }}
+              >
+                {c.label}
+              </button>
+            ))}
+          </div>
+
+          {/* Item grid — 3 cols of small thumbnails */}
+          <div className="grid grid-cols-3 gap-1.5" style={{ flexShrink: 0 }}>
+            {FAUX_WARDROBE.slice(0, 6).map((src, i) => (
+              <img
+                key={i}
+                src={src}
+                alt=""
+                loading="lazy"
+                className="rounded-md"
+                style={{
+                  aspectRatio: '3/4',
+                  objectFit: 'cover',
+                  width: '100%',
+                }}
+              />
+            ))}
+          </div>
         </div>
       </div>
 

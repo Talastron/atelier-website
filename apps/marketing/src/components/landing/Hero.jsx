@@ -221,7 +221,7 @@ function StudioFrame() {
   return (
     <div
       ref={containerRef}
-      className="mx-auto grid grid-cols-1 lg:grid-cols-[minmax(0,188px)_1fr]"
+      className="mx-auto"
       style={{
         marginTop: 'clamp(2.5rem, 4vw, 4rem)',
         width: 'min(100%, 980px)',
@@ -234,52 +234,369 @@ function StudioFrame() {
         textAlign: 'left',
       }}
     >
-      {/* ── Mobile top bar (hidden on lg+) — matches App.jsx mobile header */}
-      <div
-        className="lg:hidden flex items-center justify-between"
-        style={{
-          padding: '0.875rem 1rem',
-          borderBottom: '1px solid var(--atelier-stone-200)',
-          background: 'var(--atelier-cream)',
-        }}
-      >
-        <div className="flex items-center gap-2">
-          <AtelierMark size={22} />
-          <span
-            style={{
-              fontFamily: 'var(--atelier-font-display)',
-              fontSize: 15,
-              color: 'var(--atelier-stone-900)',
-              letterSpacing: '-0.005em',
-            }}
-          >
-            Atelier.
-          </span>
-        </div>
-        <p
+      {/* ═══════════════════════════════════════════════════════════════════
+          MOBILE LAYOUT — faithfully mirrors App.jsx mobile Wardrobe view:
+          top bar + greeting + "Your Collection" + TodayTile + outfit reveal
+          + stylist note + bottom nav with brass FAB.
+          ═══════════════════════════════════════════════════════════════════ */}
+      <div className="lg:hidden flex flex-col">
+        {/* Mobile top bar — Atelier mark left, brass profile circle right */}
+        <div
+          className="flex items-center justify-between"
           style={{
-            fontSize: 9,
-            letterSpacing: '0.28em',
-            color: 'var(--atelier-stone-500)',
-            textTransform: 'uppercase',
-            fontWeight: 600,
+            padding: '0.875rem 1rem',
+            borderBottom: '1px solid var(--atelier-stone-200)',
+            background: 'var(--atelier-cream)',
           }}
         >
-          Wardrobe
-        </p>
+          <div className="flex items-center gap-2">
+            <AtelierMark size={22} />
+            <span
+              style={{
+                fontFamily: 'var(--atelier-font-display)',
+                fontSize: 15,
+                color: 'var(--atelier-stone-900)',
+                letterSpacing: '-0.005em',
+              }}
+            >
+              Atelier.
+            </span>
+          </div>
+          <div
+            style={{
+              width: 28,
+              height: 28,
+              borderRadius: '50%',
+              background:
+                'linear-gradient(135deg, var(--atelier-brass-300), var(--atelier-brass-600))',
+              color: 'var(--atelier-stone-900)',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              fontFamily: 'var(--atelier-font-display)',
+              fontSize: 12,
+              fontWeight: 600,
+            }}
+          >
+            S
+          </div>
+        </div>
+
+        {/* Mobile main content — vertical stack like the real app */}
+        <div
+          style={{
+            padding: '1rem 1rem 0.875rem',
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '0.875rem',
+            flex: 1,
+          }}
+        >
+          {/* Greeting eyebrow + "Your Collection" header */}
+          <div>
+            <div className="flex items-center gap-2 mb-1.5">
+              <span
+                aria-hidden="true"
+                style={{
+                  display: 'inline-block',
+                  width: 18,
+                  height: '1.5px',
+                  background: 'var(--atelier-brass-300)',
+                }}
+              />
+              <p
+                style={{
+                  fontSize: 9,
+                  letterSpacing: '0.28em',
+                  textTransform: 'uppercase',
+                  color: 'var(--atelier-stone-500)',
+                  fontWeight: 600,
+                }}
+              >
+                Good morning, Sibylle
+              </p>
+            </div>
+            <h2
+              style={{
+                fontFamily: 'var(--atelier-font-display)',
+                fontSize: '1.625rem',
+                lineHeight: 1.05,
+                color: 'var(--atelier-stone-900)',
+                letterSpacing: '-0.01em',
+                marginBottom: 4,
+              }}
+            >
+              Your Collection
+            </h2>
+            <p
+              style={{
+                fontSize: 9,
+                letterSpacing: '0.2em',
+                textTransform: 'uppercase',
+                color: 'var(--atelier-stone-500)',
+                fontWeight: 600,
+              }}
+            >
+              6 Pieces Curated
+            </p>
+          </div>
+
+          {/* TodayTile — replica of App.jsx:4316 dark gradient card */}
+          <div
+            style={{
+              background:
+                'linear-gradient(135deg, var(--atelier-stone-900) 0%, var(--atelier-stone-800) 100%)',
+              color: '#ffffff',
+              borderRadius: 18,
+              padding: '0.875rem 1rem',
+              position: 'relative',
+              overflow: 'hidden',
+              boxShadow: '0 10px 30px -10px rgba(28, 25, 23, 0.18)',
+            }}
+          >
+            {/* Sparkles decoration top-right */}
+            <div
+              aria-hidden="true"
+              className="absolute pointer-events-none"
+              style={{ right: -20, top: -20, opacity: 0.06, transform: 'rotate(12deg)' }}
+            >
+              <Sparkles size={140} strokeWidth={0.8} />
+            </div>
+
+            <p
+              style={{
+                fontSize: 9,
+                letterSpacing: '0.24em',
+                textTransform: 'uppercase',
+                color: 'var(--atelier-stone-400)',
+                fontWeight: 700,
+                marginBottom: 2,
+              }}
+            >
+              Today
+            </p>
+            <p
+              style={{
+                fontFamily: 'var(--atelier-font-display)',
+                fontSize: 15,
+                lineHeight: 1.3,
+                marginBottom: 12,
+              }}
+            >
+              {current.weather}
+            </p>
+
+            <button
+              type="button"
+              tabIndex={-1}
+              aria-hidden="true"
+              style={{
+                width: '100%',
+                background: 'var(--atelier-brass-300)',
+                color: 'var(--atelier-stone-900)',
+                fontSize: 10.5,
+                fontWeight: 600,
+                letterSpacing: '0.16em',
+                textTransform: 'uppercase',
+                padding: '0.625rem 1rem',
+                borderRadius: 999,
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: 6,
+                boxShadow: buttonGlowing
+                  ? '0 0 0 4px rgba(212, 179, 120, 0.4), 0 0 20px rgba(212, 179, 120, 0.4)'
+                  : '0 1px 2px rgba(0, 0, 0, 0.06)',
+                transform: buttonGlowing ? 'scale(1.02)' : 'scale(1)',
+                transition: 'all 350ms ease',
+                opacity: composing || showingOutfit ? 0.4 : 1,
+              }}
+            >
+              <Wand2
+                size={12}
+                strokeWidth={1.5}
+                style={{ animation: composing ? 'hero-wand-spin 1.4s linear infinite' : 'none' }}
+              />
+              {composing ? 'Composing' : 'Suggest a look'}
+            </button>
+          </div>
+
+          {/* Outfit reveal card — appears when composing/revealing/complete */}
+          {(showingOutfit || composing) && (
+            <div
+              style={{
+                background: '#ffffff',
+                border: '1px solid var(--atelier-stone-200)',
+                borderRadius: 16,
+                padding: '0.875rem',
+                opacity: fading ? 0 : 1,
+                transition: 'opacity 500ms ease',
+              }}
+            >
+              <div className="flex items-center gap-2 mb-2.5">
+                <span
+                  aria-hidden="true"
+                  style={{
+                    display: 'inline-block',
+                    width: 14,
+                    height: '1.5px',
+                    background: 'var(--atelier-brass-300)',
+                  }}
+                />
+                <p
+                  style={{
+                    fontSize: 8.5,
+                    letterSpacing: '0.24em',
+                    textTransform: 'uppercase',
+                    color: 'var(--atelier-brass-600)',
+                    fontWeight: 700,
+                  }}
+                >
+                  {stage === STAGE.COMPLETE
+                    ? `Today's proposal · ${current.label}`
+                    : composing
+                    ? 'Composing'
+                    : current.label}
+                </p>
+              </div>
+
+              {/* 2x2 outfit grid */}
+              <div className="grid grid-cols-2 gap-2">
+                {current.items.map((item, i) => {
+                  const isRevealed = showingOutfit && i < revealedSlots;
+                  return (
+                    <div key={i} style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
+                      <div
+                        style={{
+                          aspectRatio: '3/4',
+                          borderRadius: 8,
+                          overflow: 'hidden',
+                          background: isRevealed ? 'var(--atelier-stone-100)' : 'transparent',
+                          border: isRevealed ? 'none' : '1.5px dashed var(--atelier-stone-200)',
+                          position: 'relative',
+                        }}
+                      >
+                        {!isRevealed && (
+                          <div
+                            style={{
+                              position: 'absolute',
+                              inset: 0,
+                              display: 'flex',
+                              alignItems: 'center',
+                              justifyContent: 'center',
+                              fontSize: 8,
+                              letterSpacing: '0.2em',
+                              color: 'var(--atelier-stone-300)',
+                              textTransform: 'uppercase',
+                              fontWeight: 600,
+                            }}
+                          >
+                            {composing ? '· · ·' : ['Top', 'Bottom', 'Footwear', 'Accessory'][i]}
+                          </div>
+                        )}
+                        {isRevealed && (
+                          <img
+                            src={item.src}
+                            alt={item.name}
+                            loading="lazy"
+                            style={{
+                              width: '100%',
+                              height: '100%',
+                              objectFit: 'cover',
+                              animation: 'hero-slot-rise 700ms cubic-bezier(0.22, 1, 0.36, 1)',
+                            }}
+                          />
+                        )}
+                      </div>
+                      <p
+                        style={{
+                          fontFamily: 'var(--atelier-font-display)',
+                          fontSize: 10.5,
+                          lineHeight: 1.2,
+                          color: 'var(--atelier-stone-800)',
+                          minHeight: '1.2em',
+                          overflow: 'hidden',
+                          textOverflow: 'ellipsis',
+                          whiteSpace: 'nowrap',
+                          opacity: isRevealed ? 1 : 0,
+                          transition: 'opacity 400ms ease 120ms',
+                        }}
+                      >
+                        {isRevealed ? item.name : ' '}
+                      </p>
+                    </div>
+                  );
+                })}
+              </div>
+
+              {/* Stylist's note + confidence — fades in at COMPLETE */}
+              <div
+                style={{
+                  marginTop: 12,
+                  padding: '0.625rem 0.75rem',
+                  background: 'var(--atelier-cream)',
+                  borderRadius: 10,
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: 10,
+                  opacity: stage === STAGE.COMPLETE ? 1 : 0,
+                  transform:
+                    stage === STAGE.COMPLETE ? 'translateY(0)' : 'translateY(0.25rem)',
+                  transition: 'opacity 500ms ease, transform 500ms ease',
+                }}
+              >
+                <Wand2
+                  size={12}
+                  strokeWidth={1.4}
+                  style={{ color: 'var(--atelier-brass-600)', flexShrink: 0 }}
+                />
+                <p
+                  style={{
+                    fontFamily: 'var(--atelier-font-display)',
+                    fontStyle: 'italic',
+                    fontSize: 11,
+                    lineHeight: 1.4,
+                    color: 'var(--atelier-stone-700)',
+                    flex: 1,
+                    minWidth: 0,
+                  }}
+                >
+                  {current.note}
+                </p>
+                <p
+                  style={{
+                    fontSize: 9,
+                    letterSpacing: '0.18em',
+                    textTransform: 'uppercase',
+                    color: 'var(--atelier-brass-600)',
+                    fontWeight: 700,
+                    flexShrink: 0,
+                    fontFeatureSettings: '"onum" on',
+                  }}
+                >
+                  {confidence}%
+                </p>
+              </div>
+            </div>
+          )}
+        </div>
       </div>
 
-      {/* ── Desktop sidebar — hidden on mobile ────────────────────────── */}
-      <aside
-        className="hidden lg:flex"
-        style={{
-          background: 'var(--atelier-cream)',
-          borderRight: '1px solid var(--atelier-stone-200)',
-          padding: '1.25rem 0.875rem 1rem',
-          flexDirection: 'column',
-          gap: '0.125rem',
-        }}
-      >
+      {/* ═══════════════════════════════════════════════════════════════════
+          DESKTOP LAYOUT — sidebar + main pane with Today header
+          ═══════════════════════════════════════════════════════════════════ */}
+      <div className="hidden lg:grid lg:grid-cols-[minmax(0,188px)_1fr]">
+        {/* Desktop sidebar — full studio nav */}
+        <aside
+          className="flex"
+          style={{
+            background: 'var(--atelier-cream)',
+            borderRight: '1px solid var(--atelier-stone-200)',
+            padding: '1.25rem 0.875rem 1rem',
+            flexDirection: 'column',
+            gap: '0.125rem',
+          }}
+        >
         {/* Atelier sentinel — hanger logo + wordmark, matches App.jsx:3143 */}
         <div
           style={{
@@ -600,6 +917,7 @@ function StudioFrame() {
             {confidence}% confidence
           </p>
         </div>
+      </div>
       </div>
 
       {/* ── Mobile bottom nav (hidden on lg+) — matches App.jsx:3360 ───── */}
