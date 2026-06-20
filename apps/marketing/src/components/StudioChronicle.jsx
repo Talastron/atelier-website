@@ -57,6 +57,24 @@ export function StudioChronicle() {
         paddingBottom: 'clamp(4rem, 7vw, 6rem)',
       }}
     >
+      {/* Chapter numeral — italic display serif, brass, matching the
+          .chapter-numeral pattern in about.astro's <style> block.
+          Inline styles here because this component is rendered from
+          /about and the page's scoped styles don't reach into it. */}
+      <p
+        style={{
+          fontFamily: 'var(--atelier-font-display)',
+          fontStyle: 'italic',
+          fontSize: 'clamp(1.5rem, 2.2vw, 1.875rem)',
+          color: 'var(--atelier-brass-600)',
+          lineHeight: 1,
+          margin: '0 0 0.5rem 0',
+          letterSpacing: '0.02em',
+        }}
+      >
+        III
+      </p>
+
       {/* Eyebrow — brass rule + small-caps, matches the other section
           eyebrows on /about (Where we began, The Practice, For Whom). */}
       <div
