@@ -36,7 +36,10 @@ const isActive = (href: string) => {
 };
 ---
 
-<nav class="fixed top-0 left-0 right-0 z-50 bg-cream/90 backdrop-blur-md border-b border-stone-200/60">
+<nav
+  class="fixed top-0 left-0 right-0 z-50 bg-cream/90 backdrop-blur-md border-b"
+  style="border-color: rgba(212, 179, 120, 0.18);"
+>
   <div
     class="mx-auto h-20 flex items-center justify-between gap-6"
     style="max-width: var(--atelier-container-max); padding-inline: var(--atelier-page-padding);"
@@ -61,7 +64,7 @@ const isActive = (href: string) => {
         Same micro-interaction as the mobile overlay, ported to desktop so
         brass appears in the bar at all times (previously the bar had no brass
         — the brand's signature accent was missing from its most-seen surface). */}
-    <div class="hidden md:flex items-center gap-8 text-sm font-medium">
+    <div class="hidden md:flex items-center gap-8 text-sm">
       {NAV_LINKS.map((link) => (
         <a
           href={link.href}
@@ -80,10 +83,12 @@ const isActive = (href: string) => {
         secondary link, since the overlay has the room for it. */}
     <div class="flex items-center gap-4 shrink-0">
       {/* Open Studio CTA (desktop only — hidden on mobile to give the hamburger
-          full prominence and keep the bar uncluttered) */}
+          full prominence and keep the bar uncluttered). The .studio-cta class
+          carries the dark base shadow at rest and a brass-tinted glow on
+          hover; see <style> block below. */}
       <a
         href={EDIT_URL}
-        class="hidden md:inline-flex bg-stone-900 text-white px-6 py-2.5 rounded-full text-sm font-medium hover:bg-stone-700 transition-all shadow-lg active:scale-95"
+        class="studio-cta hidden md:inline-flex bg-stone-900 text-white px-6 py-2.5 rounded-full text-sm font-medium hover:bg-stone-700 active:scale-95"
       >
         Open Studio
       </a>
@@ -217,12 +222,19 @@ const isActive = (href: string) => {
      page (so visitors always know where they are); draws from centre outward
      on hover (matching the mobile-overlay micro-interaction). Same timing
      function as the mobile version — keeps the site's hover vocabulary
-     consistent across breakpoints. */
+     consistent across breakpoints.
+
+     Typography: font-weight reduced from the inherited 500 (font-medium) to
+     400, plus 0.02em letter-spacing. Subtle but lifts the labels from utility
+     sans to editorial typesetting — the same restraint that distinguishes a
+     printed-page editorial from a UI feature-bar. */
   .desktop-nav-link {
     position: relative;
     display: inline-block;
     padding-bottom: 0.45rem;
     color: var(--atelier-stone-600);
+    font-weight: 400;
+    letter-spacing: 0.02em;
     transition: color 200ms ease;
   }
   .desktop-nav-link:hover,
@@ -244,6 +256,21 @@ const isActive = (href: string) => {
   .desktop-nav-link:focus-visible::after,
   .desktop-nav-link.is-active::after {
     width: 70%;
+  }
+
+  /* Open Studio CTA — refined hover state. At rest the button carries a
+     standard dark shadow (the anchor of the bar). On hover, a brass-tinted
+     glow layers over the dark base, surfacing the brand accent on intent
+     without changing the button's ink colour. The dark fill stays the bar's
+     stopping point; brass arrives only as the visitor commits. */
+  .studio-cta {
+    box-shadow: 0 6px 18px -6px rgba(28, 25, 23, 0.22);
+    transition: box-shadow 320ms cubic-bezier(0.22, 1, 0.36, 1), background-color 200ms ease, transform 100ms ease;
+  }
+  .studio-cta:hover {
+    box-shadow:
+      0 10px 28px -8px rgba(212, 179, 120, 0.4),
+      0 6px 18px -6px rgba(28, 25, 23, 0.18);
   }
 
   /* Mobile menu overlay — fades in/out, locked invisible until [data-open=true] */
