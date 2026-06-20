@@ -44,19 +44,27 @@ const isActive = (href: string) => {
     class="mx-auto h-20 flex items-center justify-between gap-6"
     style="max-width: var(--atelier-container-max); padding-inline: var(--atelier-page-padding);"
   >
-    {/* Logo — hanger mark + wordmark + editorial kicker on desktop. The kicker
-        ('est. MMXXVI') hangs to the right of 'Atelier.' at baseline, like a
-        typeset signature on a printed masthead. Hidden on mobile to keep the
-        constrained top bar uncluttered. */}
-    <a href="/" class="flex items-baseline gap-3 shrink-0">
+    {/* Logo — hanger mark + wordmark + editorial kicker on desktop.
+        Structure: outer flex is items-center so the hanger sentinel centres
+        with the wordmark text block (SVGs don't have a typographic baseline,
+        so items-baseline on the outer throws the icon off). The wordmark +
+        kicker sit inside an inner flex with items-baseline so 'est. MMXXVI'
+        hangs at the wordmark's baseline like a typeset signature. The full
+        stop on 'Atelier.' is set in brass — the wordmark's signature
+        flourish, consistent with the rest of the brand's typesetting. */}
+    <a href="/" class="flex items-center gap-3 shrink-0">
       <AtelierMark size={32} client:load />
-      <span class="font-display text-2xl tracking-tight" style="line-height: 1;">Atelier.</span>
-      <span
-        class="hidden md:inline-block italic font-display"
-        style="font-size: 0.6875rem; color: var(--atelier-stone-500); letter-spacing: 0.05em; line-height: 1;"
-      >
-        est. MMXXVI
-      </span>
+      <div class="flex items-baseline gap-3">
+        <span class="font-display text-2xl tracking-tight" style="line-height: 1;">
+          Atelier<span style="color: var(--atelier-brass-600);">.</span>
+        </span>
+        <span
+          class="hidden md:inline-block italic font-display"
+          style="font-size: 0.6875rem; color: var(--atelier-stone-500); letter-spacing: 0.05em; line-height: 1;"
+        >
+          est. MMXXVI
+        </span>
+      </div>
     </a>
 
     {/* Desktop nav links (md+) — each carries a brass hairline beneath that
@@ -135,7 +143,9 @@ const isActive = (href: string) => {
   >
     <a href="/" class="flex items-center gap-3 shrink-0" data-mobile-link>
       <AtelierMark size={32} client:load />
-      <span class="font-display text-2xl tracking-tight">Atelier.</span>
+      <span class="font-display text-2xl tracking-tight">
+        Atelier<span style="color: var(--atelier-brass-600);">.</span>
+      </span>
     </a>
     <button
       id="mobile-menu-close"
