@@ -137,11 +137,11 @@ function ToolkitCard({ icon: Icon, eyebrow, title, titleEm, description, demo })
 
 const IDENTIFY_SAMPLES = [
   {
-    src: '/seed-wardrobe/camel-wool-coat.jpg',
+    src: '/seed-wardrobe/wool-coat-charcoal.jpg',
     chips: ['OUTERWEAR', 'WOOL · CASHMERE', 'CAMEL', 'COS · £225'],
   },
   {
-    src: '/seed-wardrobe/silk-twill-scarf.jpg',
+    src: '/seed-wardrobe/leather-gloves-olive.jpg',
     chips: ['ACCESSORIES', 'SILK TWILL', 'AUTUMN PALETTE', 'HERMÈS · £395'],
   },
 ];
@@ -251,8 +251,8 @@ function IdentifyDemo() {
 // ─────────────────────────────────────────────────────────────────────────
 
 const DESTINATIONS = [
-  { name: 'Lisbon', items: ['/seed-wardrobe/breton-stripe-tee.jpg', '/seed-wardrobe/dark-wash-jeans.jpg', '/seed-wardrobe/silk-twill-scarf.jpg', '/seed-wardrobe/leather-sneakers-white.jpg', '/seed-wardrobe/silk-midi-dress-champagne.jpg'] },
-  { name: 'Edinburgh', items: ['/seed-wardrobe/cashmere-rollneck-camel.jpg', '/seed-wardrobe/wool-trouser-charcoal.jpg', '/seed-wardrobe/camel-wool-coat.jpg', '/seed-wardrobe/leather-knee-boots-black.jpg', '/seed-wardrobe/structured-tote-tan.jpg'] },
+  { name: 'Lisbon', items: ['/seed-wardrobe/silk-top-black.jpg', '/seed-wardrobe/dark-wash-jeans.jpg', '/seed-wardrobe/leather-gloves-olive.jpg', '/seed-wardrobe/leather-sneakers-white.jpg', '/seed-wardrobe/silk-midi-dress-champagne.jpg'] },
+  { name: 'Edinburgh', items: ['/seed-wardrobe/silk-blouse-ivory.jpg', '/seed-wardrobe/wool-trouser-charcoal.jpg', '/seed-wardrobe/wool-coat-charcoal.jpg', '/seed-wardrobe/leather-knee-boots-black.jpg', '/seed-wardrobe/structured-tote-tan.jpg'] },
 ];
 
 function TravelDemo() {
@@ -274,21 +274,24 @@ function TravelDemo() {
     dest.name.split('').forEach((_, i) => {
       const t = setTimeout(() => {
         if (!cancelled) setTypedName(dest.name.slice(0, i + 1));
-      }, 600 + i * 90);
+      }, 400 + i * 70);
       timerRef.current.push(t);
     });
 
-    const typingDuration = 600 + dest.name.length * 90;
+    // Tightened the cycle: faster typing (70ms/char), faster item reveals
+    // (180ms apart), shorter hold (1500ms) so destinations visibly cycle
+    // and visitors notice the change before scrolling past.
+    const typingDuration = 400 + dest.name.length * 70;
     dest.items.forEach((_, i) => {
       const t = setTimeout(() => {
         if (!cancelled) setRevealed(i + 1);
-      }, typingDuration + 600 + i * 240);
+      }, typingDuration + 400 + i * 180);
       timerRef.current.push(t);
     });
 
     const cycleTimer = setTimeout(() => {
       if (!cancelled) setActiveIdx((i) => (i + 1) % DESTINATIONS.length);
-    }, typingDuration + 600 + dest.items.length * 240 + 3000);
+    }, typingDuration + 400 + dest.items.length * 180 + 1500);
     timerRef.current.push(cycleTimer);
 
     return () => {
@@ -377,7 +380,7 @@ function TravelDemo() {
 // ─────────────────────────────────────────────────────────────────────────
 
 const CPW_SAMPLES = [
-  { name: 'Cashmere rollneck', brand: 'Pringle of Scotland', src: '/seed-wardrobe/cashmere-rollneck-camel.jpg', price: 280, maxWears: 70 },
+  { name: 'Cashmere rollneck', brand: 'Pringle of Scotland', src: '/seed-wardrobe/silk-blouse-ivory.jpg', price: 280, maxWears: 70 },
   { name: 'White poplin shirt', brand: 'The White Company', src: '/seed-wardrobe/poplin-shirt-white.jpg', price: 95, maxWears: 52 },
 ];
 
@@ -573,8 +576,8 @@ function ManifestoDemo() {
 // ─────────────────────────────────────────────────────────────────────────
 
 const LOOKBOOK_SAMPLES = [
-  { url: 'atelier.co/sh/3kF9p', items: ['/seed-wardrobe/cashmere-rollneck-camel.jpg', '/seed-wardrobe/wool-trouser-charcoal.jpg', '/seed-wardrobe/penny-loafers-tan.jpg'] },
-  { url: 'atelier.co/sh/M2qZx', items: ['/seed-wardrobe/silk-midi-dress-champagne.jpg', '/seed-wardrobe/camel-wool-coat.jpg', '/seed-wardrobe/leather-knee-boots-black.jpg'] },
+  { url: 'atelier.co/sh/3kF9p', items: ['/seed-wardrobe/silk-blouse-ivory.jpg', '/seed-wardrobe/wool-trouser-charcoal.jpg', '/seed-wardrobe/canvas-wedges-black.jpg'] },
+  { url: 'atelier.co/sh/M2qZx', items: ['/seed-wardrobe/silk-midi-dress-champagne.jpg', '/seed-wardrobe/wool-coat-charcoal.jpg', '/seed-wardrobe/leather-knee-boots-black.jpg'] },
 ];
 
 function LookbookDemo() {
@@ -689,18 +692,18 @@ const WEEK_DAYS = ['M', 'T', 'W', 'T', 'F', 'S', 'S'];
 const CALENDAR_SAMPLES = [
   {
     plan: [
-      { day: 0, src: '/seed-wardrobe/cashmere-rollneck-camel.jpg' },
+      { day: 0, src: '/seed-wardrobe/silk-blouse-ivory.jpg' },
       { day: 2, src: '/seed-wardrobe/silk-midi-dress-champagne.jpg' },
       { day: 4, src: '/seed-wardrobe/wool-trouser-charcoal.jpg' },
-      { day: 6, src: '/seed-wardrobe/breton-stripe-tee.jpg' },
+      { day: 6, src: '/seed-wardrobe/silk-top-black.jpg' },
     ],
     today: 2, // Wed highlighted
   },
   {
     plan: [
       { day: 1, src: '/seed-wardrobe/poplin-shirt-white.jpg' },
-      { day: 3, src: '/seed-wardrobe/camel-wool-coat.jpg' },
-      { day: 5, src: '/seed-wardrobe/silk-twill-scarf.jpg' },
+      { day: 3, src: '/seed-wardrobe/wool-coat-charcoal.jpg' },
+      { day: 5, src: '/seed-wardrobe/leather-gloves-olive.jpg' },
     ],
     today: 3, // Thu
   },

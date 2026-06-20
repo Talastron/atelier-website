@@ -24,14 +24,19 @@ import { ChevronRight } from 'lucide-react';
 // Annual is set as the "favourite" / highlighted default in the LS dashboard.
 const LS_CHECKOUT_URL = 'https://myatelier.lemonsqueezy.com/checkout/buy/a9d33c73-c40d-41b7-bb39-6aef6b39b525';
 
-// Founding Member URL — separate Lemon Squeezy variant for the £79/year
-// launch tier capped at 500 members. Replace with actual variant URL once
-// created in the LS dashboard. The webhook will track active founding
-// subscriptions and lock the variant when the cap is reached.
-const LS_FOUNDING_URL = 'https://myatelier.lemonsqueezy.com/checkout/buy/FOUNDING_VARIANT_ID';
+// Founding Member URL — same Annual variant as LS_CHECKOUT_URL, with the
+// KYMDE3NG discount code (£29 off forever, capped at 100 redemptions in LS)
+// pre-applied via the ?discount= param. Customers see £108 − £29 = £79/year
+// on the checkout page without typing anything. When the 100-redemption cap
+// is hit, LS auto-rejects further redemptions — the URL still loads but the
+// discount stops applying. Watch the redemption count in LS during launch
+// and swap this section out (or hide it) before customer #101 lands.
+const LS_FOUNDING_URL = 'https://myatelier.lemonsqueezy.com/checkout/buy/a9d33c73-c40d-41b7-bb39-6aef6b39b525?discount=KYMDE3NG';
 
 // Variant IDs — appear in webhook payloads; reference only, not used in URLs.
-// 1809234 = Monthly, 1809222 = Annual, Founding = TBC
+// 1809234 = Monthly, 1809222 = Annual (Founding members come in as Annual
+// + the KYMDE3NG discount, so they're indistinguishable from regular Annual
+// in the webhook payload's variant_id field).
 ---
 
 <Base title="The Keys to Atelier — Membership">
@@ -154,7 +159,7 @@ const LS_FOUNDING_URL = 'https://myatelier.lemonsqueezy.com/checkout/buy/FOUNDIN
             class="mx-auto mb-4"
             style="font-family: var(--atelier-font-display); font-size: clamp(1.625rem, 2.75vw, 2.25rem); line-height: 1.1; letter-spacing: -0.01em; color: var(--atelier-stone-900); max-width: 22ch;"
           >
-            For the <em style="font-weight: 400;">first five hundred</em>.
+            For the <em style="font-weight: 400;">first one hundred</em>.
           </h2>
 
           {/* Considered subhead */}
@@ -162,7 +167,7 @@ const LS_FOUNDING_URL = 'https://myatelier.lemonsqueezy.com/checkout/buy/FOUNDIN
             class="mx-auto mb-7"
             style="font-style: italic; font-family: var(--atelier-font-display); font-size: clamp(0.9375rem, 1.2vw, 1.0625rem); line-height: 1.65; color: var(--atelier-stone-600); max-width: 48ch;"
           >
-            The studio opens with a one-time invitation. The first five hundred
+            The studio opens with a one-time invitation. The first one hundred
             members take the keys at a founding price, kept locked at that
             price for as long as they remain.
           </p>

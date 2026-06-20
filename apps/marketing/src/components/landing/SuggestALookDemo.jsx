@@ -34,10 +34,10 @@ const BrassRule = () => (
 // sells the intelligence: "the Concierge composed something fresh, it didn't
 // just point at what was already on screen."
 const OUTFIT = [
-  { slot: 'Top',       name: 'Ivory tweed blazer',      src: '/seed-wardrobe/tweed-blazer-ivory.jpg' },
+  { slot: 'Top',       name: 'Ivory tweed blazer',      src: '/seed-wardrobe/tailored-blazer-cream.jpg' },
   { slot: 'Bottom',    name: 'Pewter silk slip',        src: '/seed-wardrobe/silk-slip-pewter.jpg' },
   { slot: 'Footwear',  name: 'Black knee boots',        src: '/seed-wardrobe/leather-knee-boots-black.jpg' },
-  { slot: 'Accessory', name: 'Quilted crossbody',       src: '/seed-wardrobe/quilted-crossbody-black.jpg' },
+  { slot: 'Accessory', name: 'Quilted crossbody',       src: '/seed-wardrobe/structured-tote-tan.jpg' },
 ];
 
 const STYLIST_NOTE =
@@ -46,12 +46,12 @@ const STYLIST_NOTE =
 // The faux background — different items entirely, so the modal looks like it
 // composed something rather than recycled what was visible.
 const FAUX_WARDROBE = [
-  '/seed-wardrobe/breton-stripe-tee.jpg',
+  '/seed-wardrobe/silk-top-black.jpg',
   '/seed-wardrobe/dark-wash-jeans.jpg',
   '/seed-wardrobe/leather-sneakers-white.jpg',
   '/seed-wardrobe/trench-coat-beige.jpg',
   '/seed-wardrobe/poplin-shirt-white.jpg',
-  '/seed-wardrobe/silk-twill-scarf.jpg',
+  '/seed-wardrobe/leather-gloves-olive.jpg',
 ];
 
 const STAGE = {

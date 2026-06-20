@@ -40,7 +40,7 @@ const STARTER_PROMPTS = [
 // Pre-written assistant reply. Inline tokens like [[name|src]] mark places
 // where an item thumbnail should render alongside the streaming text.
 // Kept tight (one sentence) so the whole reply fits the panel without scrolling.
-const ASSISTANT_REPLY = `For today's 15–27°C: the [[cashmere rollneck|/seed-wardrobe/cashmere-rollneck-camel.jpg]], [[charcoal wool trouser|/seed-wardrobe/wool-trouser-charcoal.jpg]], [[tan loafers|/seed-wardrobe/penny-loafers-tan.jpg]], and the [[structured tote|/seed-wardrobe/structured-tote-tan.jpg]]. A pair you've worn twelve times this season.`;
+const ASSISTANT_REPLY = `For today's 15–27°C: the [[ivory silk blouse|/seed-wardrobe/silk-blouse-ivory.jpg]], [[charcoal wool trouser|/seed-wardrobe/wool-trouser-charcoal.jpg]], [[black canvas wedges|/seed-wardrobe/canvas-wedges-black.jpg]], and the [[structured tote|/seed-wardrobe/structured-tote-tan.jpg]]. An outfit you've worn twelve times this season.`;
 
 // Stages of the demo loop
 const STAGE = {
