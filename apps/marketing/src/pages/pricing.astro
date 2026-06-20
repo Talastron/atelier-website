@@ -31,7 +31,14 @@ const LS_CHECKOUT_URL = 'https://myatelier.lemonsqueezy.com/checkout/buy/a9d33c7
 // is hit, LS auto-rejects further redemptions — the URL still loads but the
 // discount stops applying. Watch the redemption count in LS during launch
 // and swap this section out (or hide it) before customer #101 lands.
-const LS_FOUNDING_URL = 'https://myatelier.lemonsqueezy.com/checkout/buy/a9d33c73-c40d-41b7-bb39-6aef6b39b525?discount=KYMDE3NG';
+// LS's hosted checkout requires bracket-notation for prefill params
+// (?checkout[discount_code]=...) — the simpler ?discount= form is for the
+// embed/overlay flow and returns 422 on the hosted page. Customer arrives
+// at the checkout with the discount already applied; they can also enter
+// KYMDE3NG manually since the code is displayed on the card below as
+// belt-and-braces.
+const LS_FOUNDING_CODE = 'KYMDE3NG';
+const LS_FOUNDING_URL = `https://myatelier.lemonsqueezy.com/checkout/buy/a9d33c73-c40d-41b7-bb39-6aef6b39b525?checkout[discount_code]=${LS_FOUNDING_CODE}`;
 
 // Variant IDs — appear in webhook payloads; reference only, not used in URLs.
 // 1809234 = Monthly, 1809222 = Annual (Founding members come in as Annual
@@ -176,7 +183,7 @@ const LS_FOUNDING_URL = 'https://myatelier.lemonsqueezy.com/checkout/buy/a9d33c7
           </p>
 
           {/* Price moment */}
-          <div class="flex flex-col items-center mb-7">
+          <div class="flex flex-col items-center mb-5">
             <div class="flex items-baseline gap-2.5 mb-2">
               <span
                 style="font-family: var(--atelier-font-display); font-size: clamp(2.75rem, 5vw, 3.75rem); line-height: 1; color: var(--atelier-stone-900); letter-spacing: -0.015em;"
@@ -189,7 +196,32 @@ const LS_FOUNDING_URL = 'https://myatelier.lemonsqueezy.com/checkout/buy/a9d33c7
               class="text-[10px] uppercase"
               style="letter-spacing: 0.32em; color: var(--atelier-stone-400); font-weight: 500;"
             >
-              vs £108 public price · save £29 every year
+              vs £108 public price · save £29 every year · 14-day trial
+            </p>
+          </div>
+
+          {/* Founding code — shown as a brass-edged chip so customers see
+              the gift even when arriving via a link that strips query
+              params. Pre-filled at checkout via LS_FOUNDING_URL; can also
+              be typed manually if needed. */}
+          <div class="flex flex-col items-center mb-6">
+            <p
+              class="text-[9px] uppercase mb-2"
+              style="letter-spacing: 0.32em; color: var(--atelier-stone-500); font-weight: 600;"
+            >
+              Founding key
+            </p>
+            <code
+              class="px-4 py-2 rounded-full text-sm tracking-widest"
+              style="font-family: 'SF Mono', Menlo, Consolas, monospace; background: rgba(212, 179, 120, 0.12); border: 1px solid rgba(212, 179, 120, 0.45); color: var(--atelier-stone-900); letter-spacing: 0.18em;"
+            >
+              {LS_FOUNDING_CODE}
+            </code>
+            <p
+              class="text-[10px] mt-2 italic"
+              style="color: var(--atelier-stone-500); font-family: var(--atelier-font-display);"
+            >
+              applied automatically at checkout
             </p>
           </div>
 
@@ -255,7 +287,7 @@ const LS_FOUNDING_URL = 'https://myatelier.lemonsqueezy.com/checkout/buy/a9d33c7
             </p>
           </div>
 
-          <div class="mb-8 flex items-baseline gap-2">
+          <div class="mb-2 flex items-baseline gap-2">
             <span
               style="font-family: var(--atelier-font-display); font-size: 3rem; line-height: 1; color: var(--atelier-stone-900);"
             >
@@ -263,6 +295,12 @@ const LS_FOUNDING_URL = 'https://myatelier.lemonsqueezy.com/checkout/buy/a9d33c7
             </span>
             <span class="text-sm" style="color: var(--atelier-stone-500);">/ month</span>
           </div>
+          <p
+            class="text-[11px] uppercase mb-8"
+            style="letter-spacing: 0.24em; color: var(--atelier-stone-400); font-weight: 500;"
+          >
+            14-day trial · cancel anytime
+          </p>
 
           <a
             href={LS_CHECKOUT_URL}
@@ -315,10 +353,16 @@ const LS_FOUNDING_URL = 'https://myatelier.lemonsqueezy.com/checkout/buy/a9d33c7
             <span class="text-sm" style="color: rgba(255,255,255,0.55);">/ year</span>
           </div>
           <p
-            class="text-[11px] mb-8"
+            class="text-[11px]"
             style="color: var(--atelier-brass-300); letter-spacing: 0.06em;"
           >
             That's £9/month — save 25%.
+          </p>
+          <p
+            class="text-[11px] uppercase mb-8 mt-1"
+            style="letter-spacing: 0.24em; color: rgba(255,255,255,0.55); font-weight: 500;"
+          >
+            14-day trial · cancel anytime
           </p>
 
           <a
