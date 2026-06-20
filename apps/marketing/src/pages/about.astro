@@ -644,32 +644,9 @@ import ClosingMasthead from '../components/ClosingMasthead.astro';
     letter-spacing: -0.005em;
   }
 
-  /* Section CTA — quiet italic link with brass underline. Used after the
-     Manifesto sample so the visitor can move from 'I see what it looks
-     like' to 'I want my own' without scrolling to the page foot. */
-  .section-cta {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    font-family: var(--atelier-font-display);
-    font-style: italic;
-    font-size: clamp(1rem, 1.3vw, 1.125rem);
-    color: var(--atelier-brass-600);
-    text-decoration: none;
-    border-bottom: 1px solid var(--atelier-brass-300);
-    padding-bottom: 0.125rem;
-    transition: border-color 200ms ease, color 200ms ease;
-  }
-  .section-cta:hover {
-    border-color: var(--atelier-brass-600);
-    color: var(--atelier-stone-900);
-  }
-  .section-cta .arrow {
-    transition: transform 200ms ease;
-  }
-  .section-cta:hover .arrow {
-    transform: translateX(0.2rem);
-  }
+  /* (.section-cta moved to global.css for reuse across pages — same
+     class is used on /journal index for the lead-essay CTA. The
+     definition lives in apps/marketing/src/styles/global.css.) */
 
   /* Specimen brief — a static typeset exchange between a member and
      the Concierge, set in The Practice section. Reads as a transcript

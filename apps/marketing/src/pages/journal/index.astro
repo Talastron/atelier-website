@@ -3,6 +3,7 @@ import Base from '../../layouts/Base.astro';
 import Nav from '../../components/Nav.astro';
 import Footer from '../../components/Footer.astro';
 import ClosingMasthead from '../../components/ClosingMasthead.astro';
+import SectionOrnament from '../../components/SectionOrnament.astro';
 import { RevealOnScroll } from '../../components/RevealOnScroll.jsx';
 import { BrassRule, RomanNumeral } from '@atelier/ui';
 import { getCollection } from 'astro:content';
@@ -67,6 +68,8 @@ function fmtShortDate(d: Date) {
       </h1>
     </section>
 
+    <SectionOrnament />
+
     {/* ── Hero entry — the lead essay (or most recent piece) ───────────────── */}
     <section
       class="mx-auto"
@@ -116,20 +119,20 @@ function fmtShortDate(d: Date) {
             >
               {hero.data.description}
             </p>
-            <span
-              class="inline-flex items-center gap-2 mt-12 text-xs"
-              style="letter-spacing: var(--atelier-tracking-eyebrow); color: var(--atelier-stone-700); font-weight: 500;"
-            >
-              {hero.data.kind === 'essay' ? 'READ THE ESSAY' : 'READ THE NOTE'}
-              <span
-                class="transition-transform group-hover:translate-x-1"
-                style="color: var(--atelier-brass-600); display: inline-block;"
-              >→</span>
+            {/* Hero CTA — uses the .section-cta pattern (defined in
+                global.css), the same brass-underline italic link used
+                after the Manifesto sample on /about. Editorial register;
+                quieter than a button but stronger than a plain text link. */}
+            <span class="section-cta mt-12">
+              {hero.data.kind === 'essay' ? 'Read the essay' : 'Read the note'}
+              <span class="arrow" aria-hidden="true">→</span>
             </span>
           </div>
         </div>
       </a>
     </section>
+
+    <SectionOrnament />
 
     {/* ── Table of Contents ───────────────────────────────────────────────── */}
     <section
