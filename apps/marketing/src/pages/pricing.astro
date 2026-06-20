@@ -106,15 +106,18 @@ const LS_FOUNDING_URL = 'https://myatelier.lemonsqueezy.com/checkout/buy/a9d33c7
     </section>
 
     {/* ── Founding Members — the launch tier ───────────────────────────
-        Limited to the first 500 members. £79/year, locked at that price
+        Limited to the first 100 members. £79/year, locked at that price
         for life. Set as a vellum-card flourish so it reads as a printed
         invitation rather than a discount banner — same vocabulary as
         the Manifesto and Annual Report artefacts.
 
-        When the cap closes, this section can be hidden via a single
-        conditional or replaced with a quiet "Founding Members closed —
-        join us at the public price below" line. The webhook will track
-        subscriptions and surface a remaining count later. */}
+        Implemented as the KYMDE3NG discount code on the Annual variant
+        (£29 off forever, 100 redemption cap in LS). When the cap closes,
+        LS auto-rejects further redemptions — this section should be
+        hidden via a single conditional or replaced with a quiet
+        "Founding Members closed — join us at the public price below"
+        line, otherwise customer #101 sees a checkout with the discount
+        silently dropped. */}
     <section
       class="mx-auto"
       style="max-width: 720px; padding-inline: var(--atelier-page-padding); padding-bottom: clamp(3rem, 5vw, 4rem);"
@@ -206,7 +209,7 @@ const LS_FOUNDING_URL = 'https://myatelier.lemonsqueezy.com/checkout/buy/a9d33c7
             class="mt-6 text-[10px] uppercase"
             style="letter-spacing: 0.32em; color: var(--atelier-brass-600); font-weight: 600;"
           >
-            Limited to the first 500 · then withdrawn
+            Limited to the first 100 · then withdrawn
           </p>
         </div>
       </article>
