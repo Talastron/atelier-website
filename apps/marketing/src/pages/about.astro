@@ -26,11 +26,13 @@ import { ChevronRight } from 'lucide-react';
 import { RevealOnScroll } from '../components/RevealOnScroll.jsx';
 import { StudioChronicle } from '../components/StudioChronicle.jsx';
 import { PrinciplesPanel } from '../components/PrinciplesPanel.jsx';
+import { ChapterIndex } from '../components/ChapterIndex.jsx';
 import SectionOrnament from '../components/SectionOrnament.astro';
 ---
 
 <Base title="About — Atelier" description="Atelier is a house for the considered wardrobe. A private studio that reads what you own, composes from what you already have, and writes the manifesto of how you dress.">
   <Nav />
+  <ChapterIndex client:load />
   <main>
     {/* ── 1. Hero ───────────────────────────────────────────────────── */}
     <section
@@ -82,8 +84,9 @@ import SectionOrnament from '../components/SectionOrnament.astro';
 
     {/* ── 2. The Question ──────────────────────────────────────────── */}
     <section
+      id="question"
       class="mx-auto"
-      style="max-width: 760px; padding-inline: var(--atelier-page-padding); padding-bottom: clamp(4rem, 7vw, 6rem);"
+      style="max-width: 760px; padding-inline: var(--atelier-page-padding); padding-bottom: clamp(4rem, 7vw, 6rem); scroll-margin-top: 6rem;"
     >
       <p class="chapter-numeral">I</p>
       <div class="flex items-center gap-3 mb-6">
@@ -139,8 +142,9 @@ import SectionOrnament from '../components/SectionOrnament.astro';
 
     {/* ── 3. The Practice ──────────────────────────────────────────── */}
     <section
+      id="practice"
       class="mx-auto"
-      style="max-width: 760px; padding-inline: var(--atelier-page-padding); padding-bottom: clamp(4rem, 7vw, 6rem);"
+      style="max-width: 760px; padding-inline: var(--atelier-page-padding); padding-bottom: clamp(4rem, 7vw, 6rem); scroll-margin-top: 6rem;"
     >
       <p class="chapter-numeral">II</p>
       <div class="flex items-center gap-3 mb-6">
@@ -179,6 +183,30 @@ import SectionOrnament from '../components/SectionOrnament.astro';
           intelligence improves with the years of wears you log.
         </p>
 
+        {/* Specimen brief — a static editorial typeset exchange between a
+            member and the Concierge. Shows the AI's voice as a printed
+            transcript rather than a live demo, so it sits in the page's
+            editorial register without pulling focus the way an animated
+            demo would. */}
+        <aside class="specimen-brief">
+          <div class="specimen-eyebrow">
+            <span class="specimen-rule" aria-hidden="true"></span>
+            <p class="specimen-label">A specimen brief</p>
+            <span class="specimen-rule" aria-hidden="true"></span>
+          </div>
+          <div class="specimen-exchange">
+            <p class="specimen-prompt">
+              What should I wear for tomorrow's lunch in Pimlico?
+            </p>
+            <p class="specimen-reply">
+              The ivory silk blouse, charcoal wool trouser, and black canvas wedges
+              you wore last to the gallery opening. Carry the structured tote.
+              Layer the cream blazer if the rain holds — the forecast is on the edge.
+              <span class="specimen-attribution">— The Concierge</span>
+            </p>
+          </div>
+        </aside>
+
         <aside class="pull-quote">
           A piece of editorial criticism about your own closet, written for you alone.
         </aside>
@@ -211,8 +239,9 @@ import SectionOrnament from '../components/SectionOrnament.astro';
         edge. Sits between The Practice (what we do) and the Manifesto
         sample (proof of it) — logical flow: what → who → example. */}
     <section
+      id="for-whom"
       class="mx-auto"
-      style="max-width: 760px; padding-inline: var(--atelier-page-padding); padding-bottom: clamp(4rem, 7vw, 6rem);"
+      style="max-width: 760px; padding-inline: var(--atelier-page-padding); padding-bottom: clamp(4rem, 7vw, 6rem); scroll-margin-top: 6rem;"
     >
       <p class="chapter-numeral">IV</p>
       <div class="flex items-center gap-3 mb-6">
@@ -255,8 +284,9 @@ import SectionOrnament from '../components/SectionOrnament.astro';
         an artefact rather than another page section. Sample is for a
         fictional member named Lena to keep the framing honest. */}
     <section
+      id="manifesto"
       class="mx-auto"
-      style="max-width: var(--atelier-container-max); padding-inline: var(--atelier-page-padding); padding-bottom: clamp(4rem, 7vw, 6rem);"
+      style="max-width: var(--atelier-container-max); padding-inline: var(--atelier-page-padding); padding-bottom: clamp(4rem, 7vw, 6rem); scroll-margin-top: 6rem;"
     >
       <div class="text-center mb-12">
         <p class="chapter-numeral">V</p>
@@ -313,8 +343,9 @@ import SectionOrnament from '../components/SectionOrnament.astro';
 
     {/* ── 5. The Standard ──────────────────────────────────────────── */}
     <section
+      id="standard"
       class="mx-auto"
-      style="max-width: var(--atelier-container-max); padding-inline: var(--atelier-page-padding); padding-bottom: clamp(4rem, 7vw, 6rem);"
+      style="max-width: var(--atelier-container-max); padding-inline: var(--atelier-page-padding); padding-bottom: clamp(4rem, 7vw, 6rem); scroll-margin-top: 6rem;"
     >
       <div class="text-center mb-12">
         <p class="chapter-numeral">VI</p>
@@ -363,8 +394,9 @@ import SectionOrnament from '../components/SectionOrnament.astro';
         commission'). Place it as a small brand mark somewhere in
         this section, beside or beneath the signature line. */}
     <section
+      id="maker"
       class="mx-auto"
-      style="max-width: 1080px; padding-inline: var(--atelier-page-padding); padding-bottom: clamp(4rem, 7vw, 6rem);"
+      style="max-width: 1080px; padding-inline: var(--atelier-page-padding); padding-bottom: clamp(4rem, 7vw, 6rem); scroll-margin-top: 6rem;"
     >
       <p class="chapter-numeral">VII</p>
       <div class="flex items-center gap-3 mb-6">
@@ -639,6 +671,74 @@ import SectionOrnament from '../components/SectionOrnament.astro';
   }
   .section-cta:hover .arrow {
     transform: translateX(0.2rem);
+  }
+
+  /* Specimen brief — a static typeset exchange between a member and
+     the Concierge, set in The Practice section. Reads as a transcript
+     from a stylist's notebook rather than a UI demo. Vellum cream
+     background, brass hairlines bracketing the eyebrow, italic display
+     serif throughout. */
+  .specimen-brief {
+    margin: clamp(2rem, 3.5vw, 3rem) auto;
+    max-width: 48ch;
+    padding: clamp(1.5rem, 3vw, 2rem) clamp(1.75rem, 3.5vw, 2.5rem);
+    background: rgba(212, 179, 120, 0.05);
+    border: 1px solid rgba(212, 179, 120, 0.22);
+    border-radius: 4px;
+    position: relative;
+  }
+  .specimen-eyebrow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.625rem;
+    margin-bottom: 1.25rem;
+  }
+  .specimen-rule {
+    display: inline-block;
+    width: 16px;
+    height: 1px;
+    background: var(--atelier-brass-300);
+  }
+  .specimen-label {
+    font-size: 10px;
+    letter-spacing: 0.32em;
+    text-transform: uppercase;
+    color: var(--atelier-brass-600);
+    font-weight: 600;
+    margin: 0;
+  }
+  .specimen-exchange {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  .specimen-prompt {
+    font-family: var(--atelier-font-display);
+    font-style: italic;
+    font-size: clamp(0.9375rem, 1.2vw, 1.0625rem);
+    color: var(--atelier-stone-500);
+    line-height: 1.5;
+    margin: 0;
+    padding-left: 1rem;
+    border-left: 2px solid var(--atelier-stone-200);
+  }
+  .specimen-reply {
+    font-family: var(--atelier-font-display);
+    font-size: clamp(0.9375rem, 1.2vw, 1.0625rem);
+    color: var(--atelier-stone-800);
+    line-height: 1.65;
+    margin: 0;
+    padding-left: 1rem;
+    border-left: 2px solid var(--atelier-brass-600);
+  }
+  .specimen-attribution {
+    display: block;
+    margin-top: 0.5rem;
+    font-style: italic;
+    font-size: 0.8125rem;
+    color: var(--atelier-brass-600);
+    letter-spacing: 0.04em;
   }
 </style>
 

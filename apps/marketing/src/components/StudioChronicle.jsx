@@ -2,14 +2,19 @@ import { useEffect, useRef, useState } from 'react';
 
 /**
  * The Studio Chronicle — a short editorial heritage section on /about.
- * Four dated entries set as a printed-page ledger: Roman-numeral date
- * on the left (italic display serif, brass), single editorial line on
- * the right. Brass hairlines between entries; entries fade and lift in
- * sequence as the section enters view.
+ *
+ * Layout splits by viewport:
+ *   - Desktop (md+): horizontal timeline. A brass rule runs across the
+ *     top with a small brass diamond at each entry; date below the
+ *     diamond in italic display brass, then the editorial line beneath.
+ *     Reads as a printed chronology spread.
+ *   - Mobile (<md): vertical ledger as before. Date on the left, line
+ *     on the right, brass hairlines between entries. Horizontal scroll
+ *     on a phone would be hostile; vertical works.
  *
  * Atelier is young, but heritage components are central to luxury
- * branding because they assert the brand exists IN TIME. This is the
- * /about page's "we've been here, here's how we got here" moment.
+ * branding because they assert the brand exists IN TIME. The horizontal
+ * timeline form makes that assertion more vivid than a vertical list.
  *
  * Update the ENTRIES array as the studio's milestones land. New entries
  * append at the bottom; the oldest stays at the top (chronological).
@@ -50,11 +55,13 @@ export function StudioChronicle() {
 
   return (
     <section
+      id="chronicle"
       style={{
-        maxWidth: 760,
+        maxWidth: 1080,
         margin: '0 auto',
         paddingInline: 'var(--atelier-page-padding)',
         paddingBottom: 'clamp(4rem, 7vw, 6rem)',
+        scrollMarginTop: '6rem',
       }}
     >
       {/* Chapter numeral — italic display serif, brass, matching the
@@ -124,9 +131,105 @@ export function StudioChronicle() {
         How the studio came to be.
       </h2>
 
-      {/* Chronicle ledger — Roman date | editorial line, brass hairlines */}
+      {/* ── Desktop: horizontal timeline (md+) ──────────────────────────
+          A brass rule runs across the top with diamond tick marks at
+          each entry. The diamond is the same shape used in the
+          SectionOrnament and the closing masthead — recurring brand
+          mark across the page. */}
       <ol
         ref={listRef}
+        className="hidden md:grid"
+        style={{
+          gridTemplateColumns: `repeat(${ENTRIES.length}, 1fr)`,
+          gap: '1.5rem',
+          listStyle: 'none',
+          padding: 0,
+          margin: 0,
+          position: 'relative',
+          paddingTop: '3rem',
+        }}
+      >
+        {/* The horizontal brass rule. Starts at the centre of the first
+            column, ends at the centre of the last — so the tick marks
+            sit on the rule cleanly without overshoot. */}
+        <div
+          aria-hidden="true"
+          style={{
+            position: 'absolute',
+            top: '0.875rem',
+            left: `${100 / (ENTRIES.length * 2)}%`,
+            right: `${100 / (ENTRIES.length * 2)}%`,
+            height: '1px',
+            background: 'var(--atelier-brass-300)',
+            opacity: revealed ? 1 : 0,
+            transition: 'opacity 800ms cubic-bezier(0.22, 1, 0.36, 1)',
+          }}
+        />
+
+        {ENTRIES.map((entry, i) => (
+          <li
+            key={`${entry.date}-h`}
+            style={{
+              position: 'relative',
+              textAlign: 'center',
+              opacity: revealed ? 1 : 0,
+              transform: revealed ? 'translateY(0)' : 'translateY(0.75rem)',
+              transition: `opacity 700ms cubic-bezier(0.22, 1, 0.36, 1) ${i * 140}ms, transform 700ms cubic-bezier(0.22, 1, 0.36, 1) ${i * 140}ms`,
+            }}
+          >
+            {/* Brass diamond on the timeline */}
+            <span
+              aria-hidden="true"
+              style={{
+                position: 'absolute',
+                top: '-3.625rem',
+                left: '50%',
+                transform: 'translateX(-50%) rotate(45deg)',
+                width: '7px',
+                height: '7px',
+                background: 'var(--atelier-brass-600)',
+              }}
+            />
+
+            {/* Date */}
+            <p
+              style={{
+                fontFamily: 'var(--atelier-font-display)',
+                fontStyle: 'italic',
+                fontSize: '0.9375rem',
+                color: 'var(--atelier-brass-600)',
+                letterSpacing: '0.04em',
+                whiteSpace: 'nowrap',
+                margin: '0 0 0.75rem 0',
+              }}
+            >
+              {entry.date}
+            </p>
+
+            {/* Editorial line */}
+            <p
+              style={{
+                fontFamily: 'var(--atelier-font-display)',
+                fontSize: '1rem',
+                lineHeight: 1.45,
+                color: 'var(--atelier-stone-800)',
+                margin: 0,
+                maxWidth: '20ch',
+                marginInline: 'auto',
+              }}
+            >
+              {entry.line}
+            </p>
+          </li>
+        ))}
+      </ol>
+
+      {/* ── Mobile: vertical ledger (<md) ───────────────────────────
+          Horizontal scroll on a phone would be hostile; the vertical
+          ledger reads cleanly on a narrow viewport. Same observer
+          (listRef above) triggers the reveal regardless of layout. */}
+      <ol
+        className="md:hidden"
         style={{
           listStyle: 'none',
           padding: 0,
@@ -135,7 +238,7 @@ export function StudioChronicle() {
       >
         {ENTRIES.map((entry, i) => (
           <li
-            key={entry.date}
+            key={`${entry.date}-v`}
             style={{
               display: 'grid',
               gridTemplateColumns: 'minmax(6rem, max-content) 1fr',
@@ -143,8 +246,6 @@ export function StudioChronicle() {
               alignItems: 'baseline',
               paddingTop: '1.5rem',
               paddingBottom: '1.5rem',
-              // Slightly stronger brass at the top and bottom of the ledger
-              // to bracket it as a printed table; lighter between entries.
               borderTop:
                 i === 0
                   ? '1px solid rgba(212, 179, 120, 0.4)'
@@ -158,7 +259,6 @@ export function StudioChronicle() {
               transition: `opacity 700ms cubic-bezier(0.22, 1, 0.36, 1) ${i * 140}ms, transform 700ms cubic-bezier(0.22, 1, 0.36, 1) ${i * 140}ms`,
             }}
           >
-            {/* Date — italic display serif, brass, baseline-aligned */}
             <span
               style={{
                 fontFamily: 'var(--atelier-font-display)',
@@ -171,8 +271,6 @@ export function StudioChronicle() {
             >
               {entry.date}
             </span>
-
-            {/* Line */}
             <p
               style={{
                 fontFamily: 'var(--atelier-font-display)',
