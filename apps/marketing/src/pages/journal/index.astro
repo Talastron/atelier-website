@@ -2,6 +2,8 @@
 import Base from '../../layouts/Base.astro';
 import Nav from '../../components/Nav.astro';
 import Footer from '../../components/Footer.astro';
+import ClosingMasthead from '../../components/ClosingMasthead.astro';
+import { RevealOnScroll } from '../../components/RevealOnScroll.jsx';
 import { BrassRule, RomanNumeral } from '@atelier/ui';
 import { getCollection } from 'astro:content';
 
@@ -109,7 +111,7 @@ function fmtShortDate(d: Date) {
               {hero.data.title}
             </h2>
             <p
-              class="text-lg md:text-xl"
+              class="text-lg md:text-xl dropcap-brass"
               style="color: var(--atelier-stone-600); line-height: var(--atelier-leading-snug); max-width: 52ch;"
             >
               {hero.data.description}
@@ -154,13 +156,17 @@ function fmtShortDate(d: Date) {
           // chess-board drape only applies to notes — essays break the rhythm
           // and reset the counter.
           let noteVisualIdx = 0;
-          return rest.map((post) => {
+          return rest.map((post, i) => {
             const isEssay = post.data.kind === 'essay';
             const n = kindNumber(post);
+            // Stagger the scroll-reveal across cards. Notes within a row get
+            // sequential delays; essays (full-width) get a longer beat.
+            const revealDelay = (i % 4) * 100;
             if (isEssay) {
               noteVisualIdx = 0; // reset drape after a full-row break
               return (
                 <li class="md:col-span-2">
+                  <RevealOnScroll client:visible delay={revealDelay}>
                   <a href={`/journal/${post.slug}`} class="block group">
                     <div class="flex items-baseline gap-5 mb-7">
                       <p
@@ -202,6 +208,7 @@ function fmtShortDate(d: Date) {
                       {post.data.description}
                     </p>
                   </a>
+                  </RevealOnScroll>
                 </li>
               );
             }
@@ -210,6 +217,7 @@ function fmtShortDate(d: Date) {
             noteVisualIdx += 1;
             return (
               <li class={isOffset ? 'md:mt-28' : ''}>
+                <RevealOnScroll client:visible delay={revealDelay}>
                 <a href={`/journal/${post.slug}`} class="block group">
                   <div class="flex items-baseline gap-4 mb-5">
                     <p
@@ -249,6 +257,7 @@ function fmtShortDate(d: Date) {
                     {post.data.description}
                   </p>
                 </a>
+                </RevealOnScroll>
               </li>
             );
           });
@@ -256,10 +265,10 @@ function fmtShortDate(d: Date) {
       </ol>
     </section>
 
-    {/* ── Colophon strip ──────────────────────────────────────────────────── */}
+    {/* ── Colophon strip — journal-specific closer ────────────────────────── */}
     <section
       class="text-center"
-      style="padding-block: 5rem; border-top: 1px solid var(--atelier-stone-200);"
+      style="padding-block: 5rem 3.5rem; border-top: 1px solid var(--atelier-stone-200);"
     >
       <div class="flex items-center justify-center gap-4">
         <BrassRule client:load />
@@ -272,6 +281,11 @@ function fmtShortDate(d: Date) {
         <BrassRule client:load />
       </div>
     </section>
+
+    {/* Site-wide closing masthead — bookends the page with the same brand
+        imprint that closes /about and /pricing. Sits beneath the journal-
+        specific 'END OF CONTENTS' strip; two-layer closer. */}
+    <ClosingMasthead />
 
   </main>
   <Footer />

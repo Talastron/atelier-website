@@ -96,3 +96,22 @@ body {
   display: block;
   margin: 2.75rem auto;
 }
+
+/* ── Reusable brass drop-cap utility ──────────────────────────────────────
+   Apply class="dropcap-brass" to any block-level element whose first
+   letter you want set in display serif brass at hero-standfirst scale.
+   Smaller than .prose-atelier's drop-cap (which is sized for long-form
+   article body); this one is calibrated for shorter standfirst paragraphs
+   on landing-style sections (journal index hero, etc.). */
+.dropcap-brass::first-letter {
+  font-family: var(--atelier-font-display);
+  font-weight: 500;
+  font-feature-settings: 'onum' on;
+  color: var(--atelier-brass-600);
+  float: left;
+  font-size: 4rem;
+  line-height: 0.85;
+  padding-top: 0.3rem;
+  padding-right: 0.6rem;
+  padding-bottom: 0.05rem;
+}

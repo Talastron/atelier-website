@@ -2,6 +2,7 @@
 import Base from '../../layouts/Base.astro';
 import Nav from '../../components/Nav.astro';
 import Footer from '../../components/Footer.astro';
+import ClosingMasthead from '../../components/ClosingMasthead.astro';
 import { BrassRule, Colophon } from '@atelier/ui';
 import { getCollection } from 'astro:content';
 
@@ -155,5 +156,11 @@ const mastheadLabel = `THE JOURNAL · VOL I · ${kindLabel} N°${String(kindNumb
       </a>
     </div>
   </article>
+
+  {/* Site-wide closing masthead — bookends the article with the same brand
+      imprint that closes /about, /pricing, and the journal index. Sits
+      below the in-article Colophon and the Return-to-Quarterly link. */}
+  <ClosingMasthead />
+
   <Footer />
 </Base>

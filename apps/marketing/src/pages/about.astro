@@ -29,6 +29,7 @@ import { PrinciplesPanel } from '../components/PrinciplesPanel.jsx';
 import { ChapterIndex } from '../components/ChapterIndex.jsx';
 import { SignatureDraw } from '../components/SignatureDraw.jsx';
 import SectionOrnament from '../components/SectionOrnament.astro';
+import ClosingMasthead from '../components/ClosingMasthead.astro';
 ---
 
 <Base title="About — Atelier" description="Atelier is a house for the considered wardrobe. A private studio that reads what you own, composes from what you already have, and writes the manifesto of how you dress.">
@@ -579,32 +580,9 @@ import SectionOrnament from '../components/SectionOrnament.astro';
       </a>
     </section>
 
-    {/* ── Closing masthead ────────────────────────────────────────────
-        Closes the page the way a printed catalogue does — centred
-        typeset mark with the year in Roman numerals. Same vocabulary
-        as the closing masthead on /pricing so the two pages bookend
-        with the same brand mark. */}
-    <div
-      class="mx-auto text-center"
-      style="max-width: 600px; padding-inline: var(--atelier-page-padding); padding-bottom: clamp(4rem, 6vw, 5rem);"
-    >
-      <div class="flex items-center justify-center gap-4 mb-3">
-        <span aria-hidden="true" style="display: inline-block; width: 32px; height: 1px; background: var(--atelier-brass-300);"></span>
-        <span aria-hidden="true" style="display: inline-block; width: 5px; height: 5px; background: var(--atelier-brass-600); transform: rotate(45deg);"></span>
-        <span aria-hidden="true" style="display: inline-block; width: 32px; height: 1px; background: var(--atelier-brass-300);"></span>
-      </div>
-      <p
-        style="font-family: var(--atelier-font-display); font-size: 0.875rem; letter-spacing: 0.6em; text-indent: 0.6em; color: var(--atelier-brass-600); text-transform: uppercase;"
-      >
-        Atelier
-      </p>
-      <p
-        class="mt-1"
-        style="font-family: var(--atelier-font-display); font-style: italic; font-size: 0.75rem; letter-spacing: 0.18em; color: var(--atelier-stone-400);"
-      >
-        est. MMXXVI · London
-      </p>
-    </div>
+    {/* Closing masthead — site-wide brand imprint that closes every
+        long page (about, pricing, journal index, journal article). */}
+    <ClosingMasthead />
   </main>
   <Footer />
 </Base>

@@ -1,0 +1,47 @@
+---
+// apps/marketing/src/components/ClosingMasthead.astro
+//
+// Site-wide closing masthead — brass hairlines flanking a small rotated
+// brass lozenge, the typeset ATELIER wordmark beneath, then the est.
+// MMXXVI · London italic line. Closes long-form pages the way a printed
+// catalogue or publication does: the last page-turn carries the imprint.
+//
+// Used on /about, /pricing, /journal (index), and /journal/[slug]. Pages
+// keep their own page-specific closers (END OF CONTENTS · VOLUME I on
+// the journal index, Colophon on articles) above this; the masthead is
+// the site-wide imprint that bookends every long page.
+//
+// Visually mirrors the bookend ornament on the /about hero — the page
+// opens and closes with the same brass-rule + lozenge composition.
+---
+
+<div
+  class="mx-auto text-center"
+  style="max-width: 600px; padding-inline: var(--atelier-page-padding); padding-bottom: clamp(4rem, 6vw, 5rem);"
+>
+  <div class="flex items-center justify-center gap-4 mb-3">
+    <span
+      aria-hidden="true"
+      style="display: inline-block; width: 32px; height: 1px; background: var(--atelier-brass-300);"
+    ></span>
+    <span
+      aria-hidden="true"
+      style="display: inline-block; width: 5px; height: 5px; background: var(--atelier-brass-600); transform: rotate(45deg);"
+    ></span>
+    <span
+      aria-hidden="true"
+      style="display: inline-block; width: 32px; height: 1px; background: var(--atelier-brass-300);"
+    ></span>
+  </div>
+  <p
+    style="font-family: var(--atelier-font-display); font-size: 0.875rem; letter-spacing: 0.6em; text-indent: 0.6em; color: var(--atelier-brass-600); text-transform: uppercase;"
+  >
+    Atelier
+  </p>
+  <p
+    class="mt-1"
+    style="font-family: var(--atelier-font-display); font-style: italic; font-size: 0.75rem; letter-spacing: 0.18em; color: var(--atelier-stone-400);"
+  >
+    est. MMXXVI · London
+  </p>
+</div>

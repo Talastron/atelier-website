@@ -21,6 +21,7 @@ import Footer from '../components/Footer.astro';
 import { BrassRule } from '@atelier/ui';
 import { PricingInsideList } from '../components/PricingInsideList.jsx';
 import { ChapterIndex } from '../components/ChapterIndex.jsx';
+import ClosingMasthead from '../components/ClosingMasthead.astro';
 
 // Chapter index supplied to <ChapterIndex /> on this page. Four
 // chapters matching the four numbered sections below: the founding
@@ -574,34 +575,9 @@ const LS_FOUNDING_URL = `https://myatelier.lemonsqueezy.com/checkout/buy/a9d33c7
       </p>
     </div>
 
-    {/* ── Closing masthead — the page closes the way a printed catalogue
-        does: a centred typeset mark with the year in Roman numerals.
-        Echoes the eyebrow at the top of the hero so the page reads as
-        a bound object with covers, not an endless scroll. */}
-    <div
-      class="mx-auto text-center"
-      style="max-width: 600px; padding-inline: var(--atelier-page-padding); padding-bottom: clamp(4rem, 6vw, 5rem);"
-    >
-      <div class="flex items-center justify-center gap-4 mb-3">
-        <span aria-hidden="true" style="display: inline-block; width: 32px; height: 1px; background: var(--atelier-brass-300);"></span>
-        <span
-          aria-hidden="true"
-          style="display: inline-block; width: 5px; height: 5px; background: var(--atelier-brass-600); transform: rotate(45deg);"
-        ></span>
-        <span aria-hidden="true" style="display: inline-block; width: 32px; height: 1px; background: var(--atelier-brass-300);"></span>
-      </div>
-      <p
-        style="font-family: var(--atelier-font-display); font-size: 0.875rem; letter-spacing: 0.6em; text-indent: 0.6em; color: var(--atelier-brass-600); text-transform: uppercase;"
-      >
-        Atelier
-      </p>
-      <p
-        class="mt-1"
-        style="font-family: var(--atelier-font-display); font-style: italic; font-size: 0.75rem; letter-spacing: 0.18em; color: var(--atelier-stone-400);"
-      >
-        est. MMXXVI · London
-      </p>
-    </div>
+    {/* Closing masthead — site-wide brand imprint that closes every
+        long page (about, pricing, journal index, journal article). */}
+    <ClosingMasthead />
   </main>
   <Footer />
 </Base>
