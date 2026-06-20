@@ -26,6 +26,7 @@ import { ChevronRight } from 'lucide-react';
 import { RevealOnScroll } from '../components/RevealOnScroll.jsx';
 import { StudioChronicle } from '../components/StudioChronicle.jsx';
 import { PrinciplesPanel } from '../components/PrinciplesPanel.jsx';
+import SectionOrnament from '../components/SectionOrnament.astro';
 ---
 
 <Base title="About — Atelier" description="Atelier is a house for the considered wardrobe. A private studio that reads what you own, composes from what you already have, and writes the manifesto of how you dress.">
@@ -74,21 +75,10 @@ import { PrinciplesPanel } from '../components/PrinciplesPanel.jsx';
           with the same care a fashion house gives a collection.
         </p>
 
-        {/* Scroll cue */}
-        <div class="mt-14 flex flex-col items-center gap-2">
-          <span
-            class="text-[10px] uppercase"
-            style="letter-spacing: 0.3em; color: var(--atelier-stone-400);"
-          >
-            Read on
-          </span>
-          <span
-            aria-hidden="true"
-            style="display: inline-block; width: 1px; height: 28px; background: linear-gradient(to bottom, var(--atelier-stone-300), transparent);"
-          />
-        </div>
       </div>
     </section>
+
+    <SectionOrnament />
 
     {/* ── 2. The Question ──────────────────────────────────────────── */}
     <section
@@ -145,6 +135,8 @@ import { PrinciplesPanel } from '../components/PrinciplesPanel.jsx';
       </div>
     </section>
 
+    <SectionOrnament />
+
     {/* ── 3. The Practice ──────────────────────────────────────────── */}
     <section
       class="mx-auto"
@@ -200,6 +192,8 @@ import { PrinciplesPanel } from '../components/PrinciplesPanel.jsx';
       </div>
     </section>
 
+    <SectionOrnament />
+
     {/* ── 3.25 The Chronicle — heritage moment ──────────────────────
         Editorial heritage component. Even though Atelier is young, a
         chronicle asserts the brand exists IN TIME — a luxury-branding
@@ -207,6 +201,8 @@ import { PrinciplesPanel } from '../components/PrinciplesPanel.jsx';
         as the section enters view. Edit the ENTRIES array in
         StudioChronicle.jsx to reflect real milestones as they land. */}
     <StudioChronicle client:visible />
+
+    <SectionOrnament />
 
     {/* ── 3.5 For Whom — audience qualifier ──────────────────────────
         Three "For the…" lines that qualify the reader in or out
@@ -251,6 +247,8 @@ import { PrinciplesPanel } from '../components/PrinciplesPanel.jsx';
         </p>
       </div>
     </section>
+
+    <SectionOrnament />
 
     {/* ── 4. A Style Manifesto — embedded sample ─────────────────────
         The centrepiece. Framed as a vellum certificate so it reads as
@@ -311,6 +309,8 @@ import { PrinciplesPanel } from '../components/PrinciplesPanel.jsx';
       </div>
     </section>
 
+    <SectionOrnament />
+
     {/* ── 5. The Standard ──────────────────────────────────────────── */}
     <section
       class="mx-auto"
@@ -342,6 +342,8 @@ import { PrinciplesPanel } from '../components/PrinciplesPanel.jsx';
           inside PrinciplesPanel.jsx — edit there to update copy. */}
       <PrinciplesPanel client:visible />
     </section>
+
+    <SectionOrnament />
 
     {/* ── 5.5 The Maker — founder presence ──────────────────────────
         Two-column on desktop: framed photo on the left, first-person
@@ -484,6 +486,8 @@ import { PrinciplesPanel } from '../components/PrinciplesPanel.jsx';
       </div>
     </section>
 
+    <SectionOrnament />
+
     {/* ── 6. Closing — invitation to the studio ────────────────────── */}
     <section
       class="mx-auto"
@@ -522,6 +526,33 @@ import { PrinciplesPanel } from '../components/PrinciplesPanel.jsx';
         <ChevronRight size={16} strokeWidth={1.75} client:load />
       </a>
     </section>
+
+    {/* ── Closing masthead ────────────────────────────────────────────
+        Closes the page the way a printed catalogue does — centred
+        typeset mark with the year in Roman numerals. Same vocabulary
+        as the closing masthead on /pricing so the two pages bookend
+        with the same brand mark. */}
+    <div
+      class="mx-auto text-center"
+      style="max-width: 600px; padding-inline: var(--atelier-page-padding); padding-bottom: clamp(4rem, 6vw, 5rem);"
+    >
+      <div class="flex items-center justify-center gap-4 mb-3">
+        <span aria-hidden="true" style="display: inline-block; width: 32px; height: 1px; background: var(--atelier-brass-300);"></span>
+        <span aria-hidden="true" style="display: inline-block; width: 5px; height: 5px; background: var(--atelier-brass-600); transform: rotate(45deg);"></span>
+        <span aria-hidden="true" style="display: inline-block; width: 32px; height: 1px; background: var(--atelier-brass-300);"></span>
+      </div>
+      <p
+        style="font-family: var(--atelier-font-display); font-size: 0.875rem; letter-spacing: 0.6em; text-indent: 0.6em; color: var(--atelier-brass-600); text-transform: uppercase;"
+      >
+        Atelier
+      </p>
+      <p
+        class="mt-1"
+        style="font-family: var(--atelier-font-display); font-style: italic; font-size: 0.75rem; letter-spacing: 0.18em; color: var(--atelier-stone-400);"
+      >
+        est. MMXXVI · London
+      </p>
+    </div>
   </main>
   <Footer />
 </Base>

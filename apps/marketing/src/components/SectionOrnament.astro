@@ -1,0 +1,29 @@
+---
+// apps/marketing/src/components/SectionOrnament.astro
+//
+// Small brass fleuron — two hairlines flanking a rotated brass square.
+// Used between sections on /about (and any future long-form page) to
+// mark structural transitions like a printed-page fleuron rather than
+// just whitespace.
+//
+// Sized small and at 55% opacity so it stays subtle even when repeated
+// 7-8 times down a page. The diamond is the recurring brand mark; the
+// same shape appears in the closing masthead and as a typographic
+// accent across the site.
+---
+
+<div
+  aria-hidden="true"
+  class="mx-auto flex items-center justify-center gap-3"
+  style="padding-block: clamp(1.5rem, 2.5vw, 2rem); opacity: 0.55;"
+>
+  <span
+    style="display: inline-block; width: 22px; height: 1px; background: var(--atelier-brass-300);"
+  ></span>
+  <span
+    style="display: inline-block; width: 4px; height: 4px; background: var(--atelier-brass-600); transform: rotate(45deg);"
+  ></span>
+  <span
+    style="display: inline-block; width: 22px; height: 1px; background: var(--atelier-brass-300);"
+  ></span>
+</div>
