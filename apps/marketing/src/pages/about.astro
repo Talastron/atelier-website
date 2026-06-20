@@ -23,6 +23,9 @@ import Footer from '../components/Footer.astro';
 import ManifestoArtefact from '../components/ManifestoArtefact.astro';
 import { BrassRule } from '@atelier/ui';
 import { ChevronRight } from 'lucide-react';
+import { RevealOnScroll } from '../components/RevealOnScroll.jsx';
+import { StudioChronicle } from '../components/StudioChronicle.jsx';
+import { PrinciplesPanel } from '../components/PrinciplesPanel.jsx';
 ---
 
 <Base title="About — Atelier" description="Atelier is a house for the considered wardrobe. A private studio that reads what you own, composes from what you already have, and writes the manifesto of how you dress.">
@@ -101,12 +104,14 @@ import { ChevronRight } from 'lucide-react';
           Where we began
         </p>
       </div>
-      <h2
-        class="mb-8"
-        style="font-family: var(--atelier-font-display); font-size: clamp(1.75rem, 3vw, 2.5rem); line-height: 1.15; letter-spacing: -0.01em; color: var(--atelier-stone-900); max-width: 22ch;"
-      >
-        It started with a private question.
-      </h2>
+      <RevealOnScroll client:visible>
+        <h2
+          class="mb-8"
+          style="font-family: var(--atelier-font-display); font-size: clamp(1.75rem, 3vw, 2.5rem); line-height: 1.15; letter-spacing: -0.01em; color: var(--atelier-stone-900); max-width: 22ch;"
+        >
+          It started with a private question.
+        </h2>
+      </RevealOnScroll>
       <div
         class="space-y-6"
         style="font-size: 1.0625rem; line-height: 1.75; color: var(--atelier-stone-700);"
@@ -148,12 +153,14 @@ import { ChevronRight } from 'lucide-react';
           The Practice
         </p>
       </div>
-      <h2
-        class="mb-8"
-        style="font-family: var(--atelier-font-display); font-size: clamp(1.75rem, 3vw, 2.5rem); line-height: 1.15; letter-spacing: -0.01em; color: var(--atelier-stone-900); max-width: 24ch;"
-      >
-        What goes on inside the studio.
-      </h2>
+      <RevealOnScroll client:visible>
+        <h2
+          class="mb-8"
+          style="font-family: var(--atelier-font-display); font-size: clamp(1.75rem, 3vw, 2.5rem); line-height: 1.15; letter-spacing: -0.01em; color: var(--atelier-stone-900); max-width: 24ch;"
+        >
+          What goes on inside the studio.
+        </h2>
+      </RevealOnScroll>
       <div
         class="space-y-6"
         style="font-size: 1.0625rem; line-height: 1.75; color: var(--atelier-stone-700);"
@@ -181,6 +188,14 @@ import { ChevronRight } from 'lucide-react';
       </div>
     </section>
 
+    {/* ── 3.25 The Chronicle — heritage moment ──────────────────────
+        Editorial heritage component. Even though Atelier is young, a
+        chronicle asserts the brand exists IN TIME — a luxury-branding
+        staple. Roman-numeral dated entries fade and lift in sequence
+        as the section enters view. Edit the ENTRIES array in
+        StudioChronicle.jsx to reflect real milestones as they land. */}
+    <StudioChronicle client:visible />
+
     {/* ── 3.5 For Whom — audience qualifier ──────────────────────────
         Three "For the…" lines that qualify the reader in or out
         clearly. Closing distinction (not for those who want more,
@@ -200,12 +215,14 @@ import { ChevronRight } from 'lucide-react';
           For Whom
         </p>
       </div>
-      <h2
-        class="mb-8"
-        style="font-family: var(--atelier-font-display); font-size: clamp(1.75rem, 3vw, 2.5rem); line-height: 1.15; letter-spacing: -0.01em; color: var(--atelier-stone-900); max-width: 24ch;"
-      >
-        For the considered closet.
-      </h2>
+      <RevealOnScroll client:visible>
+        <h2
+          class="mb-8"
+          style="font-family: var(--atelier-font-display); font-size: clamp(1.75rem, 3vw, 2.5rem); line-height: 1.15; letter-spacing: -0.01em; color: var(--atelier-stone-900); max-width: 24ch;"
+        >
+          For the considered closet.
+        </h2>
+      </RevealOnScroll>
       <div
         class="space-y-6"
         style="font-size: 1.0625rem; line-height: 1.75; color: var(--atelier-stone-700);"
@@ -295,77 +312,11 @@ import { ChevronRight } from 'lucide-react';
         </h2>
       </div>
 
-      {/* Three principles — numbered, brass-tinted, set with editorial gravity */}
-      <ul
-        class="mx-auto grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-12"
-        style="max-width: 1000px;"
-      >
-        <li class="text-center md:text-left">
-          <p
-            class="text-[10px] uppercase mb-4"
-            style="letter-spacing: 0.32em; color: var(--atelier-brass-600); font-weight: 600;"
-          >
-            N°. I
-          </p>
-          <h3
-            class="mb-3"
-            style="font-family: var(--atelier-font-display); font-size: 1.375rem; line-height: 1.2; color: var(--atelier-stone-900);"
-          >
-            Your wardrobe is your data.
-          </h3>
-          <p
-            style="font-size: 0.9375rem; line-height: 1.65; color: var(--atelier-stone-600);"
-          >
-            Your collection, your wears, your manifesto — they belong to you
-            and to no one else. We will not sell it, rent it, or train external
-            models on it.
-          </p>
-        </li>
-
-        <li class="text-center md:text-left">
-          <p
-            class="text-[10px] uppercase mb-4"
-            style="letter-spacing: 0.32em; color: var(--atelier-brass-600); font-weight: 600;"
-          >
-            N°. II
-          </p>
-          <h3
-            class="mb-3"
-            style="font-family: var(--atelier-font-display); font-size: 1.375rem; line-height: 1.2; color: var(--atelier-stone-900);"
-          >
-            The aim is not to acquire more.
-          </h3>
-          <p
-            style="font-size: 0.9375rem; line-height: 1.65; color: var(--atelier-stone-600);"
-          >
-            Atelier sells nothing else. No affiliate links, no marketplace, no
-            promoted pieces. The studio works in your favour because it has
-            no other interest to serve.
-          </p>
-        </li>
-
-        <li class="text-center md:text-left">
-          <p
-            class="text-[10px] uppercase mb-4"
-            style="letter-spacing: 0.32em; color: var(--atelier-brass-600); font-weight: 600;"
-          >
-            N°. III
-          </p>
-          <h3
-            class="mb-3"
-            style="font-family: var(--atelier-font-display); font-size: 1.375rem; line-height: 1.2; color: var(--atelier-stone-900);"
-          >
-            Restraint is a feature.
-          </h3>
-          <p
-            style="font-size: 0.9375rem; line-height: 1.65; color: var(--atelier-stone-600);"
-          >
-            No notifications begging you back. No streaks, no gamification, no
-            growth-team confetti. The studio is here when you arrive and quiet
-            when you don't.
-          </p>
-        </li>
-      </ul>
+      {/* Three principles — numbered, brass-tinted, scroll-revealed in
+          sequence with a brass hairline that draws beneath each title as
+          the principle arrives. Content lives in the PRINCIPLES array
+          inside PrinciplesPanel.jsx — edit there to update copy. */}
+      <PrinciplesPanel client:visible />
     </section>
 
     {/* ── 5.5 The Maker — founder presence ──────────────────────────
@@ -389,12 +340,14 @@ import { ChevronRight } from 'lucide-react';
           The Maker
         </p>
       </div>
-      <h2
-        class="mb-8"
-        style="font-family: var(--atelier-font-display); font-size: clamp(1.75rem, 3vw, 2.5rem); line-height: 1.15; letter-spacing: -0.01em; color: var(--atelier-stone-900); max-width: 24ch;"
-      >
-        Atelier is composed by <em style="font-weight: 400;">Sibylle Sherwood</em>.
-      </h2>
+      <RevealOnScroll client:visible>
+        <h2
+          class="mb-8"
+          style="font-family: var(--atelier-font-display); font-size: clamp(1.75rem, 3vw, 2.5rem); line-height: 1.15; letter-spacing: -0.01em; color: var(--atelier-stone-900); max-width: 24ch;"
+        >
+          Atelier is composed by <em style="font-weight: 400;">Sibylle Sherwood</em>.
+        </h2>
+      </RevealOnScroll>
       <div
         class="space-y-6 mb-8"
         style="font-size: 1.0625rem; line-height: 1.75; color: var(--atelier-stone-700);"
@@ -449,12 +402,14 @@ import { ChevronRight } from 'lucide-react';
         </p>
         <BrassRule client:load />
       </div>
-      <h2
-        class="mx-auto mb-6"
-        style="font-family: var(--atelier-font-display); font-size: clamp(1.875rem, 3.5vw, 2.75rem); line-height: 1.1; letter-spacing: -0.01em; color: var(--atelier-stone-900); max-width: 22ch;"
-      >
-        Step inside the studio.
-      </h2>
+      <RevealOnScroll client:visible>
+        <h2
+          class="mx-auto mb-6"
+          style="font-family: var(--atelier-font-display); font-size: clamp(1.875rem, 3.5vw, 2.75rem); line-height: 1.1; letter-spacing: -0.01em; color: var(--atelier-stone-900); max-width: 22ch;"
+        >
+          Step inside the studio.
+        </h2>
+      </RevealOnScroll>
       <p
         class="mx-auto mb-8"
         style="font-size: 1rem; line-height: 1.65; color: var(--atelier-stone-500); max-width: 50ch;"
