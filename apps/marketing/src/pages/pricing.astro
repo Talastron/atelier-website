@@ -8,7 +8,10 @@
 //   2. Pricing cards — Monthly + Annual side by side, Annual visually featured
 //   3. What's inside — six short lines that justify the price by naming what
 //      membership actually unlocks (the Concierge, the Lookbook, etc.)
-//   4. Trust line — refund + cancel + VAT, set quietly at the base
+//   4. Trust line — cancel + VAT, set quietly at the base. The 30-day
+//      refund mention used to live here too; moved exclusively to
+//      legal/terms.mdx so the marketing surface asserts value rather
+//      than reassuring against it.
 //
 // The hero takes a full first viewport (`min-height: 90vh`) so the brand
 // phrase has the room to land before any pricing pressure hits.
@@ -204,13 +207,13 @@ const LS_FOUNDING_URL = `https://myatelier.lemonsqueezy.com/checkout/buy/a9d33c7
             class="text-center mb-7"
             style="font-family: var(--atelier-font-display); font-style: italic; font-size: 0.9375rem; color: var(--atelier-stone-500); line-height: 1.7;"
           >
-            Your founding key —{' '}
+            Your founding key:{' '}
             <span
               style="display: inline-block; padding: 0 4px 2px; font-style: normal; letter-spacing: 0.28em; color: var(--atelier-stone-900); border-bottom: 1px solid var(--atelier-brass-600);"
             >
               {LS_FOUNDING_CODE}
             </span>
-            {' '}— applied at checkout.
+            . Applied at checkout.
           </p>
 
           {/* CTA */}
@@ -373,7 +376,7 @@ const LS_FOUNDING_URL = `https://myatelier.lemonsqueezy.com/checkout/buy/a9d33c7
             class="relative text-[11px]"
             style="color: var(--atelier-brass-300); letter-spacing: 0.06em;"
           >
-            That's £9/month — save 25%.
+            That's £9/month. Save 25%.
           </p>
           <p
             class="relative text-[11px] uppercase mb-8 mt-1"
@@ -506,7 +509,7 @@ const LS_FOUNDING_URL = `https://myatelier.lemonsqueezy.com/checkout/buy/a9d33c7
               class="shrink-0 text-[11px] uppercase font-semibold"
               style="letter-spacing: 0.22em; color: var(--atelier-stone-500); font-variant-numeric: tabular-nums;"
             >
-              £350 — £800
+              £350 to £800
             </span>
           </li>
           {/* Atelier row — set differently so it lands as the answer */}
@@ -531,7 +534,7 @@ const LS_FOUNDING_URL = `https://myatelier.lemonsqueezy.com/checkout/buy/a9d33c7
           class="text-center mt-6 italic"
           style="font-family: var(--atelier-font-display); font-size: 0.9375rem; color: var(--atelier-stone-500); line-height: 1.6; max-width: 46ch; margin-inline: auto;"
         >
-          Less than half of one stylist visit — for a stylist who never closes,
+          Less than half of one stylist visit. For a stylist who never closes,
           composed from the wardrobe you already own.
         </p>
       </div>
@@ -546,7 +549,7 @@ const LS_FOUNDING_URL = `https://myatelier.lemonsqueezy.com/checkout/buy/a9d33c7
         class="text-[11px] uppercase"
         style="letter-spacing: 0.22em; color: var(--atelier-stone-400);"
       >
-        30-day no-questions-asked refund · cancel anytime · VAT included where applicable
+        Cancel anytime · VAT included where applicable
       </p>
     </div>
 

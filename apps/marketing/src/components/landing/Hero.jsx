@@ -1122,8 +1122,8 @@ export function Hero() {
             marginBottom: 'clamp(1.25rem, 2vw, 1.75rem)',
           }}
         >
-          A stylist who has{' '}
-          <em style={{ fontWeight: 400 }}>read your wardrobe</em>.
+          A stylist who knows{' '}
+          <em style={{ fontWeight: 400 }}>every piece you own</em>.
         </h1>
 
         {/* Subhead */}
@@ -1137,8 +1137,8 @@ export function Hero() {
             marginBottom: 'clamp(1.75rem, 2.5vw, 2.25rem)',
           }}
         >
-          Every piece you own, every wear you log, every look you save —
-          composed into outfits the day you need them.
+          Every piece you own, every wear you log, every look you save.
+          Composed into outfits the day you need them.
         </p>
 
         {/* CTAs */}
