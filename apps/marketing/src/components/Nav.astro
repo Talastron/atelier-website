@@ -12,8 +12,8 @@
 // Closes via the X button, ESC key, or the secondary "Close" link. Body
 // scroll is locked while the menu is open so the page doesn't drift behind it.
 //
-// All interactivity is vanilla JS in the <script> tag at the bottom — no
-// React hydration needed for a simple open/close toggle.
+// All interactivity is vanilla JS in the inline script block at the
+// bottom of this file — no React hydration needed for a simple toggle.
 import { AtelierMark } from '@atelier/ui';
 import { EDIT_URL, SITE } from '../config.ts';
 import { Menu, X } from 'lucide-react';
@@ -53,7 +53,7 @@ const isActive = (href: string) => {
         stop on 'Atelier.' is set in brass — the wordmark's signature
         flourish, consistent with the rest of the brand's typesetting. */}
     <a href="/" class="flex items-center gap-3 shrink-0">
-      <AtelierMark size={32} client:load />
+      <AtelierMark size={32} playOnce client:load />
       <div class="flex items-baseline gap-3">
         <span class="font-display text-2xl tracking-tight" style="line-height: 1;">
           Atelier<span style="color: var(--atelier-brass-600);">.</span>
@@ -142,7 +142,7 @@ const isActive = (href: string) => {
     style="padding-inline: var(--atelier-page-padding);"
   >
     <a href="/" class="flex items-center gap-3 shrink-0" data-mobile-link>
-      <AtelierMark size={32} client:load />
+      <AtelierMark size={32} playOnce client:load />
       <span class="font-display text-2xl tracking-tight">
         Atelier<span style="color: var(--atelier-brass-600);">.</span>
       </span>
