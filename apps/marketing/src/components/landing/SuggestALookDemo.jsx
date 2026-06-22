@@ -323,7 +323,7 @@ export function SuggestALookDemo() {
                 color: 'var(--atelier-stone-900)',
               }}
             >
-              Atelier.
+              Atelier<span style={{ color: 'var(--atelier-brass-600)' }}>.</span>
             </span>
           </div>
           <div

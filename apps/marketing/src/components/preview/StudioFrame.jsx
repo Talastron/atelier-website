@@ -174,7 +174,7 @@ function Sidebar({ activeView, setActiveView }) {
             fontWeight: 500,
           }}
         >
-          Atelier.
+          Atelier<span style={{ color: 'var(--atelier-brass-600)' }}>.</span>
         </h2>
       </div>
 
