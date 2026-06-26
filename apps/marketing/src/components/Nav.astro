@@ -81,6 +81,15 @@ const isActive = (href: string) => {
           {link.label}
         </a>
       ))}
+      {/* Privacy in the top bar (not just the footer) so the link to our
+          privacy policy is reachable above the fold — Google OAuth verification
+          wants an "easily accessible" privacy link on the homepage. */}
+      <a
+        href="/legal/privacy/"
+        class:list={['desktop-nav-link', { 'is-active': isActive('/legal/privacy') }]}
+      >
+        Privacy
+      </a>
     </div>
 
     {/* Right cluster — one CTA only on desktop. The previous 'Sign In' +
