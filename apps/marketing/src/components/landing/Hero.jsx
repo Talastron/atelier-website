@@ -3,12 +3,14 @@ import { Pic } from '@atelier/ui';
 import {
   ChevronRight,
   Sparkles,
+  Home,
   LayoutGrid,
   Camera,
+  Calendar,
   BookOpen,
   Bookmark,
   PoundSterling,
-  Ruler,
+  Store,
   Wand2,
 } from 'lucide-react';
 
@@ -68,16 +70,20 @@ const OUTFITS = [
   },
 ];
 
-// Sidebar icons + labels match src/App.jsx:3174 — the real studio nav.
-// Wardrobe stays the active route because the Today card lives there.
+// Sidebar icons + labels mirror the real studio nav (src/nav/Sidebar.jsx):
+// Concierge · Today · Wardrobe · Styling Studio · Calendar · Lookbook, then a
+// hairline and the quieter trio Inspiration · Insights · Directory. Today is
+// the active route because the mock shows the Daily Brief landing view.
 const NAV_ITEMS = [
   { icon: Sparkles,       label: 'Concierge',       brass: true },
-  { icon: LayoutGrid,     label: 'Wardrobe',        active: true },
+  { icon: Home,           label: 'Today',           active: true },
+  { icon: LayoutGrid,     label: 'Wardrobe' },
   { icon: Camera,         label: 'Styling Studio' },
+  { icon: Calendar,       label: 'Calendar' },
   { icon: BookOpen,       label: 'Lookbook' },
-  { icon: Bookmark,       label: 'Inspiration' },
+  { icon: Bookmark,       label: 'Inspiration',     divider: true },
   { icon: PoundSterling,  label: 'Insights' },
-  { icon: Ruler,          label: 'Profile' },
+  { icon: Store,          label: 'Directory' },
 ];
 
 // Atelier hanger sentinel — verbatim from src/App.jsx:182. The brass charm
@@ -289,9 +295,9 @@ function StudioFrame() {
       }}
     >
       {/* ═══════════════════════════════════════════════════════════════════
-          MOBILE LAYOUT — faithfully mirrors App.jsx mobile Wardrobe view:
-          top bar + greeting + "Your Collection" + TodayTile + outfit reveal
-          + stylist note + bottom nav with brass FAB.
+          MOBILE LAYOUT — faithfully mirrors the app's Today / Daily Brief view:
+          top bar + greeting ("Good morning, Sibylle.") + standfirst + TodayTile
+          + outfit reveal + stylist note + bottom nav with brass Concierge FAB.
           ═══════════════════════════════════════════════════════════════════ */}
       <div className="lg:hidden flex flex-col">
         {/* Mobile top bar — Atelier mark left, brass profile circle right */}
@@ -346,7 +352,8 @@ function StudioFrame() {
             flex: 1,
           }}
         >
-          {/* Greeting eyebrow + "Your Collection" header */}
+          {/* Today eyebrow + greeting + standfirst — mirrors the app's
+              EditorialHeader on the Today / Daily Brief landing view. */}
           <div>
             <div className="flex items-center gap-2 mb-1.5">
               <span
@@ -367,7 +374,7 @@ function StudioFrame() {
                   fontWeight: 600,
                 }}
               >
-                Good morning, Sibylle
+                Today
               </p>
             </div>
             <h2
@@ -380,7 +387,7 @@ function StudioFrame() {
                 marginBottom: 4,
               }}
             >
-              Your Collection
+              Good morning, Sibylle.
             </h2>
             <p
               style={{
@@ -391,7 +398,7 @@ function StudioFrame() {
                 fontWeight: 600,
               }}
             >
-              6 Pieces Curated
+              Your day, considered
             </p>
           </div>
 
@@ -706,9 +713,18 @@ function StudioFrame() {
         </div>
 
         {/* Nav items */}
-        {NAV_ITEMS.map(({ icon: Icon, label, active, brass }) => (
-          <div
-            key={label}
+        {NAV_ITEMS.map(({ icon: Icon, label, active, brass, divider }) => (
+          <React.Fragment key={label}>
+            {divider && (
+              <div
+                aria-hidden="true"
+                style={{
+                  borderTop: '1px solid var(--atelier-stone-200)',
+                  margin: '0.375rem 0.25rem',
+                }}
+              />
+            )}
+            <div
             style={{
               display: 'flex',
               alignItems: 'center',
@@ -751,7 +767,8 @@ function StudioFrame() {
                 Ask
               </span>
             )}
-          </div>
+            </div>
+          </React.Fragment>
         ))}
       </aside>
 
@@ -974,7 +991,8 @@ function StudioFrame() {
       </div>
       </div>
 
-      {/* ── Mobile bottom nav (hidden on lg+) — matches App.jsx:3360 ───── */}
+      {/* ── Mobile bottom nav (hidden on lg+) — mirrors src/nav/BottomBar.jsx:
+          Today · Wardrobe · [Concierge FAB] · Calendar · Studio ───── */}
       <div
         className="lg:hidden grid grid-cols-5 items-center"
         style={{
@@ -985,11 +1003,11 @@ function StudioFrame() {
         }}
       >
         {[
-          { icon: LayoutGrid, label: 'Wardrobe', active: true },
-          { icon: Camera,     label: 'Studio' },
+          { icon: Home,       label: 'Today', active: true },
+          { icon: LayoutGrid, label: 'Wardrobe' },
           { icon: Sparkles,   label: '',        fab: true },
-          { icon: BookOpen,   label: 'Lookbook' },
-          { icon: Bookmark,   label: 'Inspire' },
+          { icon: Calendar,   label: 'Calendar' },
+          { icon: Camera,     label: 'Studio' },
         ].map(({ icon: Icon, label, active, fab }, i) => {
           if (fab) {
             return (
