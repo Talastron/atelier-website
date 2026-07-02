@@ -73,10 +73,14 @@ const allLd = [organizationLd, ...extraLd];
     <meta name="description" content={description} />
     <link rel="canonical" href={canonicalUrl} />
 
-    <!-- Atelier brand favicons. The SVG auto-inverts for dark browser chrome
-         (light hanger on dark bg) via prefers-color-scheme inside the file.
-         PNG fallbacks are required because iOS Home Screen + Android PWA
-         install dialogs silently ignore SVG apple-touch-icons. -->
+    <!-- Atelier brand favicons. Order matters: the .ico comes first because
+         Google Search (and older browsers) render a root favicon.ico most
+         reliably — Google's search-result favicon has historically not
+         supported SVG, and a missing /favicon.ico 404s. The SVG follows for
+         modern browsers (auto-inverts for dark chrome via prefers-color-scheme
+         inside the file). PNG fallbacks are required because iOS Home Screen +
+         Android PWA install dialogs silently ignore SVG apple-touch-icons. -->
+    <link rel="icon" href="/favicon.ico" sizes="32x32" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="icon" type="image/png" sizes="192x192" href="/icon-192.png" />
     <link rel="icon" type="image/png" sizes="512x512" href="/icon-512.png" />
