@@ -1,0 +1,100 @@
+---
+// apps/marketing/src/components/NewsletterSignup.astro
+// Reusable email capture. Renders a real POST form to /api/subscribe (works
+// without JS → function 303-redirects to /subscribe/thanks). A small inline
+// script enhances it with fetch + inline status. No third-party JS, no cookies.
+interface Props {
+  variant?: 'compact' | 'feature';
+  source: string;
+  heading?: string;
+  subtext?: string;
+}
+const {
+  variant = 'feature',
+  source,
+  heading = 'The Atelier letter',
+  subtext = 'Occasional essays on dressing well from what you already own. No noise, unsubscribe anytime.',
+} = Astro.props;
+const fieldId = `email-${source.replace(/[^a-z0-9]+/gi, '-')}`;
+---
+<form class:list={['atelier-signup', `atelier-signup--${variant}`]} data-signup method="POST" action="/api/subscribe">
+  <input type="hidden" name="source" value={source} />
+  {/* Honeypot — visually hidden, off-screen, not announced to AT. */}
+  <div class="atelier-signup__hp" aria-hidden="true">
+    <label>Company<input type="text" name="company" tabindex="-1" autocomplete="off" /></label>
+  </div>
+
+  {variant === 'feature' && (
+    <div class="atelier-signup__intro">
+      <h3 class="font-display">{heading}</h3>
+      <p>{subtext}</p>
+    </div>
+  )}
+
+  <div class="atelier-signup__row">
+    <label class="sr-only" for={fieldId}>Email address</label>
+    <input id={fieldId} type="email" name="email" required placeholder="you@example.com" autocomplete="email" />
+    <button type="submit">Subscribe</button>
+  </div>
+
+  <p class="atelier-signup__consent">
+    Occasional essays and updates. Unsubscribe anytime. See our <a href="/legal/privacy">Privacy&nbsp;Policy</a>.
+  </p>
+  <p class="atelier-signup__status" data-status role="status" aria-live="polite"></p>
+</form>
+
+<script>
+  document.querySelectorAll('form[data-signup]').forEach((form) => {
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const f = e.currentTarget as HTMLFormElement;
+      const status = f.querySelector('[data-status]') as HTMLElement;
+      const btn = f.querySelector('button[type="submit"]') as HTMLButtonElement;
+      const data = Object.fromEntries(new FormData(f).entries());
+      btn.disabled = true;
+      status.textContent = 'One moment…';
+      try {
+        const res = await fetch('/api/subscribe', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', Accept: 'application/json', 'X-Requested-With': 'fetch' },
+          body: JSON.stringify(data),
+        });
+        const json = await res.json().catch(() => ({}));
+        if (res.ok && json.ok) {
+          f.reset();
+          status.textContent = json.message || 'Thanks — check your inbox to confirm.';
+        } else {
+          status.textContent = json.message || 'Something went wrong. Please try again.';
+        }
+      } catch {
+        status.textContent = 'Something went wrong. Please try again.';
+      } finally {
+        btn.disabled = false;
+      }
+    });
+  });
+</script>
+
+<style>
+  /* Match existing tokens (cream/stone/brass, Playfair via .font-display). Tune
+     against apps/marketing/src/styles/global.css during review. */
+  .atelier-signup { max-width: 34rem; }
+  .atelier-signup__intro h3 { font-size: 1.5rem; color: #1c1917; margin-bottom: .25rem; }
+  .atelier-signup__intro p { color: #57534e; font-size: .95rem; margin-bottom: 1rem; }
+  .atelier-signup__row { display: flex; gap: .5rem; flex-wrap: wrap; }
+  .atelier-signup__row input {
+    flex: 1 1 12rem; padding: .75rem 1rem; border: 1px solid rgba(28,25,23,.18);
+    border-radius: 999px; font-size: 16px; background: #fff;
+  }
+  .atelier-signup__row button {
+    padding: .75rem 1.5rem; border-radius: 999px; background: #1c1917; color: #fff;
+    font-weight: 500; cursor: pointer; border: 0;
+  }
+  .atelier-signup__row button:disabled { opacity: .5; cursor: default; }
+  .atelier-signup__consent { font-size: .75rem; color: #78716c; margin-top: .5rem; }
+  .atelier-signup__consent a { text-decoration: underline; }
+  .atelier-signup__status { font-size: .8rem; color: #57534e; margin-top: .5rem; min-height: 1rem; }
+  .atelier-signup--compact .atelier-signup__consent { display: none; } /* footer stays slim */
+  .atelier-signup__hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+  .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); border: 0; }
+</style>
