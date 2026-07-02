@@ -3,6 +3,7 @@ import Base from '../../layouts/Base.astro';
 import Nav from '../../components/Nav.astro';
 import Footer from '../../components/Footer.astro';
 import ClosingMasthead from '../../components/ClosingMasthead.astro';
+import NewsletterSignup from '../../components/NewsletterSignup.astro';
 import { ReadingProgress } from '../../components/ReadingProgress.jsx';
 import { BrassRule, Colophon } from '@atelier/ui';
 import { getCollection } from 'astro:content';
@@ -197,6 +198,10 @@ const breadcrumbLd = {
       </a>
     </div>
   </article>
+
+  <section style="max-width: 42rem; margin: 4rem auto 0; padding: 2rem 1.5rem 0; border-top: 1px solid rgba(28,25,23,.12);">
+    <NewsletterSignup variant="feature" source={`journal:${Astro.params.slug}`} heading="Keep reading" subtext="New essays from the Atelier journal, a few times a month." />
+  </section>
 
   {/* Site-wide closing masthead — bookends the article with the same brand
       imprint that closes /about, /pricing, and the journal index. Sits

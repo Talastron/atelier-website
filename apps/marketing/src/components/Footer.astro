@@ -34,6 +34,7 @@
 import { AtelierMark } from '@atelier/ui';
 import { EDIT_URL, SITE } from '../config.ts';
 import { ArrowUp } from 'lucide-react';
+import NewsletterSignup from './NewsletterSignup.astro';
 
 // Convert the current year to Roman numerals so the copyright line reads
 // in the same vocabulary as the rest of the site (MMXXVI in the nav kicker,
@@ -305,6 +306,10 @@ const sections = [
           </p>
         </div>
       </div>
+    </div>
+
+    <div style="margin: 2rem 0; max-width: 24rem;">
+      <NewsletterSignup variant="compact" source="footer" />
     </div>
 
     {/* ── Brass-rule divider ──────────────────────────────────────── */}

@@ -4,6 +4,7 @@ import Nav from '../../components/Nav.astro';
 import Footer from '../../components/Footer.astro';
 import ClosingMasthead from '../../components/ClosingMasthead.astro';
 import SectionOrnament from '../../components/SectionOrnament.astro';
+import NewsletterSignup from '../../components/NewsletterSignup.astro';
 import { RevealOnScroll } from '../../components/RevealOnScroll.jsx';
 import { BrassRule, RomanNumeral } from '@atelier/ui';
 import { getCollection } from 'astro:content';
@@ -266,6 +267,10 @@ function fmtShortDate(d: Date) {
           });
         })()}
       </ol>
+    </section>
+
+    <section style="max-width: 42rem; margin: 4rem auto 0; padding: 0 1.5rem;">
+      <NewsletterSignup variant="feature" source="journal-index" />
     </section>
 
     {/* ── Colophon strip — journal-specific closer ────────────────────────── */}
