@@ -1,0 +1,14 @@
+---
+import Base from '../layouts/Base.astro';
+import NewsletterSignup from '../components/NewsletterSignup.astro';
+---
+<Base title="Subscribe — Atelier" description="Occasional essays on dressing well from what you already own.">
+  <main style="max-width: 42rem; margin: 0 auto; padding: 6rem 1.5rem;">
+    <NewsletterSignup
+      variant="feature"
+      source="subscribe-page"
+      heading="The Atelier letter"
+      subtext="Essays on style, cost-per-wear, and dressing from what you already own — a few times a month, never spam."
+    />
+  </main>
+</Base>
