@@ -1,9 +1,19 @@
 ---
 import Base from '../layouts/Base.astro';
 import NewsletterSignup from '../components/NewsletterSignup.astro';
+
+// No-JS failure path: functions/api/subscribe.ts redirects here with ?error=1
+// when a native (scriptless) form POST is rejected. Surface a visible message
+// so those users aren't left with a silently re-rendered empty form.
+const hasError = Astro.url.searchParams.get('error') === '1';
 ---
 <Base title="Subscribe — Atelier" description="Occasional essays on dressing well from what you already own.">
   <main style="max-width: 42rem; margin: 0 auto; padding: 6rem 1.5rem;">
+    {hasError && (
+      <p role="alert" style="margin-bottom: 1.5rem; color: #b91c1c; font-size: .9rem;">
+        Sorry — we couldn't subscribe that address. Please check your email and try again.
+      </p>
+    )}
     <NewsletterSignup
       variant="feature"
       source="subscribe-page"
